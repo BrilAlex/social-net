@@ -1,0 +1,15 @@
+.appContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-template-areas: "header header" "sidebar content";
+  grid-gap: 10px;
+  box-sizing: border-box;
+}
+
+.appContent {
+  grid-area: content;
+  background: bisque;
+}

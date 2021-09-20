@@ -1,0 +1,7 @@
+.nav {
+    grid-area: n;
+    background: aquamarine;
+}
+
+.item a {display: block; padding: 5px 10px; color: black; text-decoration: none;}
+.item a.active {background: goldenrod; color: white;}

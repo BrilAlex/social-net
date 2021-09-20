@@ -1,0 +1,9 @@
+.newPostBlock {
+    padding: 10px 0 30px 0;
+}
+.newPostBlock textarea {
+    display: block;
+}
+.newPostBlock button {
+    margin-top: 10px;
+}
