@@ -1,23 +1,15 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css";
-import {ActionType, addNewPostActionCreator, PostType, updateNewPostTextActionCreator} from "../../../redux/state";
+import {ActionTypes, addNewPostActionCreator, PostType, updateNewPostTextActionCreator} from "../../../redux/state";
 
 type MyPostsProps = {
     postsList: Array<PostType>
     newPostText: string
-    dispatchCallback: (action: ActionType) => void
+    dispatchCallback: (action: ActionTypes) => void
 };
 
 export const MyPosts: React.FC<MyPostsProps> = (props) => {
-    let postsElements = props.postsList.map(post =>
-        <Post
-            key={post.id}
-            id={post.id}
-            postText={post.postText}
-            likesCounter={post.likesCounter}
-        />
-    );
 
     const addPostHandler = () => {
         props.dispatchCallback(addNewPostActionCreator());
@@ -29,13 +21,23 @@ export const MyPosts: React.FC<MyPostsProps> = (props) => {
         props.dispatchCallback(action);
     }
 
+    let postsElements = props.postsList.map(post =>
+        <Post
+            key={post.id}
+            id={post.id}
+            postText={post.postText}
+            likesCounter={post.likesCounter}
+        />
+    );
+
     return (
         <div>
             <h3>My Posts</h3>
             <div className={s.newPostBlock}>
                 <textarea
-                    onChange={updateNewPostTextHandler}
                     value={props.newPostText}
+                    placeholder={"Type your post here"}
+                    onChange={updateNewPostTextHandler}
                 />
                 <button onClick={addPostHandler}>Add new post</button>
             </div>

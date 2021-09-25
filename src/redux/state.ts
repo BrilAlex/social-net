@@ -42,17 +42,17 @@ export type RootStateType = {
     sidebar: SidebarType
 };
 
-export type ActionType = {
-    type: string
-    newText?: string
-}
+export type ActionTypes = ReturnType<typeof addNewPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
+    | ReturnType<typeof sendNewMessageActionCreator>
+    | ReturnType<typeof updateNewMessageTextActionCreator>;
 
 type StoreType = {
     _state: RootStateType
     _callSubscriber: () => void
     getState: () => RootStateType
     subscribe: (observer: () => void) => void
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 const ADD_NEW_POST = "ADD_NEW_POST";
@@ -60,14 +60,14 @@ const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
 const SEND_NEW_MESSAGE = "SEND_NEW_MESSAGE";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
 
-export const addNewPostActionCreator = (): ActionType => ({type: ADD_NEW_POST});
-export const updateNewPostTextActionCreator = (text: string): ActionType => (
-    {type: UPDATE_NEW_POST_TEXT, newText: text}
+export const addNewPostActionCreator = () => ({type: ADD_NEW_POST} as const);
+export const updateNewPostTextActionCreator = (text: string) => (
+    {type: UPDATE_NEW_POST_TEXT, newText: text} as const
 );
-export const sendNewMessageActionCreator = (): ActionType => ({type: SEND_NEW_MESSAGE});
-export const updateNeMessageTextActionCreator = (text: string): ActionType => ({
-    type: UPDATE_NEW_MESSAGE_TEXT, newText: text
-});
+export const sendNewMessageActionCreator = () => ({type: SEND_NEW_MESSAGE} as const);
+export const updateNewMessageTextActionCreator = (text: string) => (
+    {type: UPDATE_NEW_MESSAGE_TEXT, newText: text} as const
+);
 
 export let store: StoreType = {
     _state: {
@@ -79,7 +79,7 @@ export let store: StoreType = {
                 {id: 4, postText: "Some text 4", likesCounter: 10},
                 {id: 5, postText: "Some text 5", likesCounter: 5}
             ],
-            newPostText: "Type your post here"
+            newPostText: ""
         },
         dialogsPage: {
             dialogsData: [
@@ -98,7 +98,7 @@ export let store: StoreType = {
                 {id: 4, messageText: "Yo?"},
                 {id: 5, messageText: "What's up?"}
             ],
-            newMessageText: "Type your message here"
+            newMessageText: ""
         },
         sidebar: {
             friendsList: [
@@ -134,7 +134,7 @@ export let store: StoreType = {
                 this._callSubscriber();
                 break;
             case UPDATE_NEW_POST_TEXT:
-                if(action.newText) this._state.profilePage.newPostText = action.newText;
+                this._state.profilePage.newPostText = action.newText;
                 this._callSubscriber();
                 break;
             case SEND_NEW_MESSAGE:
@@ -147,7 +147,7 @@ export let store: StoreType = {
                 this._callSubscriber();
                 break;
             case UPDATE_NEW_MESSAGE_TEXT:
-                if(action.newText) this._state.dialogsPage.newMessageText = action.newText;
+                this._state.dialogsPage.newMessageText = action.newText;
                 this._callSubscriber();
                 break;
             default:

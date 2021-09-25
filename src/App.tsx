@@ -7,12 +7,12 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Route} from "react-router-dom";
-import {ActionType, RootStateType} from "./redux/state";
+import {ActionTypes, RootStateType} from "./redux/state";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 
 type AppProps = {
     rootState: RootStateType
-    dispatchCallback: (action: ActionType) => void
+    dispatchCallback: (action: ActionTypes) => void
 };
 
 const App: React.FC<AppProps> = (props) => {
