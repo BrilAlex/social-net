@@ -1,13 +1,12 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css";
-import { PostType } from "../../../redux/state";
+import {ActionType, ADD_NEW_POST, PostType, UPDATE_NEW_POST_TEXT} from "../../../redux/state";
 
 type MyPostsProps = {
     postsList: Array<PostType>
     newPostText: string
-    addNewPostCallback: () => void
-    updateNewPostTextCallback: (newPostText: string) => void
+    dispatchCallback: (action: ActionType) => void
 };
 
 export const MyPosts: React.FC<MyPostsProps> = (props) => {
@@ -21,12 +20,15 @@ export const MyPosts: React.FC<MyPostsProps> = (props) => {
     );
 
     const addPostHandler = () => {
-        props.addNewPostCallback();
+        //props.addNewPostCallback();
+        props.dispatchCallback({type: ADD_NEW_POST});
     };
 
     const updateNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value;
-        props.updateNewPostTextCallback(newText);
+        let action = {type: UPDATE_NEW_POST_TEXT, newText: newText};
+        props.dispatchCallback(action);
+        //props.updateNewPostTextCallback(newText);
     }
 
     return (

@@ -2,26 +2,27 @@ import React, {ChangeEvent} from "react";
 import styles from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogType, MessageType} from "../../redux/state";
+import {ActionType, DialogType, MessageType, SEND_NEW_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} from "../../redux/state";
 
 type DialogsProps = {
     dialogsData: Array<DialogType>
     messagesData: Array<MessageType>
     newMessageText: string
-    sendNewMessageCallback: () => void
-    updateNewMessageTextCallback: (newMessageText: string) => void
+    dispatchCallback: (action: ActionType) => void
 }
 
 export const Dialogs: React.FC<DialogsProps> = (props) => {
-    let newMessageTextAreaRef = React.createRef<HTMLTextAreaElement>();
 
     const sendNewMessageHandler = () => {
-        props.sendNewMessageCallback();
+        props.dispatchCallback({type: SEND_NEW_MESSAGE})
+        //props.sendNewMessageCallback();
     };
 
     const updateNewMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value;
-        props.updateNewMessageTextCallback(newText);
+        const action = {type: UPDATE_NEW_MESSAGE_TEXT, newText};
+        props.dispatchCallback(action);
+        //props.updateNewMessageTextCallback(newText);
     };
 
     return (

@@ -7,15 +7,12 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Route} from "react-router-dom";
-import {RootStateType} from "./redux/state";
+import {ActionType, RootStateType} from "./redux/state";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 
 type AppProps = {
     rootState: RootStateType
-    addNewPostCallback: () => void
-    updateNewPostTextCallback: (newPostText: string) => void
-    sendNewMessageCallback: () => void
-    updateNewMessageTextCallback: (newMessageText: string) => void
+    dispatchCallback: (action: ActionType) => void
 };
 
 const App: React.FC<AppProps> = (props) => {
@@ -29,8 +26,7 @@ const App: React.FC<AppProps> = (props) => {
                     render={() => <Profile
                         postsData={profilePage.postsData}
                         newPostText={profilePage.newPostText}
-                        addNewPostCallback={props.addNewPostCallback}
-                        updateNewPostTextCallback={props.updateNewPostTextCallback}
+                        dispatchCallback={props.dispatchCallback}
                     />}
                     path={"/profile"}/>
                 <Route
@@ -38,8 +34,7 @@ const App: React.FC<AppProps> = (props) => {
                         dialogsData={dialogsPage.dialogsData}
                         messagesData={dialogsPage.messagesData}
                         newMessageText={dialogsPage.newMessageText}
-                        sendNewMessageCallback={props.sendNewMessageCallback}
-                        updateNewMessageTextCallback={props.updateNewMessageTextCallback}
+                        dispatchCallback={props.dispatchCallback}
                     />}
                     path={"/dialogs"}/>
                 <Route render={() => <News/>} path={"/news"}/>

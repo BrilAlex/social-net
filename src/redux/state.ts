@@ -3,47 +3,62 @@ export type PostType = {
     postText: string
     likesCounter: number
 };
+
 export type DialogType = {
     id: number
     name: string
 };
+
 export type MessageType = {
     id: number
     messageText: string
 };
+
 export type FriendType = {
     id: number
     name: string
     avatar: string
     avatarAlt: string
 };
+
 type ProfilePageType = {
     postsData: Array<PostType>
     newPostText: string
 };
+
 type DialogsPageType = {
     dialogsData: Array<DialogType>
     messagesData: Array<MessageType>
     newMessageText: string
 };
+
 export type SidebarType = {
     friendsList: Array<FriendType>
 };
+
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 };
+
+export type ActionType = {
+    type: string
+    newText?: string
+}
+
 type StoreType = {
     _state: RootStateType
-    getState: () => RootStateType
-    addNewPost: () => void
-    updateNewPostText: (newPostText: string) => void
-    sendNewMessage: () => void
-    updateNewMessageText: (newMessageText: string) => void
     _callSubscriber: () => void
+    getState: () => RootStateType
     subscribe: (observer: () => void) => void
+    dispatch: (action: ActionType) => void
 }
+
+export const ADD_NEW_POST = "ADD_NEW_POST";
+export const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
+export const SEND_NEW_MESSAGE = "SEND_NEW_MESSAGE";
+export const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
 
 export let store: StoreType = {
     _state: {
@@ -88,40 +103,46 @@ export let store: StoreType = {
             ]
         }
     },
-    getState() {
-        return this._state;
-    },
     _callSubscriber() {
         console.log("State changed");
+    },
+    getState() {
+        return this._state;
     },
     subscribe(observer) {
         this._callSubscriber = observer;
     },
-    addNewPost() {
-        let newPost: PostType = {
-            id: 6,
-            postText: this._state.profilePage.newPostText,
-            likesCounter: 0
-        };
-        this._state.profilePage.postsData.push(newPost);
-        this._state.profilePage.newPostText = "";
-        this._callSubscriber();
-    },
-    updateNewPostText(newPostText) {
-        this._state.profilePage.newPostText = newPostText;
-        this._callSubscriber();
-    },
-    sendNewMessage() {
-        let newMessage: MessageType = {
-            id: 6,
-            messageText: this._state.dialogsPage.newMessageText
-        };
-        this._state.dialogsPage.messagesData.push(newMessage);
-        this._state.dialogsPage.newMessageText = "";
-        this._callSubscriber();
-    },
-    updateNewMessageText(newMessageText) {
-        this._state.dialogsPage.newMessageText = newMessageText;
-        this._callSubscriber();
+    dispatch(action){
+        switch(action.type) {
+            case ADD_NEW_POST:
+                let newPost: PostType = {
+                    id: 6,
+                    postText: this._state.profilePage.newPostText,
+                    likesCounter: 0
+                };
+                this._state.profilePage.postsData.push(newPost);
+                this._state.profilePage.newPostText = "";
+                this._callSubscriber();
+                break;
+            case UPDATE_NEW_POST_TEXT:
+                if(action.newText) this._state.profilePage.newPostText = action.newText;
+                this._callSubscriber();
+                break;
+            case SEND_NEW_MESSAGE:
+                let newMessage: MessageType = {
+                    id: 6,
+                    messageText: this._state.dialogsPage.newMessageText
+                };
+                this._state.dialogsPage.messagesData.push(newMessage);
+                this._state.dialogsPage.newMessageText = "";
+                this._callSubscriber();
+                break;
+            case UPDATE_NEW_MESSAGE_TEXT:
+                if(action.newText) this._state.dialogsPage.newMessageText = action.newText;
+                this._callSubscriber();
+                break;
+            default:
+                throw new Error("Invalid action type");
+        }
     }
 };
