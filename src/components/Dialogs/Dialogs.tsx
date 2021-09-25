@@ -2,7 +2,12 @@ import React, {ChangeEvent} from "react";
 import styles from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {ActionType, DialogType, MessageType, SEND_NEW_MESSAGE, UPDATE_NEW_MESSAGE_TEXT} from "../../redux/state";
+import {
+    ActionType,
+    DialogType,
+    MessageType,
+    sendNewMessageActionCreator, updateNeMessageTextActionCreator
+} from "../../redux/state";
 
 type DialogsProps = {
     dialogsData: Array<DialogType>
@@ -14,16 +19,16 @@ type DialogsProps = {
 export const Dialogs: React.FC<DialogsProps> = (props) => {
 
     const sendNewMessageHandler = () => {
-        props.dispatchCallback({type: SEND_NEW_MESSAGE})
+        props.dispatchCallback(sendNewMessageActionCreator());
         //props.sendNewMessageCallback();
-    };
+    }
 
     const updateNewMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value;
-        const action = {type: UPDATE_NEW_MESSAGE_TEXT, newText};
+        const action = updateNeMessageTextActionCreator(newText);
         props.dispatchCallback(action);
         //props.updateNewMessageTextCallback(newText);
-    };
+    }
 
     return (
         <div className={styles.dialogs}>
