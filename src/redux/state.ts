@@ -1,3 +1,6 @@
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+
 export type PostType = {
     id: number
     postText: string
@@ -21,12 +24,12 @@ export type FriendType = {
     avatarAlt: string
 };
 
-type ProfilePageType = {
+export type ProfilePageType = {
     postsData: Array<PostType>
     newPostText: string
 };
 
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogsData: Array<DialogType>
     messagesData: Array<MessageType>
     newMessageText: string
@@ -122,36 +125,8 @@ export let store: StoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action){
-        switch(action.type) {
-            case ADD_NEW_POST:
-                let newPost: PostType = {
-                    id: 6,
-                    postText: this._state.profilePage.newPostText,
-                    likesCounter: 0
-                };
-                this._state.profilePage.postsData.push(newPost);
-                this._state.profilePage.newPostText = "";
-                this._callSubscriber();
-                break;
-            case UPDATE_NEW_POST_TEXT:
-                this._state.profilePage.newPostText = action.newText;
-                this._callSubscriber();
-                break;
-            case SEND_NEW_MESSAGE:
-                let newMessage: MessageType = {
-                    id: 6,
-                    messageText: this._state.dialogsPage.newMessageText
-                };
-                this._state.dialogsPage.messagesData.push(newMessage);
-                this._state.dialogsPage.newMessageText = "";
-                this._callSubscriber();
-                break;
-            case UPDATE_NEW_MESSAGE_TEXT:
-                this._state.dialogsPage.newMessageText = action.newText;
-                this._callSubscriber();
-                break;
-            default:
-                throw new Error("Invalid action type");
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._callSubscriber();
     }
 };
