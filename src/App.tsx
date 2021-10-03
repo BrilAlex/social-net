@@ -7,7 +7,7 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Route} from "react-router-dom";
-import {ActionTypes, RootStateType} from "./redux/state";
+import {ActionTypes, RootStateType} from "./redux/reduxStore";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 
 type AppProps = {

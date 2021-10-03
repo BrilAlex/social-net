@@ -1,5 +1,5 @@
 import React from "react";
-import {SidebarType} from "../../redux/state";
+import {SidebarType} from "../../redux/sidebarReducer";
 import styles from "./Sidebar.module.css";
 import {Navbar} from "./Navbar/Navbar";
 
