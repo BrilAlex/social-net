@@ -2,25 +2,23 @@ import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css";
 import {PostType} from "../../../redux/profileReducer";
-import {ActionTypes} from "../../../redux/reduxStore";
-import {addNewPostAC, updateNewPostTextAC} from "../../../redux/profileReducer";
 
 type MyPostsProps = {
     postsList: Array<PostType>
     newPostText: string
-    dispatchCallback: (action: ActionTypes) => void
+    addPostCallback: () => void
+    updateNewPostTextCallback: (newText: string) => void
 };
 
 export const MyPosts: React.FC<MyPostsProps> = (props) => {
 
     const addPostHandler = () => {
-        props.dispatchCallback(addNewPostAC());
+        props.addPostCallback();
     };
 
     const updateNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value;
-        const action = updateNewPostTextAC(newText);
-        props.dispatchCallback(action);
+        props.updateNewPostTextCallback(newText);
     }
 
     let postsElements = props.postsList.map(post =>
