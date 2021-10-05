@@ -1,14 +1,19 @@
 import React from "react";
-import {RootStoreType} from "../../redux/reduxStore";
+import {StoreContext} from "../../StoreContext";
 import {Sidebar} from "./Sidebar";
 
-type SidebarContainerProps = {
-    store: RootStoreType
-}
+type SidebarContainerProps = {};
 
 export const SidebarContainer = (props: SidebarContainerProps) => {
-    let state = props.store.getState();
-    let friendsList = state.sidebar.friendsList;
-
-    return <Sidebar friendsList={friendsList}/>;
+    return (
+        <StoreContext.Consumer>
+            {
+                store => {
+                    let state = store.getState();
+                    let friendsList = state.sidebar.friendsList;
+                    return <Sidebar friendsList={friendsList}/>
+                }
+            }
+        </StoreContext.Consumer>
+    );
 }

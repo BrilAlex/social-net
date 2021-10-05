@@ -6,22 +6,19 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Route} from "react-router-dom";
-import {RootStoreType} from "./redux/reduxStore";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {SidebarContainer} from "./components/Sidebar/SidebarContainer";
 
-type AppProps = {
-    store: RootStoreType
-};
+type AppProps = {};
 
 const App: React.FC<AppProps> = (props) => {
     return (
         <div className="appContainer">
             <Header/>
-            <SidebarContainer store={props.store}/>
+            <SidebarContainer/>
             <div className={"appContent"}>
-                <Route render={() => <Profile store={props.store}/>} path={"/profile"}/>
-                <Route render={() => <DialogsContainer store={props.store}/>} path={"/dialogs"}/>
+                <Route render={() => <Profile/>} path={"/profile"}/>
+                <Route render={() => <DialogsContainer/>} path={"/dialogs"}/>
                 <Route render={() => <News/>} path={"/news"}/>
                 <Route render={() => <Music/>} path={"/music"}/>
                 <Route render={() => <Settings/>} path={"/settings"}/>
