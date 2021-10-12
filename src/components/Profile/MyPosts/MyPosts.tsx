@@ -1,16 +1,9 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import s from "./MyPost.module.css";
-import {PostType} from "../../../redux/profileReducer";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-type MyPostsProps = {
-    postsList: Array<PostType>
-    newPostText: string
-    addPostCallback: () => void
-    updateNewPostTextCallback: (newText: string) => void
-};
-
-export const MyPosts: React.FC<MyPostsProps> = (props) => {
+export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const addPostHandler = () => {
         props.addPostCallback();
@@ -21,7 +14,7 @@ export const MyPosts: React.FC<MyPostsProps> = (props) => {
         props.updateNewPostTextCallback(newText);
     }
 
-    let postsElements = props.postsList.map(post =>
+    let postsElements = props.postsData.map(post =>
         <Post
             key={post.id}
             id={post.id}

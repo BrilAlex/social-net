@@ -9,9 +9,7 @@ import {Route} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {SidebarContainer} from "./components/Sidebar/SidebarContainer";
 
-type AppProps = {};
-
-const App: React.FC<AppProps> = (props) => {
+const App = () => {
     return (
         <div className="appContainer">
             <Header/>

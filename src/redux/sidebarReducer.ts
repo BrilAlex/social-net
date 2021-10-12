@@ -7,11 +7,9 @@ export type FriendType = {
     avatarAlt: string
 };
 
-export type SidebarType = {
-    friendsList: Array<FriendType>
-};
+export type SidebarType = typeof initialSate;
 
-let initialSate: SidebarType = {
+let initialSate = {
     friendsList: [
         {id: 1, name: "Dimych", avatar: "avatar", avatarAlt: "avatar Alt"},
         {id: 2, name: "Igor", avatar: "avatar", avatarAlt: "avatar Alt"},
@@ -20,10 +18,10 @@ let initialSate: SidebarType = {
         {id: 5, name: "Viktor", avatar: "avatar", avatarAlt: "avatar Alt"},
         {id: 6, name: "Valera", avatar: "avatar", avatarAlt: "avatar Alt"},
         {id: 7, name: "Alex", avatar: "avatar", avatarAlt: "avatar Alt"}
-    ]
+    ] as Array<FriendType>
 };
 
-const sidebarReducer = (state = initialSate, action: ActionTypes) => {
+const sidebarReducer = (state: SidebarType = initialSate, action: ActionTypes): SidebarType => {
     return state;
 }
 

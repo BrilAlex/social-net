@@ -1,9 +1,9 @@
 import React from "react";
-import {SidebarType} from "../../redux/sidebarReducer";
 import styles from "./Sidebar.module.css";
 import {Navbar} from "./Navbar/Navbar";
+import {SidebarPropsType} from "./SidebarContainer";
 
-export const Sidebar: React.FC<SidebarType> = (props) => {
+export const Sidebar: React.FC<SidebarPropsType> = (props) => {
     return (
         <div className={styles.sidebar}>
             <Navbar/>

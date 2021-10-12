@@ -2,17 +2,9 @@ import React, {ChangeEvent} from "react";
 import styles from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogType, MessageType} from "../../redux/dialogsReducer";
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsProps = {
-    dialogsData: Array<DialogType>
-    messagesData: Array<MessageType>
-    newMessageText: string
-    sendNewMessageCallback: () => void
-    updateNewMessageTextCallback: (newText: string) => void
-}
-
-export const Dialogs: React.FC<DialogsProps> = (props) => {
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
     const sendNewMessageHandler = () => {
         props.sendNewMessageCallback();

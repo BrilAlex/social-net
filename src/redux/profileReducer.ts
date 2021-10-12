@@ -33,7 +33,7 @@ export const updateNewPostTextAC = (text: string) => (
     {type: UPDATE_NEW_POST_TEXT, newText: text} as const
 );
 
-const profileReducer = (state = initialState, action: ActionTypes) => {
+const profileReducer = (state = initialState, action: ActionTypes): ProfilePageType => {
     switch(action.type) {
         case ADD_NEW_POST:
             let newPost: PostType = {
@@ -41,12 +41,9 @@ const profileReducer = (state = initialState, action: ActionTypes) => {
                 postText: state.newPostText,
                 likesCounter: 0
             };
-            state.postsData.push(newPost);
-            state.newPostText = "";
-            return state;
+            return {...state, postsData: [...state.postsData, newPost], newPostText: ""};
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state;
+            return {...state, newPostText: action.newText};
         default:
             return state;
     }
