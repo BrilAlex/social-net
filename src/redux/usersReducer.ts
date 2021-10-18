@@ -1,11 +1,19 @@
 import {ActionTypes} from "./reduxStore";
 
-export type UserType = {
+/*export type UserType = {
     id: number
     fullName: string
     avatarUrl: string
     location: {country: string, city: string}
     status: string
+    followed: boolean
+};*/
+
+export type UserType = {
+    id: number
+    name: string
+    status: string
+    photos: {small: string, large: string}
     followed: boolean
 };
 
