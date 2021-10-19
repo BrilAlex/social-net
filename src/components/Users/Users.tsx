@@ -11,28 +11,35 @@ type UsersResponseType = {
     error: string
 }
 
-export const Users: React.FC<UserPropsType> = (props) => {
-    if (props.usersData.length === 0) {
+export class Users extends React.Component<UserPropsType> {
+    constructor(props: UserPropsType) {
+        super(props);
         axios.get<UsersResponseType>("https://social-network.samuraijs.com/api/1.0/users")
-            .then(response => props.setUsersCallback(response.data.items)
-        );
+            .then(response => this.props.setUsersCallback(response.data.items));
     }
-
-    return (
-        <div>{props.usersData.map(u =>
-            <div key={u.id} className={styles.user}>
-                <div>
-                    <p><img src={u.photos.small ? u.photos.small : defaultUserPhoto}/></p>
-                    <p>{u.followed
-                        ? <button onClick={() => props.unfollowCallback(u.id)}>Unfollow</button>
-                        : <button onClick={() => props.followCallback(u.id)}>Follow</button>}
-                    </p>
-                </div>
-                <div>
-                    <p>{u.name}<br/><span>{u.status}</span></p>
-                    <p>{"u.location.country"}, {"u.location.city"}</p>
-                </div>
-            </div>)}
-        </div>
-    );
+    render() {
+        return (
+            <div>
+                {this.props.usersData.map(u =>
+                    <div key={u.id} className={styles.user}>
+                        <div>
+                            <p>
+                                <img
+                                    src={u.photos.small ? u.photos.small : defaultUserPhoto}
+                                    alt={u.name}
+                                />
+                            </p>
+                            <p>{u.followed
+                                ? <button onClick={() => this.props.unfollowCallback(u.id)}>Unfollow</button>
+                                : <button onClick={() => this.props.followCallback(u.id)}>Follow</button>}
+                            </p>
+                        </div>
+                        <div>
+                            <p>{u.name}<br/><span>{u.status}</span></p>
+                            <p>{"u.location.country"}, {"u.location.city"}</p>
+                        </div>
+                    </div>)}
+            </div>
+        )
+    }
 }
