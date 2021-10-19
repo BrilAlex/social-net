@@ -12,11 +12,11 @@ type UsersResponseType = {
 }
 
 export class Users extends React.Component<UserPropsType> {
-    constructor(props: UserPropsType) {
-        super(props);
+    componentDidMount() {
         axios.get<UsersResponseType>("https://social-network.samuraijs.com/api/1.0/users")
             .then(response => this.props.setUsersCallback(response.data.items));
     }
+
     render() {
         return (
             <div>
