@@ -1,2 +1,5 @@
 .user {margin-bottom: 20px; padding: 10px; border: 1px solid black;}
 .user img {width: 50px;}
+
+.pagination span {display: inline-block; padding: 0 5px; cursor: pointer;}
+.pagination .selectedPage {font-weight: bold;}
