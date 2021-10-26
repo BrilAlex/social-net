@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Users} from "./Users";
 import {
+    toggleIsFetchingAC,
     followAC,
     setCurrentPageAC, setTotalUsersCountAC,
     setUsersAC,
@@ -12,6 +13,7 @@ import {
 } from "../../redux/usersReducer";
 import {RootStateType} from "../../redux/reduxStore";
 import axios from "axios";
+import {Preloader} from "../common/Preloader/Preloader";
 
 type MapStateToPropsType = UsersPageType;
 type MapDispatchToPropsType = {
@@ -20,6 +22,7 @@ type MapDispatchToPropsType = {
     setUsersCallback: (users: Array<UserType>) => void
     setCurrentPageCallback: (pageNumber: number) => void
     setTotalUsersCountCallback: (totalCount: number) => void
+    toggleIsFetchingCallback: (isFetching: boolean) => void
 };
 type UserAPIPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
@@ -29,10 +32,12 @@ type UsersResponseType = {
     error: string
 }
 
-class UsersAPIContainer extends React.Component<UserAPIPropsType> {
+class UsersContainer extends React.Component<UserAPIPropsType> {
     componentDidMount() {
+        this.props.toggleIsFetchingCallback(true);
         axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toggleIsFetchingCallback(false);
                 this.props.setUsersCallback(response.data.items);
                 this.props.setTotalUsersCountCallback(response.data.totalCount);
             });
@@ -40,29 +45,37 @@ class UsersAPIContainer extends React.Component<UserAPIPropsType> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPageCallback(pageNumber);
+        this.props.toggleIsFetchingCallback(true);
         axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => this.props.setUsersCallback(response.data.items));
+            .then(response => {
+                this.props.toggleIsFetchingCallback(false);
+                this.props.setUsersCallback(response.data.items);
+            });
     }
 
     render() {
-        return <Users
-            totalUsersCount={this.props.totalUsersCount}
-            pageSize={this.props.pageSize}
-            currentPage={this.props.currentPage}
-            onPageChanged={this.onPageChanged}
-            usersData={this.props.usersData}
-            followCallback={this.props.followCallback}
-            unfollowCallback={this.props.unfollowCallback}
-        />
+        return <>
+            {this.props.isFetching ? <Preloader/> : null}
+            <Users
+                totalUsersCount={this.props.totalUsersCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                onPageChanged={this.onPageChanged}
+                usersData={this.props.usersData}
+                followCallback={this.props.followCallback}
+                unfollowCallback={this.props.unfollowCallback}
+            />
+        </>
     }
 }
 
-const mapStateToProps = (state:RootStateType): MapStateToPropsType => {
+const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
     return {
         usersData: state.usersPage.usersData,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     };
 }
 const mapDispatchToProps = (dispatch: (action: UsersActionTypes) => void): MapDispatchToPropsType => {
@@ -72,7 +85,8 @@ const mapDispatchToProps = (dispatch: (action: UsersActionTypes) => void): MapDi
         setUsersCallback: (users: Array<UserType>) => dispatch(setUsersAC(users)),
         setCurrentPageCallback: (pageNumber: number) => dispatch(setCurrentPageAC(pageNumber)),
         setTotalUsersCountCallback: (totalCount: number) => dispatch(setTotalUsersCountAC(totalCount)),
+        toggleIsFetchingCallback: (isFetching: boolean) => dispatch(toggleIsFetchingAC(isFetching)),
     };
 }
 
-export const UsersContainer = connect(mapStateToProps,mapDispatchToProps)(UsersAPIContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);

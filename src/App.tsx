@@ -8,7 +8,7 @@ import {Settings} from "./components/Settings/Settings";
 import {Route} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {SidebarContainer} from "./components/Sidebar/SidebarContainer";
-import {UsersContainer} from "./components/Users/UsersContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const App = () => {
     return (
