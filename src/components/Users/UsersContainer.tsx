@@ -11,6 +11,7 @@ import {
     UserType
 } from "../../redux/usersReducer";
 import {RootStateType} from "../../redux/reduxStore";
+import axios from "axios";
 
 type MapStateToPropsType = UsersPageType;
 type MapDispatchToPropsType = {
@@ -20,7 +21,41 @@ type MapDispatchToPropsType = {
     setCurrentPageCallback: (pageNumber: number) => void
     setTotalUsersCountCallback: (totalCount: number) => void
 };
-export type UserPropsType = MapStateToPropsType & MapDispatchToPropsType;
+type UserAPIPropsType = MapStateToPropsType & MapDispatchToPropsType;
+
+type UsersResponseType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string
+}
+
+class UsersAPIContainer extends React.Component<UserAPIPropsType> {
+    componentDidMount() {
+        axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsersCallback(response.data.items);
+                this.props.setTotalUsersCountCallback(response.data.totalCount);
+            });
+    }
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPageCallback(pageNumber);
+        axios.get<UsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => this.props.setUsersCallback(response.data.items));
+    }
+
+    render() {
+        return <Users
+            totalUsersCount={this.props.totalUsersCount}
+            pageSize={this.props.pageSize}
+            currentPage={this.props.currentPage}
+            onPageChanged={this.onPageChanged}
+            usersData={this.props.usersData}
+            followCallback={this.props.followCallback}
+            unfollowCallback={this.props.unfollowCallback}
+        />
+    }
+}
 
 const mapStateToProps = (state:RootStateType): MapStateToPropsType => {
     return {
@@ -40,4 +75,4 @@ const mapDispatchToProps = (dispatch: (action: UsersActionTypes) => void): MapDi
     };
 }
 
-export const UsersContainer = connect(mapStateToProps,mapDispatchToProps)(Users);
+export const UsersContainer = connect(mapStateToProps,mapDispatchToProps)(UsersAPIContainer);
