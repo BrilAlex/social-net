@@ -24,18 +24,14 @@ export type ProfileType = {
     photos:{small: string, large: string}
 }
 
-type ProfilePageType = {
-    profile: ProfileType
-    postsData: Array<PostType>
-    newPostText: string
-};
+export type ProfilePageType = typeof initialState;
 
 export type ProfileActionTypes =
     ReturnType<typeof addNewPostAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof setUserProfile>;
 
-let initialState: ProfilePageType = {
+let initialState = {
     profile: {} as ProfileType,
     postsData: [
         {id: 1, postText: "Some text 1", likesCounter: 0},
@@ -57,7 +53,7 @@ export const updateNewPostTextAC = (text: string) => (
 );
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const);
 
-const profileReducer = (state = initialState, action: ActionTypes): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
     switch(action.type) {
         case ADD_NEW_POST:
             let newPost: PostType = {
