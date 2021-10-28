@@ -1,10 +1,18 @@
 import React from "react";
-import {addNewPostAC, ProfileActionTypes, ProfilePageType, updateNewPostTextAC} from "../../../redux/profileReducer";
+import {
+    addNewPostAC,
+    PostType,
+    ProfileActionTypes,
+    updateNewPostTextAC
+} from "../../../redux/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {RootStateType} from "../../../redux/reduxStore";
 
-type MapStateToPropsType = ProfilePageType;
+type MapStateToPropsType = {
+    postsData: Array<PostType>
+    newPostText: string
+};
 type MapDispatchToPropsType = {
     addPostCallback: () => void
     updateNewPostTextCallback: (newText: string) => void

@@ -6,15 +6,37 @@ export type PostType = {
     likesCounter: number
 };
 
-export type ProfilePageType = {
+export type ProfileType = {
+    userId: number
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    contacts: {
+        github: string
+        vk?: string
+        facebook?: string
+        instagram?: string
+        twitter?: string
+        website?: string
+        youtube?: string
+        mainLink?: string
+    }
+    photos:{small: string, large: string}
+}
+
+type ProfilePageType = {
+    profile: ProfileType
     postsData: Array<PostType>
     newPostText: string
 };
 
 export type ProfileActionTypes =
-    ReturnType<typeof addNewPostAC> | ReturnType<typeof updateNewPostTextAC>;
+    ReturnType<typeof addNewPostAC> |
+    ReturnType<typeof updateNewPostTextAC> |
+    ReturnType<typeof setUserProfile>;
 
 let initialState: ProfilePageType = {
+    profile: {} as ProfileType,
     postsData: [
         {id: 1, postText: "Some text 1", likesCounter: 0},
         {id: 2, postText: "Some text 2", likesCounter: 15},
@@ -27,11 +49,13 @@ let initialState: ProfilePageType = {
 
 const ADD_NEW_POST = "ADD_NEW_POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
 
 export const addNewPostAC = () => ({type: ADD_NEW_POST} as const);
 export const updateNewPostTextAC = (text: string) => (
     {type: UPDATE_NEW_POST_TEXT, newText: text} as const
 );
+export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const);
 
 const profileReducer = (state = initialState, action: ActionTypes): ProfilePageType => {
     switch(action.type) {
@@ -44,6 +68,8 @@ const profileReducer = (state = initialState, action: ActionTypes): ProfilePageT
             return {...state, postsData: [...state.postsData, newPost], newPostText: ""};
         case UPDATE_NEW_POST_TEXT:
             return {...state, newPostText: action.newText};
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile};
         default:
             return state;
     }
