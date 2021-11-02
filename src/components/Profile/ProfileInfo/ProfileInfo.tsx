@@ -9,7 +9,6 @@ type ProfileInfoPropsType = {
 }
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
-    debugger;
     if(!props.profile.userId) return <Preloader/>;
 
     const getUserAvatarSrc = () => props.profile.photos.large ? props.profile.photos.large : defaultUserAvatar;

@@ -38,9 +38,9 @@ let initialState = {
         {id: 2, postText: "Some text 2", likesCounter: 15},
         {id: 3, postText: "Some text 3", likesCounter: 1},
         {id: 4, postText: "Some text 4", likesCounter: 10},
-        {id: 5, postText: "Some text 5", likesCounter: 5}
+        {id: 5, postText: "Some text 5", likesCounter: 5},
     ],
-    newPostText: ""
+    newPostText: "",
 };
 
 const ADD_NEW_POST = "ADD_NEW_POST";

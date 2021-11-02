@@ -7,7 +7,7 @@ import {RootStateType} from "../../redux/reduxStore";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 type PathParamsType = {
-    userID: string,
+    userID: string
 }
 
 type MapStateToPropsType = {
