@@ -3,6 +3,7 @@ import styles from "./Users.module.css"
 import defaultUserPhoto from "../../assets/images/user.png";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -14,17 +15,53 @@ type UsersPropsType = {
     unfollowCallback: (userID: number) => void
 }
 
+type FollowResponseType = {
+    resultCode: number
+    messages: Array<string>
+    data: {}
+}
+
 export const Users: React.FC<UsersPropsType> = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
     let pages: Array<number> = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages = [...pages, i];
     }
+
+    const followHandler = (userID: number) => {
+        axios.post<FollowResponseType>(
+            `https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
+            {},
+            {
+                withCredentials: true,
+                headers: {"API-KEY": "07a6853a-00ae-46be-89bd-7635822fedbc"}
+            }
+        ).then(response => {
+            if (response.data.resultCode === 0) {
+                props.followCallback(userID);
+            }
+        });
+    }
+    const unfollowHandler = (userID: number) => {
+        axios.delete<FollowResponseType>(
+            `https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
+            {
+                withCredentials: true,
+                headers: {"API-KEY": "07a6853a-00ae-46be-89bd-7635822fedbc"}
+            }
+        ).then(response => {
+            if(response.data.resultCode === 0) {
+                props.unfollowCallback(userID);
+            }
+        });
+    }
+
     return (
         <div>
             <div className={styles.pagination}>
-                {pages.map(p =>
+                {pages.map((p,i) =>
                     <span
+                        key={i}
                         className={props.currentPage === p ? styles.selectedPage : ""}
                         onClick={() => props.onPageChanged(p)}
                     >
@@ -43,8 +80,8 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                             </NavLink>
                         </p>
                         <p>{u.followed
-                            ? <button onClick={() => props.unfollowCallback(u.id)}>Unfollow</button>
-                            : <button onClick={() => props.followCallback(u.id)}>Follow</button>}
+                            ? <button onClick={() => unfollowHandler(u.id)}>Unfollow</button>
+                            : <button onClick={() => followHandler(u.id)}>Follow</button>}
                         </p>
                     </div>
                     <div>
