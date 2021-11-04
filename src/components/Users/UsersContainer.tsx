@@ -7,13 +7,12 @@ import {
     setCurrentPage, setTotalUsersCount,
     setUsers,
     unfollow,
-    UsersActionTypes,
     UsersPageType,
     UserType
 } from "../../redux/usersReducer";
 import {RootStateType} from "../../redux/reduxStore";
-import axios from "axios";
 import {Preloader} from "../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 type MapStateToPropsType = UsersPageType;
 type MapDispatchToPropsType = {
@@ -26,34 +25,22 @@ type MapDispatchToPropsType = {
 };
 type UserAPIPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
-type UsersResponseType = {
-    items: Array<UserType>
-    totalCount: number
-    error: string
-}
-
 class UsersContainer extends React.Component<UserAPIPropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get<UsersResponseType>(
-            `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-            {withCredentials: true}
-        ).then(response => {
+        usersAPI.getUsersData(this.props.currentPage, this.props.pageSize).then(data => {
             this.props.toggleIsFetching(false);
-            this.props.setUsers(response.data.items);
-            this.props.setTotalUsersCount(response.data.totalCount);
+            this.props.setUsers(data.items);
+            this.props.setTotalUsersCount(data.totalCount);
         });
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFetching(true);
-        axios.get<UsersResponseType>(
-            `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-            {withCredentials: true}
-        ).then(response => {
+        usersAPI.getUsersData(pageNumber, this.props.pageSize).then(data => {
             this.props.toggleIsFetching(false);
-            this.props.setUsers(response.data.items);
+            this.props.setUsers(data.items);
         });
     }
 
