@@ -3,7 +3,7 @@ import styles from "./Users.module.css"
 import defaultUserPhoto from "../../assets/images/user.png";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -13,12 +13,8 @@ type UsersPropsType = {
     usersData: Array<UserType>
     followCallback: (userID: number) => void
     unfollowCallback: (userID: number) => void
-}
-
-type FollowResponseType = {
-    resultCode: number
-    messages: Array<string>
-    data: {}
+    followingInProgress: Array<number>
+    toggleFollowingProgress: (followingInProgress: boolean, userID: number) => void
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
@@ -29,37 +25,28 @@ export const Users: React.FC<UsersPropsType> = (props) => {
     }
 
     const followHandler = (userID: number) => {
-        axios.post<FollowResponseType>(
-            `https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
-            {},
-            {
-                withCredentials: true,
-                headers: {"API-KEY": "07a6853a-00ae-46be-89bd-7635822fedbc"}
-            }
-        ).then(response => {
-            if (response.data.resultCode === 0) {
+        props.toggleFollowingProgress(true, userID);
+        followAPI.followUser(userID).then(data => {
+            if (data.resultCode === 0) {
                 props.followCallback(userID);
             }
+            props.toggleFollowingProgress(false, userID);
         });
     }
     const unfollowHandler = (userID: number) => {
-        axios.delete<FollowResponseType>(
-            `https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
-            {
-                withCredentials: true,
-                headers: {"API-KEY": "07a6853a-00ae-46be-89bd-7635822fedbc"}
-            }
-        ).then(response => {
-            if(response.data.resultCode === 0) {
+        props.toggleFollowingProgress(true, userID);
+        followAPI.unfollowUser(userID).then(data => {
+            if (data.resultCode === 0) {
                 props.unfollowCallback(userID);
             }
+            props.toggleFollowingProgress(false, userID);
         });
     }
 
     return (
         <div>
             <div className={styles.pagination}>
-                {pages.map((p,i) =>
+                {pages.map((p, i) =>
                     <span
                         key={i}
                         className={props.currentPage === p ? styles.selectedPage : ""}
@@ -79,9 +66,21 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                                 />
                             </NavLink>
                         </p>
-                        <p>{u.followed
-                            ? <button onClick={() => unfollowHandler(u.id)}>Unfollow</button>
-                            : <button onClick={() => followHandler(u.id)}>Follow</button>}
+                        <p>
+                            {u.followed
+                                ? <button
+                                    onClick={() => unfollowHandler(u.id)}
+                                    disabled={props.followingInProgress.some(id => id === u.id)}
+                                >
+                                    Unfollow
+                                </button>
+                                : <button
+                                    onClick={() => followHandler(u.id)}
+                                    disabled={props.followingInProgress.some(id => id === u.id)}
+                                >
+                                    Follow
+                                </button>
+                            }
                         </p>
                     </div>
                     <div>

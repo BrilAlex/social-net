@@ -16,6 +16,12 @@ type AuthAPIResponseType = {
 
 type ProfileAPIResponseType = ProfileType
 
+type FollowAPIResponseType = {
+    resultCode: number
+    messages: Array<string>
+    data: {}
+}
+
 const axiosInstance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     withCredentials: true,
@@ -44,6 +50,19 @@ export const profileAPI = {
     getProfileData(userID: string) {
         return axiosInstance.get<ProfileAPIResponseType>(
             "https://social-network.samuraijs.com/api/1.0/profile/" + userID
+        ).then(response => response.data);
+    }
+}
+
+export const followAPI = {
+    followUser(userID: number){
+        return axiosInstance.post<FollowAPIResponseType>(
+            `follow/${userID}`
+        ).then(response => response.data);
+    },
+    unfollowUser(userID: number){
+        return axiosInstance.delete<FollowAPIResponseType>(
+            `follow/${userID}`
         ).then(response => response.data);
     }
 }
