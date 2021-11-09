@@ -9,7 +9,7 @@ import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {RootStateType} from "../../redux/reduxStore";
 
-type MapStateToPropsType = DialogsPageType;
+type MapStateToPropsType = DialogsPageType & {isAuth: boolean};
 type MapDispatchToPropsType = {
     sendNewMessageCallback: () => void
     updateNewMessageTextCallback: (newText: string) => void
@@ -20,7 +20,8 @@ const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
     return {
         dialogsData: state.dialogsPage.dialogsData,
         messagesData: state.dialogsPage.messagesData,
-        newMessageText: state.dialogsPage.newMessageText
+        newMessageText: state.dialogsPage.newMessageText,
+        isAuth: state.auth.isAuth,
     }
 };
 
