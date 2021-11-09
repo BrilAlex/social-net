@@ -1,4 +1,5 @@
-import {ActionTypes} from "./reduxStore";
+import {ActionTypes, AppThunkType} from "./reduxStore";
+import {profileAPI} from "../api/api";
 
 export type PostType = {
     id: number
@@ -52,6 +53,13 @@ export const updateNewPostTextAC = (text: string) => (
     {type: UPDATE_NEW_POST_TEXT, newText: text} as const
 );
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const);
+
+export const getUserProfile = (userID: string): AppThunkType =>
+    (dispatch) => {
+    profileAPI.getProfileData(userID).then(data => {
+        dispatch(setUserProfile(data));
+    });
+};
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
     switch(action.type) {

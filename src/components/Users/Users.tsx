@@ -3,7 +3,6 @@ import styles from "./Users.module.css"
 import defaultUserPhoto from "../../assets/images/user.png";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -14,7 +13,6 @@ type UsersPropsType = {
     followCallback: (userID: number) => void
     unfollowCallback: (userID: number) => void
     followingInProgress: Array<number>
-    toggleFollowingProgress: (followingInProgress: boolean, userID: number) => void
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
@@ -22,25 +20,6 @@ export const Users: React.FC<UsersPropsType> = (props) => {
     let pages: Array<number> = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages = [...pages, i];
-    }
-
-    const followHandler = (userID: number) => {
-        props.toggleFollowingProgress(true, userID);
-        followAPI.followUser(userID).then(data => {
-            if (data.resultCode === 0) {
-                props.followCallback(userID);
-            }
-            props.toggleFollowingProgress(false, userID);
-        });
-    }
-    const unfollowHandler = (userID: number) => {
-        props.toggleFollowingProgress(true, userID);
-        followAPI.unfollowUser(userID).then(data => {
-            if (data.resultCode === 0) {
-                props.unfollowCallback(userID);
-            }
-            props.toggleFollowingProgress(false, userID);
-        });
     }
 
     return (
@@ -69,13 +48,13 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                         <p>
                             {u.followed
                                 ? <button
-                                    onClick={() => unfollowHandler(u.id)}
+                                    onClick={() => props.unfollowCallback(u.id)}
                                     disabled={props.followingInProgress.some(id => id === u.id)}
                                 >
                                     Unfollow
                                 </button>
                                 : <button
-                                    onClick={() => followHandler(u.id)}
+                                    onClick={() => props.followCallback(u.id)}
                                     disabled={props.followingInProgress.some(id => id === u.id)}
                                 >
                                     Follow

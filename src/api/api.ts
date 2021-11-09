@@ -2,25 +2,25 @@ import axios from "axios";
 import {UserType} from "../redux/usersReducer";
 import {ProfileType} from "../redux/profileReducer";
 
+type CommonAPIResponseType<T> = {
+    resultCode: number
+    messages: Array<string>
+    data: T
+}
+
 type UsersAPIResponseType = {
     items: Array<UserType>
     totalCount: number
     error: string
-}
-
-type AuthAPIResponseType = {
-    data: {id: number, email: string, login: string}
-    resultCode: number
-    messages: Array<string>
 };
 
-type ProfileAPIResponseType = ProfileType
+type ProfileAPIResponseType = ProfileType;
 
-type FollowAPIResponseType = {
-    resultCode: number
-    messages: Array<string>
-    data: {}
-}
+type AuthAPIResponseDataType = {
+    id: number
+    email: string
+    login: string
+};
 
 const axiosInstance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -38,13 +38,18 @@ export const usersAPI = {
     }
 };
 
-export const authAPI = {
-    getAuthData() {
-        return axiosInstance.get<AuthAPIResponseType>(
-            "auth/me"
+export const followAPI = {
+    followUser(userID: number){
+        return axiosInstance.post<CommonAPIResponseType<{}>>(
+            `follow/${userID}`
+        ).then(response => response.data);
+    },
+    unfollowUser(userID: number){
+        return axiosInstance.delete<CommonAPIResponseType<{}>>(
+            `follow/${userID}`
         ).then(response => response.data);
     }
-}
+};
 
 export const profileAPI = {
     getProfileData(userID: string) {
@@ -52,17 +57,12 @@ export const profileAPI = {
             "https://social-network.samuraijs.com/api/1.0/profile/" + userID
         ).then(response => response.data);
     }
-}
+};
 
-export const followAPI = {
-    followUser(userID: number){
-        return axiosInstance.post<FollowAPIResponseType>(
-            `follow/${userID}`
-        ).then(response => response.data);
-    },
-    unfollowUser(userID: number){
-        return axiosInstance.delete<FollowAPIResponseType>(
-            `follow/${userID}`
+export const authAPI = {
+    getAuthData() {
+        return axiosInstance.get<CommonAPIResponseType<AuthAPIResponseDataType>>(
+            "auth/me"
         ).then(response => response.data);
     }
-}
+};
