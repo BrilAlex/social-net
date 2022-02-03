@@ -1,17 +1,18 @@
-import React from 'react';
-import {ProfileInfo} from "./ProfileInfo/ProfileInfo"
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/profileReducer";
+import React from "react";
+import styles from "./Profile.module.css";
+import {MyPosts} from "./MyPosts/MyPosts";
 
-type ProfilePropsType = {
-    profile: ProfileType
+export const Profile = () => {
+  return (
+    <div className={styles.content}>
+      <div className={styles.profileBackground}>
+        <img src={""} alt={"Profile background"}/>
+      </div>
+      <div className={styles.profileInfo}>
+        <img src={""} alt={"Avatar"}/>
+        <div>Profile info</div>
+      </div>
+      <MyPosts/>
+    </div>
+  );
 }
-
-export const Profile: React.FC<ProfilePropsType> = (props) => {
-    return (
-        <div>
-            <ProfileInfo profile={props.profile}/>
-            <MyPostsContainer/>
-        </div>
-    );
-};

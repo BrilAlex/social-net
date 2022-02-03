@@ -1,2 +1,16 @@
-.item {border-bottom: 1px solid #000;}
-.item:last-child {border-bottom: none;}
+.item {
+    padding: 0 0 10px 0;
+}
+
+.item img {
+    width: 50px;
+    border-radius: 50px;
+}
+
+.item h4 {
+    margin: 0 0 5px 0;
+}
+
+.item p {
+    margin: 0;
+}

@@ -1,0 +1,15 @@
+.nav {
+    grid-area: nav;
+    background: darkgray;
+}
+.item a {
+    display: block;
+    padding: 5px 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.item.active a {
+    background: orange;
+    color: #000;
+}
