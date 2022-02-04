@@ -1,15 +1,21 @@
 .dialogsPage {
     display: grid;
     grid-template-columns: 3fr 9fr;
-    padding: 10px 0;
 }
 .dialogsContainer {
     padding-right: 10px;
 }
 .dialog {
-    padding: 10px;
+    padding-bottom: 5px;
 }
-.dialog.active{
+.dialog a {
+    display: block;
+    padding: 10px;
+    background: darkgrey;
+    color: black;
+    border-radius: 5px;
+}
+.dialog a.active{
     background: orange;
 }
 .messagesContainer {

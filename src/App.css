@@ -10,6 +10,6 @@
 
 .appContentWrapper {
     grid-area: content;
-    padding: 0 10px;
+    padding: 10px;
     background: lightgray;
 }
