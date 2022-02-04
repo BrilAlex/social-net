@@ -2,14 +2,14 @@
     grid-area: nav;
     background: darkgray;
 }
-.item a {
+.item .navLink {
     display: block;
     padding: 5px 10px;
     color: #fff;
     text-decoration: none;
 }
 
-.item.active a {
+.item .navLink.active {
     background: orange;
     color: #000;
 }

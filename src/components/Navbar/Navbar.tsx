@@ -1,24 +1,39 @@
 import React from "react";
 import styles from "./Navbar.module.css";
+import {NavLink} from "react-router-dom";
 
 export const Navbar = () => {
+  const getNavLinkClassName = (navData: {isActive: boolean}) => {
+    return navData.isActive ? `${styles.navLink} ${styles.active}` : styles.navLink;
+  };
+
   return (
     <nav className={styles.nav}>
-      <div className={`${styles.item} ${styles.active}`}>
-        <a href={"#1"}>Profile</a>
+      <div className={styles.item}>
+        <NavLink to={"/profile"} className={(navData) => getNavLinkClassName(navData)}>
+          Profile
+        </NavLink>
       </div>
       <div className={styles.item}>
-        <a href={"#2"}>Messages</a>
+        <NavLink to={"/dialogs"} className={(navData) => getNavLinkClassName(navData)}>
+          Messages
+        </NavLink>
       </div>
       <div className={styles.item}>
-        <a href={"#3"}>News</a>
+        <NavLink to={"/news"} className={(navData) => getNavLinkClassName(navData)}>
+          News
+        </NavLink>
       </div>
       <div className={styles.item}>
-        <a href={"#4"}>Music</a>
+        <NavLink to={"/music"} className={(navData) => getNavLinkClassName(navData)}>
+          Music
+        </NavLink>
       </div>
       <div className={styles.item}>
-        <a href={"#5"}>Settings</a>
+        <NavLink to={"/settings"} className={(navData) => getNavLinkClassName(navData)}>
+          Settings
+        </NavLink>
       </div>
     </nav>
   );
-}
+};
