@@ -1,0 +1,12 @@
+.profileBackground img {
+    max-width: 100%;
+}
+
+.profileInfo {
+    padding: 5px 0;
+}
+
+.profileInfo img {
+    max-width: 150px;
+    margin-bottom: 10px;
+}

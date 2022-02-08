@@ -10,8 +10,10 @@ export const Post = (props: PostPropsType) => {
   return (
     <div className={styles.item}>
       <img src={""} alt={"Avatar"}/>
-      <p>{props.postText}</p>
-      <p>Likes: {props.likesCount}</p>
+      <div>
+        <p>{props.postText}</p>
+        <p>Likes: {props.likesCount}</p>
+      </div>
     </div>
   );
 }
