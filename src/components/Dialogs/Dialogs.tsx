@@ -48,7 +48,7 @@ const Message = (props: MessagePropsType) => {
 };
 
 export const Dialogs = (props: DialogsPropsType) => {
-  const dialogsData = [
+  const dialogs = [
     {id: 1, name: "Karina"},
     {id: 2, name: "Dimych"},
     {id: 3, name: "Sergei"},
@@ -56,31 +56,31 @@ export const Dialogs = (props: DialogsPropsType) => {
     {id: 5, name: "Svetlana"},
   ];
 
-  const messagesData = [
+  const messages = [
     {id: 1, name: "Me", avatarImg: "", messageText: "Hi!", messageTime: "12:05"},
-    {id: 1, name: "User", avatarImg: "", messageText: "Yo! How are you?", messageTime: "12:18"},
-    {id: 1, name: "Me", avatarImg: "", messageText: "Fine, studying in IT-Incubator now. And you?", messageTime: "12:24"},
+    {id: 2, name: "User", avatarImg: "", messageText: "Yo! How are you?", messageTime: "12:18"},
+    {id: 3, name: "Me", avatarImg: "", messageText: "Fine, studying in IT-Incubator now. And you?", messageTime: "12:24"},
   ];
+
+  const dialogsElements = dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>);
+
+  const messagesElements = messages.map(m =>
+    <Message
+      key={m.id}
+      name={m.name}
+      avatarImg={m.avatarImg}
+      messageText={m.messageText}
+      messageTime={m.messageTime}
+    />
+  );
 
   return (
     <div className={styles.dialogsPage}>
       <div className={styles.dialogsContainer}>
-        <DialogItem id={dialogsData[0].id} name={dialogsData[0].name}/>
-        <DialogItem id={dialogsData[1].id} name={dialogsData[1].name}/>
+        {dialogsElements}
       </div>
       <div className={styles.messagesContainer}>
-        <Message
-          name={messagesData[0].name}
-          avatarImg={messagesData[0].avatarImg}
-          messageText={messagesData[0].messageText}
-          messageTime={messagesData[0].messageTime}
-        />
-        <Message
-          name={messagesData[1].name}
-          avatarImg={messagesData[1].avatarImg}
-          messageText={messagesData[1].messageText}
-          messageTime={messagesData[1].messageTime}
-        />
+        {messagesElements}
       </div>
     </div>
   );
