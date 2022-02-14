@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
+import {PostType} from "../Profile";
 
-export const MyPosts = () => {
-  const posts = [
-    {id: 1, postText: "It's my first post", likesCount: 10},
-    {id: 2, postText: "It's my first post", likesCount: 10},
-  ];
+type MyPostsPropsType = {
+  posts: Array<PostType>
+};
 
-  const postsElements = posts.map(p =>
+export const MyPosts = (props: MyPostsPropsType) => {
+  const postsElements = props.posts.map(p =>
     <Post
       key={p.id}
       postText={p.postText}
