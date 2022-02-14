@@ -2,23 +2,17 @@ import React from "react";
 import styles from "./Profile.module.css";
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
+import {ProfileType} from "../../index";
 
-export type PostType = {
-  id: number
-  postText: string
-  likesCount: number
+type ProfilePropsType = {
+  profile: ProfileType
 }
 
-export const Profile = () => {
-  const posts: Array<PostType> = [
-    {id: 1, postText: "It's my first post", likesCount: 10},
-    {id: 2, postText: "It's my first post", likesCount: 10},
-  ];
-
+export const Profile = (props: ProfilePropsType) => {
   return (
     <div className={styles.profilePage}>
       <ProfileInfo/>
-      <MyPosts posts={posts}/>
+      <MyPosts posts={props.profile.posts}/>
     </div>
   );
 }
