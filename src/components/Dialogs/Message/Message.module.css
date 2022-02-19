@@ -1,0 +1,67 @@
+.message {
+    padding: 0 10px 10px 10px;
+}
+.message::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.senderInfo {
+    width: 70px;
+    text-align: center;
+}
+.incoming .senderInfo {
+    float: left;
+    margin-right: 10px;
+}
+.outgoing .senderInfo {
+    float: right;
+    margin-left: 10px;
+}
+.senderInfo img {
+    width: 50px;
+    border-radius: 25px;
+}
+.senderName {
+    font-size: 12px;
+}
+.messageContent {
+    position: relative;
+    float: left;
+    min-width: 60px;
+    padding: 10px 10px 25px 15px;
+    background: darkgrey;
+}
+.incoming .messageContent {
+    float: left;
+    border-radius: 10px 10px 10px 0;
+}
+.outgoing .messageContent {
+    float: right;
+    border-radius: 10px 10px 0 10px;
+}
+.messageContent::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 30px;
+    height: 15px;
+    background: transparent;
+}
+.incoming .messageContent::after {
+    left: -30px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 15px 0 0 0 darkgrey;
+}
+.outgoing .messageContent::after {
+    right: -30px;
+    border-bottom-left-radius: 15px;
+    box-shadow: -15px 0 0 0 darkgrey;
+}
+.messageTime {
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    font-size: 12px;
+}

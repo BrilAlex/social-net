@@ -1,12 +1,22 @@
 .item {
-    padding: 0 0 10px 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.item::after {
+    clear: both;
+    content: "";
+    display: table;
 }
 
 .item img {
+    display: block;
+    float: left;
     width: 50px;
-    border-radius: 50px;
+    border-radius: 25px;
 }
 
-.item p {
-    margin: 0;
+.item .itemText {
+    float: left;
+    margin-left: 15px;
 }

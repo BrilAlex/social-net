@@ -4,6 +4,17 @@
 .postsBlock h3 {
     margin-bottom: 15px;
 }
-.postList {
+.newPostBlock {
+    margin-bottom: 15px;
+}
+.newPostBlock textarea {
+    display: block;
+}
+.newPostBlock button {
+    display: block;
+    padding: 5px 15px;
+}
+
+.postsList {
     padding: 5px 0;
 }

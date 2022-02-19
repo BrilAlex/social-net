@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./../Dialogs.module.css";
+import styles from "./Message.module.css";
 
 type MessagePropsType = {
   name: string
@@ -8,8 +8,10 @@ type MessagePropsType = {
 };
 
 export const Message = (props: MessagePropsType) => {
+  const messageClassName = `${styles.message} ${props.name === "Me" ? styles.outgoing : styles.incoming}`;
+
   return (
-    <div className={styles.message}>
+    <div className={messageClassName}>
       <div className={styles.senderInfo}>
         <img className={styles.senderAvatar} src={""} alt={props.name + " avatar"}/>
         <p className={styles.senderName}>{props.name}</p>

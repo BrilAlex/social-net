@@ -5,67 +5,7 @@
 .dialogsContainer {
     padding-right: 10px;
 }
-.dialog {
-    padding-bottom: 5px;
-}
-.dialog a {
-    display: block;
-    padding: 10px;
-    background: darkgrey;
-    color: black;
-    border-radius: 5px;
-}
-.dialog a.active{
-    background: orange;
-}
+
 .messagesContainer {
     padding-left: 10px;
-}
-.message {
-    padding: 0 10px 10px 10px;
-}
-.message:before, .message:after {
-    clear: both;
-    content: "";
-    display: table;
-}
-.senderInfo {
-    float: left;
-    width: 70px;
-    margin-right: 10px;
-    text-align: center;
-}
-.senderInfo img {
-    width: 100%;
-    border-radius: 50px;
-}
-.senderName {
-    font-size: 12px;
-}
-.messageContent {
-    position: relative;
-    float: left;
-    width: 250px;
-    padding: 10px 10px 25px 15px;
-    background: darkgrey;
-    border-radius: 10px 10px 10px 0;
-}
-.messageContent::after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: -30px;
-    bottom: 0;
-    width: 30px;
-    height: 15px;
-    background: transparent;
-    border-bottom-right-radius: 15px;
-    box-shadow: 15px 0 0 0 darkgrey;
-
-}
-.messageTime {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 12px;
 }

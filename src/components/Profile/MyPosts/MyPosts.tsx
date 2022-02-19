@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {PostType} from "../../../index";
+import {PostType} from "../../../redux/state";
 
 type MyPostsPropsType = {
   posts: Array<PostType>
@@ -19,15 +19,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
   return (
     <div className={styles.postsBlock}>
       <h3>My posts</h3>
-      <div>
-        <div>
+      <div className={styles.newPostBlock}>
           <textarea>Enter new post text</textarea>
-        </div>
-        <div>
           <button>Add post</button>
-        </div>
       </div>
-      <div className={styles.postList}>
+      <div className={styles.postsList}>
         {postsElements}
       </div>
     </div>

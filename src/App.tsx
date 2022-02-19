@@ -1,19 +1,17 @@
 import React from 'react';
 import './App.css';
 import {Header} from './components/Header/Header';
-import {Navbar} from "./components/Navbar/Navbar";
+import {Sidebar} from "./components/Sidebar/Sidebar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {DialogType, MessageType, PostType} from "./index";
+import {AppStateType} from "./redux/state";
 
 type AppPropsType = {
-  posts: Array<PostType>
-  dialogs: Array<DialogType>
-  messages: Array<MessageType>
+  state: AppStateType
 };
 
 const App = (props: AppPropsType) => {
@@ -21,11 +19,11 @@ const App = (props: AppPropsType) => {
     <BrowserRouter>
       <div className="appWrapper">
         <Header/>
-        <Navbar/>
+        <Sidebar state={props.state.sidebar}/>
         <div className={"appContentWrapper"}>
           <Routes>
-            <Route path={"/profile"} element={<Profile posts={props.posts}/>}/>
-            <Route path={"/dialogs/*"} element={<Dialogs dialogs={props.dialogs} messages={props.messages}/>}/>
+            <Route path={"/profile"} element={<Profile state={props.state.profilePage}/>}/>
+            <Route path={"/dialogs/*"} element={<Dialogs state={props.state.dialogsPage}/>}/>
             <Route path={"/news"} element={<News/>}/>
             <Route path={"/music"} element={<Music/>}/>
             <Route path={"/settings"} element={<Settings/>}/>

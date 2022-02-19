@@ -1,0 +1,34 @@
+.dialog {
+    padding-bottom: 5px;
+}
+.dialog .navLink {
+    display: block;
+    padding: 10px;
+    background: darkgrey;
+    color: black;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.dialog .navLink::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.dialog .navLink.active{
+    background: orange;
+}
+
+.dialog img {
+    display: block;
+    float: left;
+    width: 40px;
+    border-radius: 20px;
+}
+
+.dialog span {
+    display: block;
+    float: left;
+    margin-left: 10px;
+    padding: 10px 0;
+    font-size: 15px;
+}
