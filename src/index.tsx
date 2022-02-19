@@ -10,73 +10,55 @@ export type PostType = {
   likesCount: number
 };
 
-type DialogType = {
+export type DialogType = {
   id: number
   name: string
 };
 
-type MessageType = {
+export type MessageType = {
   id: number
   sender: string
   messageText: string
   messageTime: string
 };
 
-export type ProfileType = {
-  posts: Array<PostType>
-}
+export const posts: Array<PostType> = [
+  {id: 1, postText: "It's my first post", likesCount: 20},
+  {id: 2, postText: "Hi! How are you?", likesCount: 10},
+];
 
-export type DialogsType = {
-  dialogs: Array<DialogType>
-  messages: Array<MessageType>
-}
+export const dialogs: Array<DialogType> = [
+  {id: 1, name: "Karina"},
+  {id: 2, name: "Dimych"},
+  {id: 3, name: "Sergei"},
+  {id: 4, name: "Alexander"},
+  {id: 5, name: "Svetlana"},
+];
 
-export type AppStateType = {
-  profile: ProfileType
-  dialogs: DialogsType
-};
-
-export const state: AppStateType = {
-  profile: {
-    posts: [
-      {id: 1, postText: "It's my first post", likesCount: 10},
-      {id: 2, postText: "It's my first post", likesCount: 10},
-    ],
+export const messages: Array<MessageType> = [
+  {
+    id: 1,
+    sender: "Me",
+    messageText: "Hi!",
+    messageTime: "12:05"
   },
-  dialogs: {
-    dialogs: [
-      {id: 1, name: "Karina"},
-      {id: 2, name: "Dimych"},
-      {id: 3, name: "Sergei"},
-      {id: 4, name: "Alexander"},
-      {id: 5, name: "Svetlana"},
-    ],
-    messages: [
-      {
-        id: 1,
-        sender: "Me",
-        messageText: "Hi!",
-        messageTime: "12:05"
-      },
-      {
-        id: 2,
-        sender: "User",
-        messageText: "Yo! How are you?",
-        messageTime: "12:18"
-      },
-      {
-        id: 3,
-        sender: "Me",
-        messageText: "Fine, studying in IT-Incubator now. And you?",
-        messageTime: "12:24"
-      },
-    ],
+  {
+    id: 2,
+    sender: "User",
+    messageText: "Yo! How are you?",
+    messageTime: "12:18"
   },
-};
+  {
+    id: 3,
+    sender: "Me",
+    messageText: "Fine, studying in IT-Incubator now. And you?",
+    messageTime: "12:24"
+  },
+];
 
 ReactDOM.render(
   <React.StrictMode>
-    <App state={state}/>
+    <App posts={posts} dialogs={dialogs} messages={messages}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
