@@ -29,15 +29,17 @@
     position: relative;
     float: left;
     min-width: 60px;
+    max-width: 270px;
     padding: 10px 10px 25px 15px;
-    background: darkgrey;
 }
 .incoming .messageContent {
     float: left;
+    background: darkgrey;
     border-radius: 10px 10px 10px 0;
 }
 .outgoing .messageContent {
     float: right;
+    background: orange;
     border-radius: 10px 10px 0 10px;
 }
 .messageContent::after {
@@ -57,7 +59,7 @@
 .outgoing .messageContent::after {
     right: -30px;
     border-bottom-left-radius: 15px;
-    box-shadow: -15px 0 0 0 darkgrey;
+    box-shadow: -15px 0 0 0 orange;
 }
 .messageTime {
     position: absolute;

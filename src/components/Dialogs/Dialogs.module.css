@@ -1,6 +1,7 @@
 .dialogsPage {
     display: grid;
     grid-template-columns: 3fr 9fr;
+    padding: 10px;
 }
 .dialogsContainer {
     padding-right: 10px;

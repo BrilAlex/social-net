@@ -1,3 +1,4 @@
+import {FC} from "react";
 import styles from "./Sidebar.module.css";
 import {Navbar} from "./Navbar/Navbar";
 import {SidebarType} from "../../redux/state";
@@ -6,7 +7,7 @@ type SidebarPropsType = {
   state: SidebarType
 };
 
-export const Sidebar = (props: SidebarPropsType) => {
+export const Sidebar: FC<SidebarPropsType> = (props) => {
   const friendsElements = props.state.friends.map(f =>
     <div key={f.id} className={styles.friend}>
       <img src={f.avatarSrc} alt={f.name + "'s Avatar"}/>

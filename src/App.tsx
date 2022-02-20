@@ -8,13 +8,13 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {AppStateType} from "./redux/state";
+import {RootStateType} from "./redux/state";
 
 type AppPropsType = {
-  state: AppStateType
+  state: RootStateType
 };
 
-const App = (props: AppPropsType) => {
+const App: React.FC<AppPropsType> = (props) => {
   return (
     <BrowserRouter>
       <div className="appWrapper">

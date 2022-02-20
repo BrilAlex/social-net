@@ -1,3 +1,6 @@
+import manAvatar from "./../assets/images/man_avatar.png";
+import womanAvatar from "./../assets/images/woman_avatar.png";
+
 export type PostType = {
   id: number
   postText: string
@@ -35,13 +38,13 @@ export type SidebarType = {
   friends: Array<FriendType>
 };
 
-export type AppStateType = {
+export type RootStateType = {
   profilePage: ProfilePageType
   dialogsPage: DialogsPageType
   sidebar: SidebarType
 };
 
-export const state: AppStateType = {
+export const state: RootStateType = {
   profilePage: {
     posts: [
       {id: 1, postText: "It's my first post", likesCount: 20},
@@ -79,11 +82,11 @@ export const state: AppStateType = {
   },
   sidebar: {
     friends: [
-      {id: 1, name: "Karina", avatarSrc: ""},
-      {id: 2, name: "Dimych", avatarSrc: ""},
-      {id: 3, name: "Sergei", avatarSrc: ""},
-      {id: 4, name: "Alexander", avatarSrc: ""},
-      {id: 5, name: "Svetlana", avatarSrc: ""},
+      {id: 1, name: "Karina", avatarSrc: womanAvatar},
+      {id: 2, name: "Dimych", avatarSrc: manAvatar},
+      {id: 3, name: "Sergei", avatarSrc: manAvatar},
+      {id: 4, name: "Alexander", avatarSrc: manAvatar},
+      {id: 5, name: "Svetlana", avatarSrc: womanAvatar},
     ],
   }
 };

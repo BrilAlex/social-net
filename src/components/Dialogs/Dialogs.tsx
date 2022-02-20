@@ -8,7 +8,7 @@ type DialogsPropsType = {
   state: DialogsPageType
 };
 
-export const Dialogs = (props: DialogsPropsType) => {
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const dialogsElements = props.state.dialogs.map(d =>
     <DialogItem key={d.id} id={d.id} name={d.name}/>
   );

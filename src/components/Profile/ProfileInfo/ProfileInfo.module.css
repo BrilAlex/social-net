@@ -1,12 +1,21 @@
 .profileBackground img {
-    max-width: 100%;
+    width: 100%;
 }
 
+.profileInfoBlock {
+    margin: 15px 0;
+    padding: 5px 10px;
+}
+.profileInfoBlock::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.profileInfoBlock img {
+    float: left;
+    width: 150px;
+}
 .profileInfo {
-    padding: 5px 0;
-}
-
-.profileInfo img {
-    max-width: 150px;
-    margin-bottom: 10px;
+    float: left;
+    margin-left: 25px;
 }
