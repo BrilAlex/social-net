@@ -22,6 +22,13 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     />
   );
 
+  const newMessageTextarea = React.createRef<HTMLTextAreaElement>();
+
+  const sendMessageHandler = () => {
+    const newMessageText = newMessageTextarea.current?.value;
+    console.log(newMessageText);
+  };
+
   return (
     <div className={styles.dialogsPage}>
       <div className={styles.dialogsContainer}>
@@ -29,6 +36,10 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
       </div>
       <div className={styles.messagesContainer}>
         {messagesElements}
+        <div className={styles.newMessageBlock}>
+          <textarea ref={newMessageTextarea}>Enter new message text</textarea>
+          <button onClick={sendMessageHandler}>Send message</button>
+        </div>
       </div>
     </div>
   );

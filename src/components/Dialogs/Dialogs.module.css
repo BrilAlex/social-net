@@ -10,3 +10,16 @@
 .messagesContainer {
     padding-left: 10px;
 }
+
+.newMessageBlock {
+    margin-top: 20px;
+}
+
+.newMessageBlock textarea {
+    display: block;
+}
+
+.newMessageBlock button {
+    display: block;
+    padding: 5px 15px;
+}
