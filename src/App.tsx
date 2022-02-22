@@ -30,7 +30,7 @@ const App: React.FC<AppPropsType> = (props) => {
               path={"/profile"}
               element={
                 <Profile
-                  state={props.state.profilePage}
+                  profilePage={props.state.profilePage}
                   updateNewPostText={props.updateNewPostText}
                   addPost={props.addPost}
                 />
@@ -40,7 +40,7 @@ const App: React.FC<AppPropsType> = (props) => {
               path={"/dialogs/*"}
               element={
                 <Dialogs
-                  state={props.state.dialogsPage}
+                  dialogsPage={props.state.dialogsPage}
                   updateNewMessageText={props.updateNewMessageText}
                   addMessage={props.addMessage}
                 />

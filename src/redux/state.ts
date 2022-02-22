@@ -102,10 +102,13 @@ export const updateNewPostText = (text: string) => {
 };
 
 export const addPost = () => {
-  const posts = state.profilePage.posts;
-  const newPostText = state.profilePage.newPostText;
-  const newPost:PostType = {id: posts.length + 1, postText: newPostText, likesCount: 0};
-  posts.push(newPost);
+  const newPost: PostType = {
+    id: state.profilePage.posts.length + 1,
+    postText: state.profilePage.newPostText,
+    likesCount: 0
+  };
+  state.profilePage.posts.push(newPost);
+  state.profilePage.newPostText = "";
   rerenderEntireTree(state);
 };
 
@@ -115,14 +118,16 @@ export const updateNewMessageText = (text: string) => {
 };
 
 export const addMessage = () => {
-  const messages = state.dialogsPage.messages;
-  const newMessageText = state.dialogsPage.newMessageText;
   const newMessage: MessageType = {
-    id: messages.length + 1,
-    sender: "User",
-    messageText: newMessageText,
+    id: state.dialogsPage.messages.length + 1,
+    sender: "Me",
+    messageText: state.dialogsPage.newMessageText,
     messageTime: "14.51"
   };
-  messages.push(newMessage);
+  state.dialogsPage.messages.push(newMessage);
+  state.dialogsPage.newMessageText = "";
   rerenderEntireTree(state);
 };
+
+// @ts-ignore
+window.state = state;
