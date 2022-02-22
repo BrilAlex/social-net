@@ -1,11 +1,12 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {PostType} from "../../../redux/state";
 
 type MyPostsPropsType = {
   posts: Array<PostType>
-  addPostCallback: (newPostText: string) => void
+  updateNewPostText: (text: string) => void
+  addPost: () => void
 };
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -20,15 +21,21 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
   const newPostTextarea = React.createRef<HTMLTextAreaElement>();
 
   const addPostHandler = () => {
-    const newPostText = newPostTextarea.current?.value;
-    if (newPostText) props.addPostCallback(newPostText);
+    if (newPostTextarea.current) {
+      props.addPost();
+      newPostTextarea.current.value = "";
+    }
+  };
+
+  const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateNewPostText(e.currentTarget.value);
   };
 
   return (
     <div className={styles.postsBlock}>
       <h3>My posts</h3>
       <div className={styles.newPostBlock}>
-          <textarea ref={newPostTextarea}/>
+          <textarea ref={newPostTextarea} onChange={onChangeHandler}/>
           <button onClick={addPostHandler}>Add post</button>
       </div>
       <div className={styles.postsList}>

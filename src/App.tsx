@@ -12,8 +12,10 @@ import {RootStateType} from "./redux/state";
 
 type AppPropsType = {
   state: RootStateType
-  addPostCallback: (newPostText: string) => void
-  addMessageCallback: (newMessageText: string) => void
+  updateNewPostText: (text: string) => void
+  addPost: () => void
+  updateNewMessageText: (text: string) => void
+  addMessage: () => void
 };
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -27,13 +29,21 @@ const App: React.FC<AppPropsType> = (props) => {
             <Route
               path={"/profile"}
               element={
-                <Profile state={props.state.profilePage} addPostCallback={props.addPostCallback}/>
+                <Profile
+                  state={props.state.profilePage}
+                  updateNewPostText={props.updateNewPostText}
+                  addPost={props.addPost}
+                />
               }
             />
             <Route
               path={"/dialogs/*"}
               element={
-                <Dialogs state={props.state.dialogsPage} addMessageCallback={props.addMessageCallback}/>
+                <Dialogs
+                  state={props.state.dialogsPage}
+                  updateNewMessageText={props.updateNewMessageText}
+                  addMessage={props.addMessage}
+                />
               }
             />
             <Route path={"/news"} element={<News/>}/>

@@ -1,5 +1,6 @@
 import manAvatar from "./../assets/images/man_avatar.png";
 import womanAvatar from "./../assets/images/woman_avatar.png";
+import {rerenderEntireTree} from "../render";
 
 export type PostType = {
   id: number
@@ -27,11 +28,13 @@ type FriendType = {
 
 export type ProfilePageType = {
   posts: Array<PostType>
+  newPostText: string
 };
 
 export type DialogsPageType = {
   dialogs: Array<DialogType>
   messages: Array<MessageType>
+  newMessageText: string
 };
 
 export type SidebarType = {
@@ -50,6 +53,7 @@ export const state: RootStateType = {
       {id: 1, postText: "It's my first post", likesCount: 20},
       {id: 2, postText: "Hi! How are you?", likesCount: 10},
     ],
+    newPostText: "",
   },
   dialogsPage: {
     dialogs: [
@@ -79,6 +83,7 @@ export const state: RootStateType = {
         messageTime: "12:24",
       },
     ],
+    newMessageText: "",
   },
   sidebar: {
     friends: [
@@ -91,14 +96,27 @@ export const state: RootStateType = {
   }
 };
 
-export const addPost = (newPostText: string) => {
-  const posts = state.profilePage.posts;
-  const newPost:PostType = {id: posts.length + 1, postText: newPostText, likesCount: 0};
-  posts.push(newPost);
+export const updateNewPostText = (text: string) => {
+  state.profilePage.newPostText = text;
+  rerenderEntireTree(state);
 };
 
-export const addMessage = (newMessageText: string) => {
+export const addPost = () => {
+  const posts = state.profilePage.posts;
+  const newPostText = state.profilePage.newPostText;
+  const newPost:PostType = {id: posts.length + 1, postText: newPostText, likesCount: 0};
+  posts.push(newPost);
+  rerenderEntireTree(state);
+};
+
+export const updateNewMessageText = (text: string) => {
+  state.dialogsPage.newMessageText = text;
+  rerenderEntireTree(state);
+};
+
+export const addMessage = () => {
   const messages = state.dialogsPage.messages;
+  const newMessageText = state.dialogsPage.newMessageText;
   const newMessage: MessageType = {
     id: messages.length + 1,
     sender: "User",
@@ -106,4 +124,5 @@ export const addMessage = (newMessageText: string) => {
     messageTime: "14.51"
   };
   messages.push(newMessage);
+  rerenderEntireTree(state);
 };
