@@ -12,6 +12,8 @@ import {RootStateType} from "./redux/state";
 
 type AppPropsType = {
   state: RootStateType
+  addPostCallback: (newPostText: string) => void
+  addMessageCallback: (newMessageText: string) => void
 };
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -22,8 +24,18 @@ const App: React.FC<AppPropsType> = (props) => {
         <Sidebar state={props.state.sidebar}/>
         <div className={"appContentWrapper"}>
           <Routes>
-            <Route path={"/profile"} element={<Profile state={props.state.profilePage}/>}/>
-            <Route path={"/dialogs/*"} element={<Dialogs state={props.state.dialogsPage}/>}/>
+            <Route
+              path={"/profile"}
+              element={
+                <Profile state={props.state.profilePage} addPostCallback={props.addPostCallback}/>
+              }
+            />
+            <Route
+              path={"/dialogs/*"}
+              element={
+                <Dialogs state={props.state.dialogsPage} addMessageCallback={props.addMessageCallback}/>
+              }
+            />
             <Route path={"/news"} element={<News/>}/>
             <Route path={"/music"} element={<Music/>}/>
             <Route path={"/settings"} element={<Settings/>}/>

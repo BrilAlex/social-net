@@ -90,3 +90,20 @@ export const state: RootStateType = {
     ],
   }
 };
+
+export const addPost = (newPostText: string) => {
+  const posts = state.profilePage.posts;
+  const newPost:PostType = {id: posts.length + 1, postText: newPostText, likesCount: 0};
+  posts.push(newPost);
+};
+
+export const addMessage = (newMessageText: string) => {
+  const messages = state.dialogsPage.messages;
+  const newMessage: MessageType = {
+    id: messages.length + 1,
+    sender: "User",
+    messageText: newMessageText,
+    messageTime: "14.51"
+  };
+  messages.push(newMessage);
+};

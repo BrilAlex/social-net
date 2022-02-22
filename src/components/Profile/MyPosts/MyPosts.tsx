@@ -5,6 +5,7 @@ import {PostType} from "../../../redux/state";
 
 type MyPostsPropsType = {
   posts: Array<PostType>
+  addPostCallback: (newPostText: string) => void
 };
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -20,14 +21,14 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
   const addPostHandler = () => {
     const newPostText = newPostTextarea.current?.value;
-    console.log(newPostText);
+    if (newPostText) props.addPostCallback(newPostText);
   };
 
   return (
     <div className={styles.postsBlock}>
       <h3>My posts</h3>
       <div className={styles.newPostBlock}>
-          <textarea ref={newPostTextarea}>Enter new post text</textarea>
+          <textarea ref={newPostTextarea}/>
           <button onClick={addPostHandler}>Add post</button>
       </div>
       <div className={styles.postsList}>
