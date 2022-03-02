@@ -1,7 +1,7 @@
 import {FC} from "react";
 import styles from "./Sidebar.module.css";
 import {Navbar} from "./Navbar/Navbar";
-import {SidebarType} from "../../redux/state";
+import {SidebarType} from "../../redux/store";
 
 type SidebarPropsType = {
   state: SidebarType
