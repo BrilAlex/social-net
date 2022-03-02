@@ -1,6 +1,5 @@
 import manAvatar from "./../assets/images/man_avatar.png";
 import womanAvatar from "./../assets/images/woman_avatar.png";
-import {rerenderEntireTree} from "../render";
 
 export type PostType = {
   id: number
@@ -127,6 +126,14 @@ export const addMessage = () => {
   state.dialogsPage.messages.push(newMessage);
   state.dialogsPage.newMessageText = "";
   rerenderEntireTree(state);
+};
+
+let rerenderEntireTree = (state: RootStateType) => {
+  console.log("State changed");
+};
+
+export const subscribe = (observer: (state: RootStateType) => void) => {
+  rerenderEntireTree = observer;
 };
 
 // @ts-ignore
