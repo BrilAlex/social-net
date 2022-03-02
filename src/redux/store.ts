@@ -48,13 +48,13 @@ export type RootStateType = {
 
 export type RootStoreType = {
   _state: RootStateType
+  _subscriber: (state: RootStateType) => void
+  subscribe: (observer: (state: RootStateType) => void) => void
+  getState: () => RootStateType
   updateNewPostText: (text: string) => void
   addPost: () => void
   updateNewMessageText: (text: string) => void
   addMessage: () => void
-  _subscriber: (state: RootStateType) => void
-  subscribe: (observer: (state: RootStateType) => void) => void
-  getState: () => RootStateType
 };
 
 export const store: RootStoreType = {
@@ -106,7 +106,16 @@ export const store: RootStoreType = {
       ],
     }
   },
-  updateNewPostText(text: string) {
+  _subscriber() {
+    console.log("No subscribers (observers)");
+  },
+  subscribe(observer) {
+    this._subscriber = observer;
+  },
+  getState() {
+    return this._state;
+  },
+  updateNewPostText(text) {
     this._state.profilePage.newPostText = text;
     this._subscriber(this._state);
   },
@@ -120,7 +129,7 @@ export const store: RootStoreType = {
     this._state.profilePage.newPostText = "";
     this._subscriber(this._state);
   },
-  updateNewMessageText(text: string) {
+  updateNewMessageText(text) {
     this._state.dialogsPage.newMessageText = text;
     this._subscriber(this._state);
   },
@@ -134,15 +143,6 @@ export const store: RootStoreType = {
     this._state.dialogsPage.messages.push(newMessage);
     this._state.dialogsPage.newMessageText = "";
     this._subscriber(this._state);
-  },
-  _subscriber() {
-    console.log("No subscribers (observers)");
-  },
-  subscribe(observer: (state: RootStateType) => void) {
-    this._subscriber = observer;
-  },
-  getState() {
-    return this._state;
   },
 };
 
