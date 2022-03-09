@@ -8,14 +8,11 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {RootStateType} from "./redux/store";
+import {ActionType, RootStateType} from "./redux/store";
 
 type AppPropsType = {
   state: RootStateType
-  updateNewPostText: (text: string) => void
-  addPost: () => void
-  updateNewMessageText: (text: string) => void
-  addMessage: () => void
+  dispatch: (action: ActionType) => void
 };
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -31,8 +28,7 @@ const App: React.FC<AppPropsType> = (props) => {
               element={
                 <Profile
                   profilePage={props.state.profilePage}
-                  updateNewPostText={props.updateNewPostText}
-                  addPost={props.addPost}
+                  dispatch={props.dispatch}
                 />
               }
             />
@@ -41,8 +37,7 @@ const App: React.FC<AppPropsType> = (props) => {
               element={
                 <Dialogs
                   dialogsPage={props.state.dialogsPage}
-                  updateNewMessageText={props.updateNewMessageText}
-                  addMessage={props.addMessage}
+                  dispatch={props.dispatch}
                 />
               }
             />

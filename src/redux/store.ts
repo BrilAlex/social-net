@@ -51,11 +51,30 @@ export type RootStoreType = {
   _subscriber: (state: RootStateType) => void
   subscribe: (observer: (state: RootStateType) => void) => void
   getState: () => RootStateType
-  updateNewPostText: (text: string) => void
-  addPost: () => void
-  updateNewMessageText: (text: string) => void
-  addMessage: () => void
+  dispatch: (action: ActionType) => void
 };
+
+type UpdateNewPostTextActionType = {
+  type: "UPDATE-NEW-POST-TEXT"
+  text: string
+};
+
+type AddPostActionType = {
+  type: "ADD-POST"
+};
+
+type UpdateNewMessageTextActionType = {
+  type: "UPDATE-NEW-MESSAGE-TEXT"
+  text: string
+};
+
+type AddMessageActionType = {
+  type: "ADD-MESSAGE"
+};
+
+export type ActionType =
+  AddPostActionType | UpdateNewPostTextActionType |
+  UpdateNewMessageTextActionType | AddMessageActionType;
 
 export const store: RootStoreType = {
   _state: {
@@ -115,34 +134,38 @@ export const store: RootStoreType = {
   getState() {
     return this._state;
   },
-  updateNewPostText(text) {
-    this._state.profilePage.newPostText = text;
-    this._subscriber(this._state);
-  },
-  addPost() {
-    const newPost: PostType = {
-      id: this._state.profilePage.posts.length + 1,
-      postText: this._state.profilePage.newPostText,
-      likesCount: 0
-    };
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.newPostText = "";
-    this._subscriber(this._state);
-  },
-  updateNewMessageText(text) {
-    this._state.dialogsPage.newMessageText = text;
-    this._subscriber(this._state);
-  },
-  addMessage() {
-    const newMessage: MessageType = {
-      id: this._state.dialogsPage.messages.length + 1,
-      sender: "Me",
-      messageText: this._state.dialogsPage.newMessageText,
-      messageTime: "14.51"
-    };
-    this._state.dialogsPage.messages.push(newMessage);
-    this._state.dialogsPage.newMessageText = "";
-    this._subscriber(this._state);
+  dispatch(action) {
+    switch (action.type) {
+      case "UPDATE-NEW-POST-TEXT":
+        this._state.profilePage.newPostText = action.text;
+        this._subscriber(this._state);
+        break;
+      case "ADD-POST":
+        const newPost: PostType = {
+          id: this._state.profilePage.posts.length + 1,
+          postText: this._state.profilePage.newPostText,
+          likesCount: 0
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = "";
+        this._subscriber(this._state);
+        break;
+      case "UPDATE-NEW-MESSAGE-TEXT":
+        this._state.dialogsPage.newMessageText = action.text;
+        this._subscriber(this._state);
+        break;
+      case "ADD-MESSAGE":
+        const newMessage: MessageType = {
+          id: this._state.dialogsPage.messages.length + 1,
+          sender: "Me",
+          messageText: this._state.dialogsPage.newMessageText,
+          messageTime: "14.51"
+        };
+        this._state.dialogsPage.messages.push(newMessage);
+        this._state.dialogsPage.newMessageText = "";
+        this._subscriber(this._state);
+        break;
+    }
   },
 };
 
