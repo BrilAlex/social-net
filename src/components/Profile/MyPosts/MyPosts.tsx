@@ -1,7 +1,12 @@
 import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {ActionType, PostType} from "../../../redux/store";
+import {
+  ActionType,
+  addPostActionCreator,
+  PostType,
+  updateNewPostTextActionCreator
+} from "../../../redux/store";
 
 type MyPostsPropsType = {
   posts: Array<PostType>
@@ -20,12 +25,12 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
   const addPost = () => {
     if (props.newPostText !== "") {
-      props.dispatch({type: "ADD-POST"});
+      props.dispatch(addPostActionCreator());
     }
   };
 
   const onChangeNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch({type: "UPDATE-NEW-POST-TEXT", text: e.currentTarget.value});
+    props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value));
   };
 
   return (

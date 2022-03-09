@@ -76,6 +76,20 @@ export type ActionType =
   AddPostActionType | UpdateNewPostTextActionType |
   UpdateNewMessageTextActionType | AddMessageActionType;
 
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
+const ADD_MESSAGE = "ADD-MESSAGE";
+
+export const updateNewPostTextActionCreator = (text: string): UpdateNewPostTextActionType =>
+  ({type: UPDATE_NEW_POST_TEXT, text});
+export const addPostActionCreator = (): AddPostActionType => ({type: ADD_POST});
+
+export const updateNewMessageTextActionCreator = (text: string): UpdateNewMessageTextActionType =>
+  ({type: UPDATE_NEW_MESSAGE_TEXT, text});
+
+export const addMessageActionCreator = (): AddMessageActionType => ({type: ADD_MESSAGE});
+
 export const store: RootStoreType = {
   _state: {
     profilePage: {
@@ -135,12 +149,13 @@ export const store: RootStoreType = {
     return this._state;
   },
   dispatch(action) {
+    debugger;
     switch (action.type) {
-      case "UPDATE-NEW-POST-TEXT":
+      case UPDATE_NEW_POST_TEXT:
         this._state.profilePage.newPostText = action.text;
         this._subscriber(this._state);
         break;
-      case "ADD-POST":
+      case ADD_POST:
         const newPost: PostType = {
           id: this._state.profilePage.posts.length + 1,
           postText: this._state.profilePage.newPostText,
@@ -150,11 +165,11 @@ export const store: RootStoreType = {
         this._state.profilePage.newPostText = "";
         this._subscriber(this._state);
         break;
-      case "UPDATE-NEW-MESSAGE-TEXT":
+      case UPDATE_NEW_MESSAGE_TEXT:
         this._state.dialogsPage.newMessageText = action.text;
         this._subscriber(this._state);
         break;
-      case "ADD-MESSAGE":
+      case ADD_MESSAGE:
         const newMessage: MessageType = {
           id: this._state.dialogsPage.messages.length + 1,
           sender: "Me",
