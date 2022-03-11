@@ -3,9 +3,9 @@ import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {
   ActionType,
-  addPostActionCreator,
+  addPostAC,
   PostType,
-  updateNewPostTextActionCreator
+  updateNewPostTextAC
 } from "../../../redux/store";
 
 type MyPostsPropsType = {
@@ -25,19 +25,23 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
   const addPost = () => {
     if (props.newPostText !== "") {
-      props.dispatch(addPostActionCreator());
+      props.dispatch(addPostAC());
     }
   };
 
   const onChangeNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value));
+    props.dispatch(updateNewPostTextAC(e.currentTarget.value));
   };
 
   return (
     <div className={styles.postsBlock}>
       <h3>My posts</h3>
       <div className={styles.newPostBlock}>
-          <textarea value={props.newPostText} onChange={onChangeNewPostText}/>
+          <textarea
+            value={props.newPostText}
+            onChange={onChangeNewPostText}
+            placeholder={"Enter new post text"}
+          />
           <button onClick={addPost}>Add post</button>
       </div>
       <div className={styles.postsList}>

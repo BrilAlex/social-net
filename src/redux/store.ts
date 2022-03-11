@@ -54,41 +54,31 @@ export type RootStoreType = {
   dispatch: (action: ActionType) => void
 };
 
-type UpdateNewPostTextActionType = {
-  type: "UPDATE-NEW-POST-TEXT"
-  text: string
-};
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>;
 
-type AddPostActionType = {
-  type: "ADD-POST"
-};
+type AddPostActionType = ReturnType<typeof addPostAC>;
 
-type UpdateNewMessageTextActionType = {
-  type: "UPDATE-NEW-MESSAGE-TEXT"
-  text: string
-};
+type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>;
 
-type AddMessageActionType = {
-  type: "ADD-MESSAGE"
-};
+type SendMessageActionType = ReturnType<typeof sendMessageAC>;
 
 export type ActionType =
   AddPostActionType | UpdateNewPostTextActionType |
-  UpdateNewMessageTextActionType | AddMessageActionType;
+  UpdateNewMessageTextActionType | SendMessageActionType;
 
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
-const ADD_MESSAGE = "ADD-MESSAGE";
+const SEND_MESSAGE = "SEND-MESSAGE";
 
-export const updateNewPostTextActionCreator = (text: string): UpdateNewPostTextActionType =>
-  ({type: UPDATE_NEW_POST_TEXT, text});
-export const addPostActionCreator = (): AddPostActionType => ({type: ADD_POST});
+export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, text} as const);
 
-export const updateNewMessageTextActionCreator = (text: string): UpdateNewMessageTextActionType =>
-  ({type: UPDATE_NEW_MESSAGE_TEXT, text});
+export const addPostAC = () => ({type: ADD_POST} as const);
 
-export const addMessageActionCreator = (): AddMessageActionType => ({type: ADD_MESSAGE});
+export const updateNewMessageTextAC = (text: string) =>
+  ({type: UPDATE_NEW_MESSAGE_TEXT, text} as const);
+
+export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 
 export const store: RootStoreType = {
   _state: {
@@ -149,7 +139,6 @@ export const store: RootStoreType = {
     return this._state;
   },
   dispatch(action) {
-    debugger;
     switch (action.type) {
       case UPDATE_NEW_POST_TEXT:
         this._state.profilePage.newPostText = action.text;
@@ -169,7 +158,7 @@ export const store: RootStoreType = {
         this._state.dialogsPage.newMessageText = action.text;
         this._subscriber(this._state);
         break;
-      case ADD_MESSAGE:
+      case SEND_MESSAGE:
         const newMessage: MessageType = {
           id: this._state.dialogsPage.messages.length + 1,
           sender: "Me",

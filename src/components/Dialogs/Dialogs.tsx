@@ -4,9 +4,9 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {
   ActionType,
-  addMessageActionCreator,
+  sendMessageAC,
   DialogsPageType,
-  updateNewMessageTextActionCreator
+  updateNewMessageTextAC
 } from "../../redux/store";
 
 type DialogsPropsType = {
@@ -30,12 +30,12 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
   const sendMessage = () => {
     if(props.dialogsPage.newMessageText !== "") {
-      props.dispatch(addMessageActionCreator());
+      props.dispatch(sendMessageAC());
     }
   };
 
   const onChangeNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(updateNewMessageTextActionCreator(e.currentTarget.value));
+    props.dispatch(updateNewMessageTextAC(e.currentTarget.value));
   };
 
   return (
@@ -44,9 +44,13 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         {dialogsElements}
       </div>
       <div className={styles.messagesContainer}>
-        {messagesElements}
+        <div>{messagesElements}</div>
         <div className={styles.newMessageBlock}>
-          <textarea value={props.dialogsPage.newMessageText} onChange={onChangeNewMessageText}/>
+          <textarea
+            value={props.dialogsPage.newMessageText}
+            onChange={onChangeNewMessageText}
+            placeholder={"Enter your message"}
+          />
           <button onClick={sendMessage}>Send message</button>
         </div>
       </div>
