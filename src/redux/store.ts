@@ -1,5 +1,16 @@
 import manAvatar from "./../assets/images/man_avatar.png";
 import womanAvatar from "./../assets/images/woman_avatar.png";
+import {
+  AddPostActionType,
+  profileReducer,
+  UpdateNewPostTextActionType
+} from "./profileReducer";
+import {
+  dialogsReducer,
+  SendMessageActionType,
+  UpdateNewMessageTextActionType
+} from "./dialogsReducer";
+import {sidebarReducer} from "./sidebarReducer";
 
 export type PostType = {
   id: number
@@ -12,7 +23,7 @@ type DialogType = {
   name: string
 };
 
-type MessageType = {
+export type MessageType = {
   id: number
   sender: string
   messageText: string
@@ -54,31 +65,9 @@ export type RootStoreType = {
   dispatch: (action: ActionType) => void
 };
 
-type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>;
-
-type AddPostActionType = ReturnType<typeof addPostAC>;
-
-type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>;
-
-type SendMessageActionType = ReturnType<typeof sendMessageAC>;
-
 export type ActionType =
   AddPostActionType | UpdateNewPostTextActionType |
   UpdateNewMessageTextActionType | SendMessageActionType;
-
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
-const SEND_MESSAGE = "SEND-MESSAGE";
-
-export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, text} as const);
-
-export const addPostAC = () => ({type: ADD_POST} as const);
-
-export const updateNewMessageTextAC = (text: string) =>
-  ({type: UPDATE_NEW_MESSAGE_TEXT, text} as const);
-
-export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 
 export const store: RootStoreType = {
   _state: {
@@ -139,37 +128,10 @@ export const store: RootStoreType = {
     return this._state;
   },
   dispatch(action) {
-    switch (action.type) {
-      case UPDATE_NEW_POST_TEXT:
-        this._state.profilePage.newPostText = action.text;
-        this._subscriber(this._state);
-        break;
-      case ADD_POST:
-        const newPost: PostType = {
-          id: this._state.profilePage.posts.length + 1,
-          postText: this._state.profilePage.newPostText,
-          likesCount: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = "";
-        this._subscriber(this._state);
-        break;
-      case UPDATE_NEW_MESSAGE_TEXT:
-        this._state.dialogsPage.newMessageText = action.text;
-        this._subscriber(this._state);
-        break;
-      case SEND_MESSAGE:
-        const newMessage: MessageType = {
-          id: this._state.dialogsPage.messages.length + 1,
-          sender: "Me",
-          messageText: this._state.dialogsPage.newMessageText,
-          messageTime: "14.51"
-        };
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = "";
-        this._subscriber(this._state);
-        break;
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+    this._subscriber(this._state);
   },
 };
 

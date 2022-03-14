@@ -1,12 +1,8 @@
 import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {
-  ActionType,
-  addPostAC,
-  PostType,
-  updateNewPostTextAC
-} from "../../../redux/store";
+import {ActionType, PostType} from "../../../redux/store";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profileReducer";
 
 type MyPostsPropsType = {
   posts: Array<PostType>
@@ -42,7 +38,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             onChange={onChangeNewPostText}
             placeholder={"Enter new post text"}
           />
-          <button onClick={addPost}>Add post</button>
+        <button onClick={addPost}>Add post</button>
       </div>
       <div className={styles.postsList}>
         {postsElements}
