@@ -1,8 +1,56 @@
-import {ActionType, DialogsPageType, MessageType} from "./store";
+import {ActionType} from "./reduxStore";
 
-export type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>;
+export type DialogType = {
+  id: number
+  name: string
+};
 
-export type SendMessageActionType = ReturnType<typeof sendMessageAC>;
+export type MessageType = {
+  id: number
+  sender: string
+  messageText: string
+  messageTime: string
+};
+
+export type DialogsPageType = {
+  dialogs: Array<DialogType>
+  messages: Array<MessageType>
+  newMessageText: string
+};
+
+export type DialogsActionType =
+  ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageTextAC>;
+
+const initialState: DialogsPageType = {
+  dialogs: [
+    {id: 1, name: "Karina"},
+    {id: 2, name: "Dimych"},
+    {id: 3, name: "Sergei"},
+    {id: 4, name: "Alexander"},
+    {id: 5, name: "Svetlana"},
+  ],
+  messages: [
+    {
+      id: 1,
+      sender: "Me",
+      messageText: "Hi!",
+      messageTime: "12:05",
+    },
+    {
+      id: 2,
+      sender: "User",
+      messageText: "Yo! How are you?",
+      messageTime: "12:18",
+    },
+    {
+      id: 3,
+      sender: "Me",
+      messageText: "Fine, studying in IT-Incubator now. And you?",
+      messageTime: "12:24",
+    },
+  ],
+  newMessageText: "",
+};
 
 export const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 export const SEND_MESSAGE = "SEND-MESSAGE";
@@ -12,7 +60,7 @@ export const updateNewMessageTextAC = (text: string) =>
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 
-export const dialogsReducer = (state: DialogsPageType, action: ActionType) => {
+export const dialogsReducer = (state = initialState, action: ActionType): DialogsPageType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
       state.newMessageText = action.text;

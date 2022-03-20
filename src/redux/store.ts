@@ -1,18 +1,11 @@
 import manAvatar from "./../assets/images/man_avatar.png";
 import womanAvatar from "./../assets/images/woman_avatar.png";
-import {
-  AddPostActionType,
-  profileReducer,
-  UpdateNewPostTextActionType
-} from "./profileReducer";
-import {
-  dialogsReducer,
-  SendMessageActionType,
-  UpdateNewMessageTextActionType
-} from "./dialogsReducer";
+import {profileReducer} from "./profileReducer";
+import {dialogsReducer} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
+import {ActionType} from "./reduxStore";
 
-export type PostType = {
+type PostType = {
   id: number
   postText: string
   likesCount: number
@@ -23,7 +16,7 @@ type DialogType = {
   name: string
 };
 
-export type MessageType = {
+type MessageType = {
   id: number
   sender: string
   messageText: string
@@ -36,28 +29,28 @@ type FriendType = {
   avatarSrc: string
 };
 
-export type ProfilePageType = {
+type ProfilePageType = {
   posts: Array<PostType>
   newPostText: string
 };
 
-export type DialogsPageType = {
+type DialogsPageType = {
   dialogs: Array<DialogType>
   messages: Array<MessageType>
   newMessageText: string
 };
 
-export type SidebarType = {
+type SidebarType = {
   friends: Array<FriendType>
 };
 
-export type RootStateType = {
+type RootStateType = {
   profilePage: ProfilePageType
   dialogsPage: DialogsPageType
   sidebar: SidebarType
 };
 
-export type RootStoreType = {
+type RootStoreType = {
   _state: RootStateType
   _subscriber: (state: RootStateType) => void
   subscribe: (observer: (state: RootStateType) => void) => void
@@ -65,11 +58,7 @@ export type RootStoreType = {
   dispatch: (action: ActionType) => void
 };
 
-export type ActionType =
-  AddPostActionType | UpdateNewPostTextActionType |
-  UpdateNewMessageTextActionType | SendMessageActionType;
-
-export const store: RootStoreType = {
+const store: RootStoreType = {
   _state: {
     profilePage: {
       posts: [
