@@ -1,5 +1,5 @@
 import React from "react";
-import {RootStoreType} from "../redux/reduxStore";
+import {RootStoreType} from "./redux/reduxStore";
 
 export const StoreContext = React.createContext({} as RootStoreType);
 

@@ -1,6 +1,6 @@
 import {MyPosts} from "./MyPosts";
 import {addPostAC, updateNewPostTextAC} from "../../../redux/profileReducer";
-import {StoreContext} from "../../StoreContext";
+import {StoreContext} from "../../../StoreContext";
 
 export const MyPostsContainer = () => {
   return (

@@ -1,5 +1,5 @@
 import {Sidebar} from "./Sidebar";
-import {StoreContext} from "../StoreContext";
+import {StoreContext} from "../../StoreContext";
 
 export const SidebarContainer = () => {
   return <StoreContext.Consumer>

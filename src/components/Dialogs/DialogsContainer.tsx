@@ -1,6 +1,6 @@
 import {Dialogs} from "./Dialogs";
 import {sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogsReducer";
-import {StoreContext} from "../StoreContext";
+import {StoreContext} from "../../StoreContext";
 
 export const DialogsContainer = () => {
   return (
