@@ -1,12 +1,13 @@
-import {RootStoreType} from "../../redux/reduxStore";
 import {Sidebar} from "./Sidebar";
+import {StoreContext} from "../StoreContext";
 
-type SidebarContainerPropsType = {
-  store: RootStoreType
-};
-
-export const SidebarContainer = (props: SidebarContainerPropsType) => {
-  const state = props.store.getState().sidebar;
-
-  return <Sidebar state={state}/>
+export const SidebarContainer = () => {
+  return <StoreContext.Consumer>
+    {
+      (store) => {
+        const state = store.getState().sidebar;
+        return <Sidebar state={state}/>;
+      }
+    }
+  </StoreContext.Consumer>
 };
