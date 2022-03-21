@@ -1,46 +1,28 @@
 import React from 'react';
 import './App.css';
 import {Header} from './components/Header/Header';
-import {Sidebar} from "./components/Sidebar/Sidebar";
+import {SidebarContainer} from "./components/Sidebar/SidebarContainer";
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs} from "./components/Dialogs/Dialogs";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {Routes, Route} from "react-router-dom";
-import {ActionType, AppStateType} from "./redux/reduxStore";
-
+import {RootStoreType} from "./redux/reduxStore";
 
 type AppPropsType = {
-  state: AppStateType
-  dispatch: (action: ActionType) => void
+  store: RootStoreType
 };
 
 const App: React.FC<AppPropsType> = (props) => {
   return (
     <div className="appWrapper">
       <Header/>
-      <Sidebar state={props.state.sidebar}/>
+      <SidebarContainer store={props.store}/>
       <div className={"appContentWrapper"}>
         <Routes>
-          <Route
-            path={"/profile"}
-            element={
-              <Profile
-                profilePage={props.state.profilePage}
-                dispatch={props.dispatch}
-              />
-            }
-          />
-          <Route
-            path={"/dialogs/*"}
-            element={
-              <Dialogs
-                dialogsPage={props.state.dialogsPage}
-                dispatch={props.dispatch}
-              />
-            }
-          />
+          <Route path={"/profile"} element={<Profile store={props.store}/>}/>
+          <Route path={"/dialogs/*"} element={<DialogsContainer store={props.store}/>}/>
           <Route path={"/news"} element={<News/>}/>
           <Route path={"/music"} element={<Music/>}/>
           <Route path={"/settings"} element={<Settings/>}/>

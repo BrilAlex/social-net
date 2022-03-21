@@ -1,13 +1,9 @@
 import {combineReducers, createStore} from "redux";
-import {ProfileActionType, ProfilePageType, profileReducer} from "./profileReducer";
-import {DialogsActionType, DialogsPageType, dialogsReducer} from "./dialogsReducer";
-import {sidebarReducer, SidebarType} from "./sidebarReducer";
+import {ProfileActionType, profileReducer} from "./profileReducer";
+import {DialogsActionType, dialogsReducer} from "./dialogsReducer";
+import {sidebarReducer} from "./sidebarReducer";
 
-export type AppStateType = {
-  profilePage: ProfilePageType
-  dialogsPage: DialogsPageType
-  sidebar: SidebarType
-};
+export type RootStoreType = typeof store;
 
 export type ActionType = ProfileActionType | DialogsActionType;
 
