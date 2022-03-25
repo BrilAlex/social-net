@@ -1,11 +1,7 @@
 import {FC} from "react";
 import styles from "./Sidebar.module.css";
 import {Navbar} from "./Navbar/Navbar";
-import {SidebarType} from "../../redux/sidebarReducer";
-
-type SidebarPropsType = {
-  state: SidebarType
-};
+import {SidebarPropsType} from "./SidebarContainer";
 
 export const Sidebar: FC<SidebarPropsType> = (props) => {
   const friendsElements = props.state.friends.map(f =>

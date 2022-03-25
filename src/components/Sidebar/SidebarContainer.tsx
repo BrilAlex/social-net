@@ -1,13 +1,24 @@
 import {Sidebar} from "./Sidebar";
-import {StoreContext} from "../../StoreContext";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/reduxStore";
+import {SidebarInitStateType} from "../../redux/sidebarReducer";
 
-export const SidebarContainer = () => {
-  return <StoreContext.Consumer>
-    {
-      (store) => {
-        const state = store.getState().sidebar;
-        return <Sidebar state={state}/>;
-      }
-    }
-  </StoreContext.Consumer>
+type MapStateToPropsType = {
+  state: SidebarInitStateType
 };
+
+type MapDispatchToPropsType = {};
+
+export type SidebarPropsType = MapStateToPropsType & MapDispatchToPropsType;
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+  return {
+    state: state.sidebar,
+  };
+};
+
+const mapDispatchToProps = (): MapDispatchToPropsType => {
+  return {};
+};
+
+export const SidebarContainer = connect(mapStateToProps, mapDispatchToProps)(Sidebar);

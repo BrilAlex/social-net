@@ -12,23 +12,19 @@ export type MessageType = {
   messageTime: string
 };
 
-export type DialogsPageType = {
-  dialogs: Array<DialogType>
-  messages: Array<MessageType>
-  newMessageText: string
-};
+export type DialogsInitStateType = typeof initialState;
 
 export type DialogsActionType =
   ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageTextAC>;
 
-const initialState: DialogsPageType = {
+const initialState = {
   dialogs: [
     {id: 1, name: "Karina"},
     {id: 2, name: "Dimych"},
     {id: 3, name: "Sergei"},
     {id: 4, name: "Alexander"},
     {id: 5, name: "Svetlana"},
-  ],
+  ] as Array<DialogType>,
   messages: [
     {
       id: 1,
@@ -48,7 +44,7 @@ const initialState: DialogsPageType = {
       messageText: "Fine, studying in IT-Incubator now. And you?",
       messageTime: "12:24",
     },
-  ],
+  ] as Array<MessageType>,
   newMessageText: "",
 };
 
@@ -60,7 +56,7 @@ export const updateNewMessageTextAC = (text: string) =>
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 
-export const dialogsReducer = (state = initialState, action: ActionType): DialogsPageType => {
+export const dialogsReducer = (state = initialState, action: ActionType): DialogsInitStateType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
       state.newMessageText = action.text;

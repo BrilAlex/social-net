@@ -6,19 +6,16 @@ export type PostType = {
   likesCount: number
 };
 
-export type ProfilePageType = {
-  posts: Array<PostType>
-  newPostText: string
-};
+export type ProfileInitStateType = typeof initialState;
 
 export type ProfileActionType =
   ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC>;
 
-const initialState: ProfilePageType = {
+const initialState = {
   posts: [
     {id: 1, postText: "It's my first post", likesCount: 20},
     {id: 2, postText: "Hi! How are you?", likesCount: 10},
-  ],
+  ] as Array<PostType>,
   newPostText: "",
 };
 
@@ -29,7 +26,7 @@ export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEX
 
 export const addPostAC = () => ({type: ADD_POST} as const);
 
-export const profileReducer = (state = initialState, action: ActionType): ProfilePageType => {
+export const profileReducer = (state = initialState, action: ActionType): ProfileInitStateType => {
   switch (action.type) {
     case UPDATE_NEW_POST_TEXT:
       state.newPostText = action.text;

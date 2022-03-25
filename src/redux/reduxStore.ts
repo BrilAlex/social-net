@@ -3,7 +3,7 @@ import {ProfileActionType, profileReducer} from "./profileReducer";
 import {DialogsActionType, dialogsReducer} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 
-export type RootStoreType = typeof store;
+export type AppStateType = ReturnType<typeof rootReducer>;
 
 export type ActionType = ProfileActionType | DialogsActionType;
 

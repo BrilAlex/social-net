@@ -8,21 +8,19 @@ export type FriendType = {
   avatarSrc: string
 };
 
-export type SidebarType = {
-  friends: Array<FriendType>
-};
+export type SidebarInitStateType = typeof initialState;
 
-const initialState: SidebarType = {
+const initialState = {
   friends: [
     {id: 1, name: "Karina", avatarSrc: womanAvatar},
     {id: 2, name: "Dimych", avatarSrc: manAvatar},
     {id: 3, name: "Sergei", avatarSrc: manAvatar},
     {id: 4, name: "Alexander", avatarSrc: manAvatar},
     {id: 5, name: "Svetlana", avatarSrc: womanAvatar},
-  ],
+  ] as Array<FriendType>,
 };
 
-export const sidebarReducer = (state = initialState, action: ActionType): SidebarType => {
+export const sidebarReducer = (state = initialState, action: ActionType): SidebarInitStateType => {
   switch (action.type) {
     default:
       return state;

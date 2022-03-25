@@ -1,14 +1,7 @@
 import React, {ChangeEvent} from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {PostType} from "../../../redux/profileReducer";
-
-type MyPostsPropsType = {
-  posts: Array<PostType>
-  newPostText: string
-  addPost: () => void
-  updateNewPostText: (text: string) => void
-};
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
   const postsElements = props.posts.map(p =>
