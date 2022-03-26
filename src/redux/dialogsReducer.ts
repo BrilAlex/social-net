@@ -41,7 +41,7 @@ const initialState = {
     {
       id: 3,
       sender: "Me",
-      messageText: "Fine, studying in IT-Incubator now. And you?",
+      messageText: "Fine, studying in IT-Incubator now. And how are you?",
       messageTime: "12:24",
     },
   ] as Array<MessageType>,
@@ -59,9 +59,10 @@ export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 export const dialogsReducer = (state = initialState, action: ActionType): DialogsInitStateType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT: {
-      let stateCopy = {...state};
-      stateCopy.newMessageText = action.text;
-      return stateCopy;
+      return {
+        ...state,
+        newMessageText: action.text,
+      };
     }
     case SEND_MESSAGE: {
       const newMessage: MessageType = {
@@ -70,11 +71,12 @@ export const dialogsReducer = (state = initialState, action: ActionType): Dialog
         messageText: state.newMessageText,
         messageTime: "14.51"
       };
-      let stateCopy = {...state};
-      stateCopy.messages = [...state.messages];
-      stateCopy.messages.push(newMessage);
-      stateCopy.newMessageText = "";
-      return stateCopy;
+
+      return {
+        ...state,
+        messages: [...state.messages, newMessage],
+        newMessageText: "",
+      };
     }
     default:
       return state;
