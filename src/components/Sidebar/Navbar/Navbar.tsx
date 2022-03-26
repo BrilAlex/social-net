@@ -3,7 +3,7 @@ import styles from "./Navbar.module.css";
 import {NavLink} from "react-router-dom";
 
 export const Navbar = () => {
-  const getNavLinkClassName = (navData: {isActive: boolean}) => {
+  const getNavLinkClassName = (navData: { isActive: boolean }) => {
     return navData.isActive ? `${styles.navLink} ${styles.active}` : styles.navLink;
   };
 
@@ -27,6 +27,11 @@ export const Navbar = () => {
       <div className={styles.item}>
         <NavLink to={"/music"} className={(navData) => getNavLinkClassName(navData)}>
           Music
+        </NavLink>
+      </div>
+      <div className={styles.item}>
+        <NavLink to={"/users"} className={(navData) => getNavLinkClassName(navData)}>
+          Users
         </NavLink>
       </div>
       <div className={styles.item}>

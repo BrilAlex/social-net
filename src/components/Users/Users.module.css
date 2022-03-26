@@ -1,0 +1,21 @@
+.usersPage {
+    padding: 10px;
+}
+
+.user {
+    display: flex;
+}
+
+.userAvatar {
+    width: 150px;
+    padding: 10px;
+}
+
+.userAvatar img {
+    display: block;
+    width: 100%;
+}
+
+.userInfo {
+    padding: 10px 20px;
+}
