@@ -60,7 +60,7 @@ export const dialogsReducer = (state = initialState, action: ActionType): Dialog
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
       state.newMessageText = action.text;
-      return state;
+      return {...state};
     case SEND_MESSAGE:
       const newMessage: MessageType = {
         id: state.messages.length + 1,
@@ -70,7 +70,7 @@ export const dialogsReducer = (state = initialState, action: ActionType): Dialog
       };
       state.messages.push(newMessage);
       state.newMessageText = "";
-      return state;
+      return {...state};
     default:
       return state;
   }

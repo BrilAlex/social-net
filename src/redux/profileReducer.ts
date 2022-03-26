@@ -30,7 +30,7 @@ export const profileReducer = (state = initialState, action: ActionType): Profil
   switch (action.type) {
     case UPDATE_NEW_POST_TEXT:
       state.newPostText = action.text;
-      return state;
+      return {...state};
     case ADD_POST:
       const newPost: PostType = {
         id: state.posts.length + 1,
@@ -39,7 +39,7 @@ export const profileReducer = (state = initialState, action: ActionType): Profil
       };
       state.posts.push(newPost);
       state.newPostText = "";
-      return state;
+      return {...state};
     default:
       return state;
   }
