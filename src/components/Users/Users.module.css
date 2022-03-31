@@ -4,16 +4,24 @@
 
 .user {
     display: flex;
+    margin-bottom: 20px;
+    padding: 10px 0;
 }
 
 .userAvatar {
     width: 150px;
     padding: 10px;
+    text-align: center;
 }
 
 .userAvatar img {
     display: block;
     width: 100%;
+}
+
+.userAvatar button {
+    margin-top: 15px;
+    padding: 5px 15px;
 }
 
 .userInfo {
