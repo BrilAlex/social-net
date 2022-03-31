@@ -12,14 +12,17 @@ type UsersAPIResponseType = {
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
-  if (props.users.length === 0) {
-    axios.get<UsersAPIResponseType>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-      props.setUsers(response.data.items);
-    });
-  }
+  const getUsers = () => {
+    if (props.users.length === 0) {
+      axios.get<UsersAPIResponseType>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+        props.setUsers(response.data.items);
+      });
+    }
+  };
 
   return (
     <div className={styles.usersPage}>
+      <button onClick={getUsers}>Get users</button>
       {props.users.map(u => {
         return (
           <div key={u.id} className={styles.user}>
