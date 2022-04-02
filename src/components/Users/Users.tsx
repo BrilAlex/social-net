@@ -12,12 +12,11 @@ type UsersAPIResponseType = {
 };
 
 export class Users extends React.Component<UsersPropsType> {
-  constructor(props: UsersPropsType) {
-    super(props);
+  componentDidMount() {
     axios.get<UsersAPIResponseType>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-      props.setUsers(response.data.items);
+      this.props.setUsers(response.data.items);
     });
-  }
+  };
 
   render() {
     return (
@@ -44,5 +43,5 @@ export class Users extends React.Component<UsersPropsType> {
         })}
       </div>
     );
-  }
+  };
 }
