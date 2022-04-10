@@ -1,4 +1,11 @@
-import {followUserAC, setUsersAC, unfollowUserAC, UsersInitStateType, usersReducer} from "./usersReducer";
+import {
+  followUserAC, setCurrentPageAC,
+  setTotalUsersCountAC,
+  setUsersAC,
+  unfollowUserAC,
+  UsersInitStateType,
+  usersReducer
+} from "./usersReducer";
 
 let state: UsersInitStateType;
 
@@ -26,7 +33,10 @@ beforeEach(() => {
         photos: {small: "", large: ""},
         followed: true,
       },
-    ]
+    ],
+    totalUsersCount: 0,
+    pageSize: 10,
+    currentPage: 1,
   };
 });
 
@@ -79,4 +89,24 @@ test("Users should be correctly added to initial array", () => {
   expect(newState.users.length).toBe(5);
   expect(state.users.length).toBe(3);
   expect(newState.users[4].name).toBe("Alex B.");
+});
+
+test("Total users count should be correctly received from server", () => {
+  const totalUsersCount = 1000;
+
+  const newState = usersReducer(state, setTotalUsersCountAC(totalUsersCount));
+
+  expect(newState).not.toBe(state);
+  expect(state.totalUsersCount).toBe(0);
+  expect(newState.totalUsersCount).toBe(totalUsersCount);
+});
+
+test("Current page should be correctly updated", () => {
+  const pageNumber = 10;
+
+  const newState = usersReducer(state, setCurrentPageAC(pageNumber));
+
+  expect(newState).not.toBe(state);
+  expect(state.currentPage).toBe(1);
+  expect(newState.currentPage).toBe(pageNumber);
 });
