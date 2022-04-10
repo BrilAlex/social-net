@@ -1,7 +1,7 @@
 import {
   followUserAC, setCurrentPageAC,
   setTotalUsersCountAC,
-  setUsersAC,
+  setUsersAC, toggleIsFetchingAC,
   unfollowUserAC,
   UsersInitStateType,
   usersReducer
@@ -37,6 +37,7 @@ beforeEach(() => {
     totalUsersCount: 0,
     pageSize: 10,
     currentPage: 1,
+    isFetching: false,
   };
 });
 
@@ -64,6 +65,27 @@ test("Correct user should be unfollowed", () => {
 
 test("Users should be correctly added to initial array", () => {
   const newUsers = [
+    {
+      id: 1,
+      name: "Dmitri K.",
+      status: "I am looking for a job right now...",
+      photos: {small: "", large: ""},
+      followed: false,
+    },
+    {
+      id: 2,
+      name: "Svetlana D.",
+      status: "I am so pretty",
+      photos: {small: "", large: ""},
+      followed: false,
+    },
+    {
+      id: 3,
+      name: "Sergei S.",
+      status: "I like football!!!",
+      photos: {small: "", large: ""},
+      followed: true,
+    },
     {
       id: 4,
       avatarUrl: "",
@@ -109,4 +131,14 @@ test("Current page should be correctly updated", () => {
   expect(newState).not.toBe(state);
   expect(state.currentPage).toBe(1);
   expect(newState.currentPage).toBe(pageNumber);
+});
+
+test("Status isFetching should be correctly updated", () => {
+  const isFetching = true;
+
+  const newState = usersReducer(state, toggleIsFetchingAC(isFetching));
+
+  expect(newState).not.toBe(state);
+  expect(state.isFetching).toBeFalsy();
+  expect(newState.isFetching).toBeTruthy();
 });
