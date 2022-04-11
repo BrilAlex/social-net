@@ -1,8 +1,8 @@
 import {
-  followUserAC, setCurrentPageAC,
-  setTotalUsersCountAC,
-  setUsersAC, toggleIsFetchingAC,
-  unfollowUserAC,
+  followUser, setCurrentPage,
+  setTotalUsersCount,
+  setUsers, toggleIsFetching,
+  unfollowUser,
   UsersInitStateType,
   usersReducer
 } from "./usersReducer";
@@ -44,7 +44,7 @@ beforeEach(() => {
 test("Correct user should be followed", () => {
   const user_ID = 2;
 
-  const newState = usersReducer(state, followUserAC(user_ID));
+  const newState = usersReducer(state, followUser(user_ID));
 
   expect(newState).not.toBe(state);
   expect(newState.users).not.toBe(state.users);
@@ -55,7 +55,7 @@ test("Correct user should be followed", () => {
 test("Correct user should be unfollowed", () => {
   const user_ID = 3;
 
-  const newState = usersReducer(state, unfollowUserAC(user_ID));
+  const newState = usersReducer(state, unfollowUser(user_ID));
 
   expect(newState).not.toBe(state);
   expect(newState.users).not.toBe(state.users);
@@ -104,7 +104,7 @@ test("Users should be correctly added to initial array", () => {
     },
   ];
 
-  const newState = usersReducer(state, setUsersAC(newUsers));
+  const newState = usersReducer(state, setUsers(newUsers));
 
   expect(newState).not.toBe(state);
   expect(newState.users).not.toBe(state.users);
@@ -116,7 +116,7 @@ test("Users should be correctly added to initial array", () => {
 test("Total users count should be correctly received from server", () => {
   const totalUsersCount = 1000;
 
-  const newState = usersReducer(state, setTotalUsersCountAC(totalUsersCount));
+  const newState = usersReducer(state, setTotalUsersCount(totalUsersCount));
 
   expect(newState).not.toBe(state);
   expect(state.totalUsersCount).toBe(0);
@@ -126,7 +126,7 @@ test("Total users count should be correctly received from server", () => {
 test("Current page should be correctly updated", () => {
   const pageNumber = 10;
 
-  const newState = usersReducer(state, setCurrentPageAC(pageNumber));
+  const newState = usersReducer(state, setCurrentPage(pageNumber));
 
   expect(newState).not.toBe(state);
   expect(state.currentPage).toBe(1);
@@ -136,7 +136,7 @@ test("Current page should be correctly updated", () => {
 test("Status isFetching should be correctly updated", () => {
   const isFetching = true;
 
-  const newState = usersReducer(state, toggleIsFetchingAC(isFetching));
+  const newState = usersReducer(state, toggleIsFetching(isFetching));
 
   expect(newState).not.toBe(state);
   expect(state.isFetching).toBeFalsy();

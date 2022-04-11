@@ -14,12 +14,12 @@ export type UserType = {
 export type UsersInitStateType = typeof initialState;
 
 export type UsersActionType =
-  ReturnType<typeof followUserAC>
-  | ReturnType<typeof unfollowUserAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof setTotalUsersCountAC>
-  | ReturnType<typeof setCurrentPageAC>
-  | ReturnType<typeof toggleIsFetchingAC>;
+  ReturnType<typeof followUser>
+  | ReturnType<typeof unfollowUser>
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof setTotalUsersCount>
+  | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof toggleIsFetching>;
 
 const initialState = {
   users: [] as UserType[],
@@ -36,20 +36,15 @@ const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 
-export const followUserAC = (user_ID: number) => ({type: FOLLOW_USER, user_ID} as const);
-
-export const unfollowUserAC = (user_ID: number) => ({type: UNFOLLOW_USER, user_ID} as const);
-
-export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users} as const);
-
-export const setTotalUsersCountAC = (totalCount: number) => ({
+export const followUser = (user_ID: number) => ({type: FOLLOW_USER, user_ID} as const);
+export const unfollowUser = (user_ID: number) => ({type: UNFOLLOW_USER, user_ID} as const);
+export const setUsers = (users: UserType[]) => ({type: SET_USERS, users} as const);
+export const setTotalUsersCount = (totalCount: number) => ({
   type: SET_TOTAL_USERS_COUNT,
   totalUsersCount: totalCount
 } as const);
-
-export const setCurrentPageAC = (pageNumber: number) => ({type: SET_CURRENT_PAGE, currentPage: pageNumber} as const);
-
-export const toggleIsFetchingAC = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const);
+export const setCurrentPage = (pageNumber: number) => ({type: SET_CURRENT_PAGE, currentPage: pageNumber} as const);
+export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const);
 
 export const usersReducer = (state: UsersInitStateType = initialState, action: ActionType): UsersInitStateType => {
   switch (action.type) {
