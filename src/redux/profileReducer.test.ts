@@ -1,7 +1,7 @@
 import {
   addPostAC,
   ProfileInitStateType,
-  profileReducer,
+  profileReducer, ProfileType, setUserProfile,
   updateNewPostTextAC
 } from "./profileReducer";
 
@@ -9,6 +9,7 @@ let state: ProfileInitStateType;
 
 beforeEach(() => {
   state = {
+    profile: {} as ProfileType,
     posts: [
       {id: 1, postText: "It's my first post", likesCount: 20},
       {id: 2, postText: "Hi! How are you?", likesCount: 10},
@@ -39,4 +40,26 @@ test("New post should be immutably added", () => {
   expect(newState.posts[2].id).toBe(3);
   expect(newState.posts[2].postText).toBe(newPostText);
   expect(newState.newPostText).toBe("");
+});
+
+test("Profile data should be immutably added to state", () => {
+  const profileData = {
+    userId: 1,
+    lookingForAJob: true,
+    lookingForAJobDescription: "",
+    fullName: "User",
+    contacts: {
+      github: "",
+    },
+    photos: {
+      small: "",
+      large: "",
+    },
+  };
+  const action = setUserProfile(profileData);
+
+  const newState = profileReducer(state, action);
+
+  expect(newState).not.toBe(state);
+  expect(newState.profile).toEqual(profileData);
 });

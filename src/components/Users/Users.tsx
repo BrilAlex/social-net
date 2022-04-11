@@ -2,6 +2,7 @@ import {FC} from "react";
 import styles from "./Users.module.css";
 import defaultUserPhoto from "../../assets/images/man_avatar.png";
 import {UserType} from "../../redux/usersReducer";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
   users: Array<UserType>
@@ -39,7 +40,9 @@ export const Users: FC<UsersPropsType> = (props) => {
         return (
           <div key={u.id} className={styles.user}>
             <div className={styles.userAvatar}>
-              <img src={u.photos.small ? u.photos.small : defaultUserPhoto} alt={u.name}/>
+              <NavLink to={`/profile/${u.id}`}>
+                <img src={u.photos.small ? u.photos.small : defaultUserPhoto} alt={u.name}/>
+              </NavLink>
               {
                 u.followed ?
                   <button onClick={() => props.unfollowUser(u.id)}>Unfollow</button>
