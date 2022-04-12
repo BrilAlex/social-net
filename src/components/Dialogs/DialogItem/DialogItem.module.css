@@ -1,7 +1,7 @@
 .dialog {
     padding-bottom: 5px;
 }
-.dialog .navLink {
+.dialog a {
     display: block;
     padding: 10px;
     background: darkgrey;
@@ -9,12 +9,12 @@
     border-radius: 5px;
     text-decoration: none;
 }
-.dialog .navLink::after {
+.dialog a::after {
     clear: both;
     content: "";
     display: table;
 }
-.dialog .navLink.active{
+.dialog a.active{
     background: orange;
 }
 

@@ -13,13 +13,9 @@ export const DialogItem: React.FC<DialogItemPropsType> = (props) => {
   const path = "/dialogs/" + props.id;
   const avatarSrc = (props.name === "Karina" || props.name === "Svetlana") ? womanAvatar : manAvatar;
 
-  const getNavLinkClassName = (navData: { isActive: boolean }) => {
-    return navData.isActive ? `${styles.navLink} ${styles.active}` : styles.navLink;
-  };
-
   return (
     <div className={styles.dialog}>
-      <NavLink to={path} className={(navData) => getNavLinkClassName(navData)}>
+      <NavLink to={path} activeClassName={styles.active}>
         <img src={avatarSrc} alt={props.name + "'s Avatar"}/>
         <span>{props.name}</span>
       </NavLink>
