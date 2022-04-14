@@ -23,7 +23,7 @@ type MapDispatchToPropsType = {
   toggleIsFetching: (isFetching: boolean) => void
 };
 
-type UsersAPIPropsType = MapStateToPropsType & MapDispatchToPropsType;
+type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 type UsersAPIResponseType = {
   items: UserType[]
@@ -31,11 +31,12 @@ type UsersAPIResponseType = {
   error: string
 };
 
-class UsersContainer extends React.Component<UsersAPIPropsType> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
   componentDidMount() {
     this.props.toggleIsFetching(true);
     axios.get<UsersAPIResponseType>(
-      `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+      `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+      {withCredentials: true},
     ).then(response => {
       this.props.toggleIsFetching(false);
       this.props.setUsers(response.data.items);
@@ -47,7 +48,8 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
     this.props.toggleIsFetching(true);
     this.props.setCurrentPage(pageNumber);
     axios.get<UsersAPIResponseType>(
-      `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`
+      `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
+      {withCredentials: true},
     ).then(response => {
       this.props.toggleIsFetching(false);
       this.props.setUsers(response.data.items);
