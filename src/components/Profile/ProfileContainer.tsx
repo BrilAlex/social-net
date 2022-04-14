@@ -20,7 +20,7 @@ type MapDispatchToPropsType = {
 
 type ProfileAPIProsType = RouteComponentProps<PathParamsType> & MapStateToPropsType & MapDispatchToPropsType;
 
-type ProfileAPIResponseType = ProfileType;
+export type ProfileAPIResponseType = ProfileType;
 
 class ProfileContainer extends React.Component<ProfileAPIProsType> {
   componentDidMount() {

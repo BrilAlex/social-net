@@ -4,7 +4,25 @@
     background: #323232;
     color: #fff;
 }
-.header img {
+.header .logo {
     width: 120px;
     margin-top: 10px;
+}
+
+.loginBlock {
+    float: right;
+}
+
+.loginBlock .container {
+    display: flex;
+}
+
+.loginBlock img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.loginBlock a {
+    color: white;
+    text-decoration: none;
 }
