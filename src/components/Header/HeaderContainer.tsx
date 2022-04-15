@@ -3,9 +3,8 @@ import {Header} from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 import {setAuthUserData, setAuthUserProfile} from "../../redux/authReducer";
-import axios from "axios";
 import {ProfileType} from "../../redux/profileReducer";
-import {ProfileAPIResponseType} from "../Profile/ProfileContainer";
+import {authAPI, profileAPI} from "../../api/api";
 
 type MapStateToPropsType = {
   login: string
@@ -20,29 +19,17 @@ type MapDispatchPropsType = {
 
 type HeaderContainerPropsType = MapStateToPropsType & MapDispatchPropsType;
 
-type AuthAPIResponseType = {
-  data: {
-    id: number
-    email: string
-    login: string
-  }
-  resultCode: number
-  messages: Array<string>
-};
-
-class HeaderContainer extends React.Component<HeaderContainerPropsType>{
+class HeaderContainer extends React.Component<HeaderContainerPropsType> {
   componentDidMount() {
-    axios.get<AuthAPIResponseType>(
-      "https://social-network.samuraijs.com/api/1.0/auth/me",
-      {withCredentials: true}
-    ).then(response => {
-      if (response.data.resultCode === 0) {
-        const {id, email, login} = response.data.data;
+    authAPI.getAuthUser().then(data => {
+      if (data.resultCode === 0) {
+        const {id, email, login} = data.data;
         this.props.setAuthUserData(id, email, login);
-        return axios.get<ProfileAPIResponseType>("https://social-network.samuraijs.com/api/1.0/profile/" + id);
+        return profileAPI.getUserProfile(id.toString());
       }
-    }).then(response => response && this.props.setAuthUserProfile(response.data));
+    }).then(data => data && this.props.setAuthUserProfile(data));
   };
+
   render() {
     return <Header {...this.props}/>;
   };

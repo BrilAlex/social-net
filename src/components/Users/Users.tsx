@@ -3,7 +3,7 @@ import styles from "./Users.module.css";
 import defaultUserPhoto from "../../assets/images/man_avatar.png";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
   users: Array<UserType>
@@ -15,12 +15,6 @@ type UsersPropsType = {
   unfollowUser: (user_ID: number) => void
 };
 
-type FollowAPIResponseType = {
-  resultCode: number
-  messages: Array<string>
-  data: {}
-};
-
 export const Users: FC<UsersPropsType> = (props) => {
   const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
   let pages: Array<number> = [];
@@ -29,20 +23,13 @@ export const Users: FC<UsersPropsType> = (props) => {
   }
 
   const followUser = (user_ID: number) => {
-    axios.post<FollowAPIResponseType>(
-      `https://social-network.samuraijs.com/api/1.0/follow/${user_ID}`,
-      {},
-      {withCredentials: true, headers: {"API-KEY": "07a6853a-00ae-46be-89bd-7635822fedbc"}}
-    ).then(response => {
-      if (response.data.resultCode === 0) props.followUser(user_ID);
+    followAPI.follow(user_ID).then(data => {
+      if (data.resultCode === 0) props.followUser(user_ID);
     });
   };
   const unfollowUser = (user_ID: number) => {
-    axios.delete<FollowAPIResponseType>(
-      `https://social-network.samuraijs.com/api/1.0/follow/${user_ID}`,
-      {withCredentials: true, headers: {"API-KEY": "07a6853a-00ae-46be-89bd-7635822fedbc"}}
-    ).then(response => {
-      if (response.data.resultCode === 0) props.unfollowUser(user_ID);
+    followAPI.unfollow(user_ID).then(data => {
+      if (data.resultCode === 0) props.unfollowUser(user_ID);
     });
   };
 
