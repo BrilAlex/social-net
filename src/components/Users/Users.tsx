@@ -13,6 +13,8 @@ type UsersPropsType = {
   setCurrentPage: (pageNumber: number) => void
   followUser: (user_ID: number) => void
   unfollowUser: (user_ID: number) => void
+  followingInProgress: Array<number>
+  toggleFollowingProgress: (inProgress: boolean, user_ID: number) => void
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -23,13 +25,17 @@ export const Users: FC<UsersPropsType> = (props) => {
   }
 
   const followUser = (user_ID: number) => {
+    props.toggleFollowingProgress(true, user_ID);
     followAPI.follow(user_ID).then(data => {
       if (data.resultCode === 0) props.followUser(user_ID);
+      props.toggleFollowingProgress(false, user_ID);
     });
   };
   const unfollowUser = (user_ID: number) => {
+    props.toggleFollowingProgress(true, user_ID);
     followAPI.unfollow(user_ID).then(data => {
       if (data.resultCode === 0) props.unfollowUser(user_ID);
+      props.toggleFollowingProgress(false, user_ID);
     });
   };
 
@@ -57,9 +63,19 @@ export const Users: FC<UsersPropsType> = (props) => {
               </NavLink>
               {
                 u.followed ?
-                  <button onClick={() => unfollowUser(u.id)}>Unfollow</button>
+                  <button
+                    onClick={() => unfollowUser(u.id)}
+                    disabled={props.followingInProgress.some(id => id === u.id)}
+                  >
+                    Unfollow
+                  </button>
                   :
-                  <button onClick={() => followUser(u.id)}>Follow</button>
+                  <button
+                    onClick={() => followUser(u.id)}
+                    disabled={props.followingInProgress.some(id => id === u.id)}
+                  >
+                    Follow
+                  </button>
               }
             </div>
             <div className={styles.userInfo}>
