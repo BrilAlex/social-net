@@ -3,7 +3,6 @@ import styles from "./Users.module.css";
 import defaultUserPhoto from "../../assets/images/man_avatar.png";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {followAPI} from "../../api/api";
 
 type UsersPropsType = {
   users: Array<UserType>
@@ -14,7 +13,6 @@ type UsersPropsType = {
   followUser: (user_ID: number) => void
   unfollowUser: (user_ID: number) => void
   followingInProgress: Array<number>
-  toggleFollowingProgress: (inProgress: boolean, user_ID: number) => void
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -25,18 +23,10 @@ export const Users: FC<UsersPropsType> = (props) => {
   }
 
   const followUser = (user_ID: number) => {
-    props.toggleFollowingProgress(true, user_ID);
-    followAPI.follow(user_ID).then(data => {
-      if (data.resultCode === 0) props.followUser(user_ID);
-      props.toggleFollowingProgress(false, user_ID);
-    });
+    props.followUser(user_ID);
   };
   const unfollowUser = (user_ID: number) => {
-    props.toggleFollowingProgress(true, user_ID);
-    followAPI.unfollow(user_ID).then(data => {
-      if (data.resultCode === 0) props.unfollowUser(user_ID);
-      props.toggleFollowingProgress(false, user_ID);
-    });
+    props.unfollowUser(user_ID);
   };
 
   return (
