@@ -1,4 +1,6 @@
 import {ActionType} from "./reduxStore";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 export type UserType = {
   id: number
@@ -39,6 +41,7 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const TOGGLE_FOLLOWING_PROGRESS = "TOGGLE_FOLLOWING_PROGRESS";
 
+// actionCreators
 export const followUser = (user_ID: number) => ({type: FOLLOW_USER, user_ID} as const);
 export const unfollowUser = (user_ID: number) => ({type: UNFOLLOW_USER, user_ID} as const);
 export const setUsers = (users: UserType[]) => ({type: SET_USERS, users} as const);
@@ -50,6 +53,18 @@ export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCH
 export const toggleFollowingProgress = (inProgress: boolean, user_ID: number) => ({
   type: TOGGLE_FOLLOWING_PROGRESS, inProgress, user_ID,
 } as const);
+
+// thunkCreators
+export const getUsers = (currentPage: number, pageSize: number) => {
+  return (dispatch: Dispatch) => {
+    dispatch(toggleIsFetching(true));
+    usersAPI.getUsers(currentPage, pageSize).then(data => {
+      dispatch(toggleIsFetching(false));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalUsersCount(data.totalCount));
+    });
+  };
+};
 
 export const usersReducer = (state: UsersInitStateType = initialState, action: ActionType): UsersInitStateType => {
   switch (action.type) {

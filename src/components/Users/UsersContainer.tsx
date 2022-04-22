@@ -2,12 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 import {
-  followUser, setCurrentPage, setTotalUsersCount,
-  setUsers, toggleFollowingProgress, toggleIsFetching,
+  followUser,
+  getUsers,
+  setCurrentPage,
+  toggleFollowingProgress,
   unfollowUser,
   UserType
 } from "../../redux/usersReducer";
-import {usersAPI} from "../../api/api";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 
@@ -23,32 +24,21 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
   followUser: (user_ID: number) => void
   unfollowUser: (user_ID: number) => void
-  setUsers: (users: UserType[]) => void
-  setTotalUsersCount: (totalCount: number) => void
   setCurrentPage: (pageNumber: number) => void
-  toggleIsFetching: (isFetching: boolean) => void
   toggleFollowingProgress: (inProgress: boolean, user_ID: number) => void
+  getUsers: (currentPage: number, pageSize: number) => void
 };
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
   componentDidMount() {
-    this.props.toggleIsFetching(true);
-    usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(data.items);
-      this.props.setTotalUsersCount(data.totalCount);
-    });
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   };
 
   setCurrentPage = (pageNumber: number) => {
-    this.props.toggleIsFetching(true);
     this.props.setCurrentPage(pageNumber);
-    usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(data.items);
-    });
+    this.props.getUsers(pageNumber, this.props.pageSize);
   };
 
   render() {
@@ -85,9 +75,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 export default connect(mapStateToProps, {
   followUser,
   unfollowUser,
-  setUsers,
-  setTotalUsersCount,
   setCurrentPage,
-  toggleIsFetching,
   toggleFollowingProgress,
+  getUsers
 })(UsersContainer);
