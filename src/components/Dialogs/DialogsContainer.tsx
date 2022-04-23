@@ -5,7 +5,7 @@ import {
   updateNewMessageTextAC
 } from "../../redux/dialogsReducer";
 import {connect} from "react-redux";
-import {ActionType, AppStateType} from "../../redux/reduxStore";
+import {AppActionType, AppStateType} from "../../redux/reduxStore";
 
 type MapStateToPropsType = DialogsInitStateType;
 
@@ -24,7 +24,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
   };
 };
 
-const mapDispatchToProps = (dispatch: (action: ActionType) => void): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: (action: AppActionType) => void): MapDispatchToPropsType => {
   return {
     sendMessage: () => {
       dispatch(sendMessageAC());

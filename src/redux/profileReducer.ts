@@ -1,4 +1,5 @@
-import {ActionType} from "./reduxStore";
+import {AppActionType, AppThunkType} from "./reduxStore";
+import {profileAPI} from "../api/api";
 
 export type PostType = {
   id: number
@@ -45,11 +46,17 @@ const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 
+// actionCreators
 export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, text} as const);
 export const addPostAC = () => ({type: ADD_POST} as const);
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const);
 
-export const profileReducer = (state: ProfileInitStateType = initialState, action: ActionType): ProfileInitStateType => {
+// thunkCreators
+export const getUserProfile = (user_ID: string): AppThunkType => (dispatch) => {
+  profileAPI.getUserProfile(user_ID).then(data => dispatch(setUserProfile(data)));
+};
+
+export const profileReducer = (state: ProfileInitStateType = initialState, action: AppActionType): ProfileInitStateType => {
   switch (action.type) {
     case UPDATE_NEW_POST_TEXT: {
       return {

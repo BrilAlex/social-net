@@ -1,4 +1,4 @@
-import {ActionType} from "./reduxStore";
+import {AppActionType} from "./reduxStore";
 
 export type DialogType = {
   id: number
@@ -56,7 +56,7 @@ export const updateNewMessageTextAC = (text: string) =>
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 
-export const dialogsReducer = (state = initialState, action: ActionType): DialogsInitStateType => {
+export const dialogsReducer = (state = initialState, action: AppActionType): DialogsInitStateType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT: {
       return {

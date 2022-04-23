@@ -4,11 +4,12 @@ import {DialogsActionType, dialogsReducer} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 import {UsersActionType, usersReducer} from "./usersReducer";
 import {AuthActionType, authReducer} from "./authReducer";
-import thunkMiddleware from "redux-thunk";
+import thunkMiddleware, {ThunkAction} from "redux-thunk";
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 
-export type ActionType = ProfileActionType | DialogsActionType | UsersActionType | AuthActionType;
+export type AppActionType = ProfileActionType | DialogsActionType | UsersActionType | AuthActionType;
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionType>;
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,

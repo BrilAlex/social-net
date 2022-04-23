@@ -1,9 +1,9 @@
 import manAvatar from "./../assets/images/man_avatar.png";
 import womanAvatar from "./../assets/images/woman_avatar.png";
-import {profileReducer} from "./profileReducer";
-import {dialogsReducer} from "./dialogsReducer";
-import {sidebarReducer} from "./sidebarReducer";
-import {ActionType} from "./reduxStore";
+// import {profileReducer} from "./profileReducer";
+// import {dialogsReducer} from "./dialogsReducer";
+// import {sidebarReducer} from "./sidebarReducer";
+import {AppActionType} from "./reduxStore";
 
 type PostType = {
   id: number
@@ -55,7 +55,7 @@ type RootStoreType = {
   _subscriber: (state: RootStateType) => void
   subscribe: (observer: (state: RootStateType) => void) => void
   getState: () => RootStateType
-  dispatch: (action: ActionType) => void
+  dispatch: (action: AppActionType) => void
 };
 
 const store: RootStoreType = {
