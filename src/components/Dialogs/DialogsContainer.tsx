@@ -7,7 +7,7 @@ import {
 import {connect} from "react-redux";
 import {AppActionType, AppStateType} from "../../redux/reduxStore";
 
-type MapStateToPropsType = DialogsInitStateType;
+type MapStateToPropsType = DialogsInitStateType & { isAuth: boolean };
 
 type MapDispatchToPropsType = {
   sendMessage: () => void
@@ -21,6 +21,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
     newMessageText: state.dialogsPage.newMessageText,
+    isAuth: state.auth.isAuth,
   };
 };
 
