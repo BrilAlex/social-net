@@ -4,6 +4,7 @@ import defaultProfileBG from "./../../../assets/images/default_profile_bg.jpg";
 import {ProfileType} from "../../../redux/profileReducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import defaultAvatar from "../../../assets/images/man_avatar.png";
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
   profile: ProfileType
@@ -26,6 +27,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = (props) => {
         <div className={styles.profileInfo}>
           <h3>Profile description:</h3>
           <p>Name: {props.profile.fullName}</p>
+          <ProfileStatus status={"Hello my friends!!!"}/>
           {props.profile.lookingForAJob ?
             <>
               <p>Looking for a job: Yes</p>

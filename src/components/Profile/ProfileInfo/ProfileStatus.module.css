@@ -1,0 +1,11 @@
+.status {
+  margin: 5px 0;
+}
+
+.statusText {
+  cursor: pointer;
+}
+
+.statusInput:focus {
+  outline: none;
+}
