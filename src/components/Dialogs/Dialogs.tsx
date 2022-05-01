@@ -3,7 +3,6 @@ import styles from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
-import {Redirect} from "react-router-dom";
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const dialogsElements = props.dialogs.map(d =>
@@ -28,8 +27,6 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const onChangeNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     props.updateNewMessageText(e.currentTarget.value);
   };
-
-  if (!props.isAuth) return <Redirect to={"/login"}/>;
 
   return (
     <div className={styles.dialogsPage}>
