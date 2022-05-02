@@ -11,21 +11,21 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     statusText: "",
   };
 
-  activateEditMode() {
+  activateEditMode = () => {
     this.setState({
       editMode: true,
       statusText: this.props.status,
     });
   };
 
-  deactivateEditMode() {
+  deactivateEditMode = () => {
     this.setState({
       editMode: false,
       statusText: "",
     });
   };
 
-  changeStatusText(e: ChangeEvent<HTMLInputElement>) {
+  changeStatusText = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       statusText: e.currentTarget.value,
     });
@@ -35,7 +35,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     return (
       <div className={s.status}>
         {!this.state.editMode &&
-        <span className={s.statusText} onDoubleClick={this.activateEditMode.bind(this)}>
+        <span className={s.statusText} onDoubleClick={this.activateEditMode}>
           {this.props.status}
         </span>
         }
@@ -43,8 +43,8 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         <input
           className={s.statusInput}
           value={this.state.statusText}
-          onChange={this.changeStatusText.bind(this)}
-          onBlur={this.deactivateEditMode.bind(this)}
+          onChange={this.changeStatusText}
+          onBlur={this.deactivateEditMode}
           autoFocus
         />
         }

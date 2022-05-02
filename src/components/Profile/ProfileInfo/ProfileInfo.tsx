@@ -27,7 +27,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = (props) => {
         <div className={styles.profileInfo}>
           <h3>Profile description:</h3>
           <p>Name: {props.profile.fullName}</p>
-          <ProfileStatus status={"Hello my friends!!!"}/>
+          <ProfileStatus status={"Hello my friends!"}/>
           {props.profile.lookingForAJob ?
             <>
               <p>Looking for a job: Yes</p>
