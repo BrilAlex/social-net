@@ -3,6 +3,7 @@ import s from "./ProfileStatus.module.css";
 
 type ProfileStatusPropsType = {
   status: string
+  updateStatus: (newStatus: string) => void
 };
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
@@ -23,6 +24,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
       editMode: false,
       statusText: "",
     });
+    this.props.updateStatus(this.state.statusText);
   };
 
   changeStatusText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
       <div className={s.status}>
         {!this.state.editMode &&
         <span className={s.statusText} onDoubleClick={this.activateEditMode}>
-          {this.props.status}
+          {this.props.status || "------"}
         </span>
         }
         {this.state.editMode &&

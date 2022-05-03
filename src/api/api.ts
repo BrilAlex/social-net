@@ -2,7 +2,7 @@ import axios from "axios";
 import {UserType} from "../redux/usersReducer";
 import {ProfileType} from "../redux/profileReducer";
 
-type CommonAPIResponseType<T> = {
+type CommonAPIResponseType<T = {}> = {
   data: T
   resultCode: number
   messages: Array<string>
@@ -38,6 +38,16 @@ export const profileAPI = {
       .get<ProfileAPIResponseType>(`profile/${user_ID}`)
       .then(response => response.data);
   },
+  getUserStatus(user_ID: string) {
+    return axiosInstance
+      .get<string>(`profile/status/${user_ID}`)
+      .then(response => response.data);
+  },
+  updateUserStatus(newStatus: string) {
+    return axiosInstance
+      .put<CommonAPIResponseType>("profile/status", {status: newStatus})
+      .then(response => response.data);
+  },
 };
 
 type AuthAPIDataType = {
@@ -54,17 +64,15 @@ export const authAPI = {
   },
 };
 
-type FollowAPIDataType = {};
-
 export const followAPI = {
   follow(user_ID: number) {
     return axiosInstance
-      .post<CommonAPIResponseType<FollowAPIDataType>>(`follow/${user_ID}`, {})
+      .post<CommonAPIResponseType>(`follow/${user_ID}`, {})
       .then(response => response.data);
   },
   unfollow(user_ID: number) {
     return axiosInstance
-      .delete<CommonAPIResponseType<FollowAPIDataType>>(`follow/${user_ID}`)
+      .delete<CommonAPIResponseType>(`follow/${user_ID}`)
       .then(response => response.data);
   },
 }

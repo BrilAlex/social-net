@@ -35,6 +35,7 @@ test("Authorised user data should be set to state", () => {
 test("Authorised user profile should be set to state", () => {
   const userProfile: ProfileType = {
     userId: 2,
+    aboutMe: "",
     lookingForAJob: true,
     lookingForAJobDescription: "",
     fullName: "User",
