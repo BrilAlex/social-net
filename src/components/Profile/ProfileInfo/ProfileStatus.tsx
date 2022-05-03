@@ -6,23 +6,34 @@ type ProfileStatusPropsType = {
   updateStatus: (newStatus: string) => void
 };
 
+type ProfileStatusStateType = {
+  editMode: boolean
+  statusText: string
+};
+
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
-  state = {
+  state: ProfileStatusStateType = {
     editMode: false,
-    statusText: "",
+    statusText: this.props.status,
+  };
+
+  componentDidUpdate(prevProps:ProfileStatusPropsType, prevState: ProfileStatusStateType) {
+    if (this.props.status !== prevProps.status) {
+      this.setState({
+        statusText: this.props.status,
+      });
+    }
   };
 
   activateEditMode = () => {
     this.setState({
       editMode: true,
-      statusText: this.props.status,
     });
   };
 
   deactivateEditMode = () => {
     this.setState({
       editMode: false,
-      statusText: "",
     });
     this.props.updateStatus(this.state.statusText);
   };

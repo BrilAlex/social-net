@@ -30,6 +30,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = (props) => {
           <h3>Profile description:</h3>
           <p>Name: {props.profile.fullName}</p>
           <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+          {props.profile.aboutMe && <p>About me: {props.profile.aboutMe}</p>}
           {props.profile.lookingForAJob ?
             <>
               <p>Looking for a job: Yes</p>

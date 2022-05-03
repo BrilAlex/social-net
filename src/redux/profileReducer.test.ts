@@ -73,5 +73,5 @@ test("User status should be immutably updated in state", () => {
   const newState = profileReducer(state, action);
 
   expect(newState).not.toBe(state);
-  expect(newState.status).toEqual(newStatus);
+  expect(newState.status).toBe(newStatus);
 });
