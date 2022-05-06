@@ -4,7 +4,9 @@ import {authAPI, profileAPI} from "../api/api";
 
 export type AuthInitStateType = typeof initState;
 
-export type AuthActionType = ReturnType<typeof setAuthUserData> | ReturnType<typeof setAuthUserProfile>;
+export type AuthActionType =
+  ReturnType<typeof setAuthUserData>
+  | ReturnType<typeof setAuthUserProfile>;
 
 const initState = {
   user_ID: 0,
@@ -34,6 +36,16 @@ export const getAuthUserData = (): AppThunkType => (dispatch) => {
       return profileAPI.getUserProfile(id.toString());
     }
   }).then(data => data && dispatch(setAuthUserProfile(data)));
+};
+
+export const sendLoginData = (loginFormData: { email: string, password: string, rememberMe: boolean }): AppThunkType => {
+  return (dispatch) => {
+    authAPI.login(loginFormData).then(data => {
+      if (data.resultCode === 0) {
+        return profileAPI.getUserProfile(data.data.userId.toString());
+      }
+    }).then(data => data && dispatch(setAuthUserProfile(data)));
+  };
 };
 
 export const authReducer = (state: AuthInitStateType = initState, action: AppActionType): AuthInitStateType => {

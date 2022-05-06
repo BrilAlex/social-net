@@ -62,6 +62,13 @@ export const authAPI = {
       .get<CommonAPIResponseType<AuthAPIDataType>>("auth/me")
       .then(response => response.data);
   },
+  login(loginData: {email: string, password: string, rememberMe: boolean}) {
+    return axiosInstance
+      .post<CommonAPIResponseType<{userId: number}>>("auth/login", loginData)
+      .then(response => {
+        return response.data;
+      });
+  },
 };
 
 export const followAPI = {
