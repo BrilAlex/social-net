@@ -14,8 +14,7 @@ export type MessageType = {
 
 export type DialogsInitStateType = typeof initialState;
 
-export type DialogsActionType =
-  ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageTextAC>;
+export type DialogsActionType = ReturnType<typeof sendNewMessageAC>;
 
 const initialState = {
   dialogs: [
@@ -45,37 +44,28 @@ const initialState = {
       messageTime: "12:24",
     },
   ] as Array<MessageType>,
-  newMessageText: "",
 };
 
-export const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
-export const SEND_MESSAGE = "SEND-MESSAGE";
+export const SEND_NEW_MESSAGE = "SEND-NEW-MESSAGE";
 
-export const updateNewMessageTextAC = (text: string) =>
-  ({type: UPDATE_NEW_MESSAGE_TEXT, text} as const);
-
-export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
+export const sendNewMessageAC = (newMessageText: string) => ({
+  type: SEND_NEW_MESSAGE,
+  newMessageText,
+} as const);
 
 export const dialogsReducer = (state = initialState, action: AppActionType): DialogsInitStateType => {
   switch (action.type) {
-    case UPDATE_NEW_MESSAGE_TEXT: {
-      return {
-        ...state,
-        newMessageText: action.text,
-      };
-    }
-    case SEND_MESSAGE: {
+    case SEND_NEW_MESSAGE: {
       const newMessage: MessageType = {
         id: state.messages.length + 1,
         sender: "Me",
-        messageText: state.newMessageText,
+        messageText: action.newMessageText,
         messageTime: "14.51"
       };
 
       return {
         ...state,
         messages: [...state.messages, newMessage],
-        newMessageText: "",
       };
     }
     default:

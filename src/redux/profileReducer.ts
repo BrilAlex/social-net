@@ -32,8 +32,7 @@ export type ProfileType = {
 export type ProfileInitStateType = typeof initialState;
 
 export type ProfileActionType =
-  ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostTextAC>
+  ReturnType<typeof addNewPostAC>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setUserStatus>;
 
@@ -43,18 +42,15 @@ const initialState = {
     {id: 1, postText: "It's my first post", likesCount: 20},
     {id: 2, postText: "Hi! How are you?", likesCount: 10},
   ] as Array<PostType>,
-  newPostText: "",
   status: "",
 };
 
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_POST = "ADD-POST";
+const ADD_NEW_POST = "ADD-NEW-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET-USER-STATUS";
 
 // actionCreators
-export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, text} as const);
-export const addPostAC = () => ({type: ADD_POST} as const);
+export const addNewPostAC = (newPostText: string) => ({type: ADD_NEW_POST, newPostText} as const);
 export const setUserProfile = (profile: ProfileType) => ({
   type: SET_USER_PROFILE,
   profile
@@ -83,23 +79,16 @@ export const updateUserStatus = (newStatus: string): AppThunkType => {
 
 export const profileReducer = (state: ProfileInitStateType = initialState, action: AppActionType): ProfileInitStateType => {
   switch (action.type) {
-    case UPDATE_NEW_POST_TEXT: {
-      return {
-        ...state,
-        newPostText: action.text,
-      };
-    }
-    case ADD_POST: {
+    case ADD_NEW_POST: {
       const newPost: PostType = {
         id: state.posts.length + 1,
-        postText: state.newPostText,
+        postText: action.newPostText,
         likesCount: 0
       };
 
       return {
         ...state,
         posts: [...state.posts, newPost],
-        newPostText: "",
       };
     }
     case SET_USER_PROFILE: {

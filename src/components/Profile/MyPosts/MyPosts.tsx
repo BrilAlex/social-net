@@ -1,7 +1,8 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
+import {AddNewPostFormContainer, AddNewPostFormDataType} from "./AddNewPostForm/AddNewPostForm";
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
   const postsElements = props.posts.map(p =>
@@ -12,30 +13,17 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     />
   );
 
-  const addPost = () => {
-    if (props.newPostText !== "") {
-      props.addPost();
-    }
-  };
-
-  const onChangeNewPostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateNewPostText(e.currentTarget.value);
+  const addNewPost = (formData: AddNewPostFormDataType) => {
+    props.addNewPost(formData.newPostText);
   };
 
   return (
     <div className={styles.postsBlock}>
       <h3>My posts</h3>
-      <div className={styles.newPostBlock}>
-          <textarea
-            value={props.newPostText}
-            onChange={onChangeNewPostText}
-            placeholder={"Enter new post text"}
-          />
-        <button onClick={addPost}>Add post</button>
-      </div>
+      <AddNewPostFormContainer onSubmit={addNewPost}/>
       <div className={styles.postsList}>
         {postsElements}
       </div>
     </div>
   );
-}
+};
