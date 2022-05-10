@@ -1,6 +1,7 @@
 import {AppActionType, AppThunkType} from "./reduxStore";
 import {setUserProfile} from "./profileReducer";
 import {authAPI, profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 export type AuthInitStateType = typeof initState;
 
@@ -36,6 +37,9 @@ export const login = (email: string, password: string, rememberMe: boolean): App
     authAPI.login(email, password, rememberMe).then(data => {
       if (data.resultCode === 0) {
         dispatch(getAuthUserData());
+      } else {
+        const message = data.messages.length > 0 ? data.messages[0] : "Some error";
+        dispatch(stopSubmit("loginForm", {_error: message}));
       }
     });
   };

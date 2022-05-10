@@ -2,6 +2,7 @@
   margin-bottom: 10px;
 }
 
+.formControl input,
 .formControl textarea {
   display: block;
   width: 100%;
