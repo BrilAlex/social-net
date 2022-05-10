@@ -3,25 +3,35 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
 import styles from "./Login.module.css";
+import {connect} from "react-redux";
+import {login} from "../../redux/authReducer";
+import {AppStateType} from "../../redux/reduxStore";
+import {Redirect} from "react-router-dom";
 
 type LoginFormDataType = {
-  login: string
+  email: string
   password: string
   rememberMe: boolean
 };
 
-type LoginPropsType = {
-  sendLoginData: (loginFormData: { email: string, password: string, rememberMe: boolean }) => void
+type MapStateToPropsType = {
+  isAuth: boolean
 };
+
+type MapDispatchToPropsType = {
+  login: (email: string, password: string, rememberMe: boolean) => void
+};
+
+type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
         <Field
-          name={"login"}
+          name={"email"}
           component={Input}
-          placeholder={"Login"}
+          placeholder={"Email"}
           validate={[required]}
         />
       </div>
@@ -46,15 +56,14 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = (props) => {
 
 const LoginFormContainer = reduxForm<LoginFormDataType>({form: "loginForm"})(LoginForm);
 
-export const Login: FC<LoginPropsType> = (props) => {
+const Login: FC<LoginPropsType> = (props) => {
   const onLoginFormSubmit = (formData: LoginFormDataType) => {
-    const loginData = {
-      email: formData.login,
-      password: formData.password,
-      rememberMe: formData.rememberMe
-    };
-    props.sendLoginData(loginData);
+    props.login(formData.email, formData.password, formData.rememberMe);
   };
+
+  if (props.isAuth) {
+    return <Redirect to={"/profile"}/>;
+  }
 
   return (
     <div className={styles.loginPage}>
@@ -65,3 +74,9 @@ export const Login: FC<LoginPropsType> = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state: AppStateType) => ({
+  isAuth: state.auth.isAuth,
+});
+
+export default connect(mapStateToProps, {login})(Login);

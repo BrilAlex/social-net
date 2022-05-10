@@ -9,6 +9,7 @@ type HeaderPropsType = {
   login: string
   isAuth: boolean
   profile: ProfileType
+  logout: () => void
 };
 
 export const Header: FC<HeaderPropsType> = (props) => {
@@ -29,7 +30,10 @@ export const Header: FC<HeaderPropsType> = (props) => {
               </NavLink>
               <div className={styles.userInfo}>
                 <p>Name: {props.profile.fullName}</p>
-                <p>{props.login}</p>
+                <p>
+                  {props.login}
+                  <button onClick={props.logout}>Logout</button>
+                </p>
               </div>
             </div>
           :

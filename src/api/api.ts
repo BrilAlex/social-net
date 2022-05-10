@@ -57,17 +57,25 @@ type AuthAPIDataType = {
 };
 
 export const authAPI = {
-  getAuthUser() {
+  me() {
     return axiosInstance
       .get<CommonAPIResponseType<AuthAPIDataType>>("auth/me")
       .then(response => response.data);
   },
-  login(loginData: {email: string, password: string, rememberMe: boolean}) {
+  login(email: string, password: string, rememberMe: boolean = false) {
     return axiosInstance
-      .post<CommonAPIResponseType<{userId: number}>>("auth/login", loginData)
+      .post<CommonAPIResponseType<{ userId: number }>>(
+        "auth/login",
+        {email, password, rememberMe},
+      )
       .then(response => {
         return response.data;
       });
+  },
+  logout() {
+    return axiosInstance
+      .delete<CommonAPIResponseType>("auth/login")
+      .then(response => response.data);
   },
 };
 
