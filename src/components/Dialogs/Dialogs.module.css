@@ -14,14 +14,3 @@
 .newMessageBlock {
     margin-top: 20px;
 }
-
-.newMessageBlock textarea {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.newMessageBlock button {
-    display: block;
-    padding: 5px 15px;
-}

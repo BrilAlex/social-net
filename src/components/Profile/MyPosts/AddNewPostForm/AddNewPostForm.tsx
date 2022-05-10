@@ -1,22 +1,27 @@
-import styles from "../MyPosts.module.css";
 import React, {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../../utils/validators/validators";
+import {Textarea} from "../../../common/FormControls/FormControls";
+import styles from "./AddNewPostForm.module.css";
 
 export type AddNewPostFormDataType = {
   newPostText: string
 };
 
+const maxLength10 = maxLengthCreator(10);
+
 const AddNewPostForm: FC<InjectedFormProps<AddNewPostFormDataType>> = (props) => {
   return (
-    <form className={styles.newPostBlock} onSubmit={props.handleSubmit}>
+    <form onSubmit={props.handleSubmit}>
       <Field
         name={"newPostText"}
-        component={"textarea"}
+        component={Textarea}
         placeholder={"Enter new post text"}
+        validate={[required, maxLength10]}
       />
-      <button>Add post</button>
+      <button className={styles.submitButton}>Add post</button>
     </form>
   );
 };
 
-export const AddNewPostFormContainer = reduxForm<AddNewPostFormDataType>({form: "addNewPostForm"})(AddNewPostForm);
+export default reduxForm<AddNewPostFormDataType>({form: "addNewPostForm"})(AddNewPostForm);

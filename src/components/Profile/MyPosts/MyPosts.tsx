@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
-import {AddNewPostFormContainer, AddNewPostFormDataType} from "./AddNewPostForm/AddNewPostForm";
+import AddNewPostForm, {AddNewPostFormDataType} from "./AddNewPostForm/AddNewPostForm";
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
   const postsElements = props.posts.map(p =>
@@ -20,7 +20,9 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
   return (
     <div className={styles.postsBlock}>
       <h3>My posts</h3>
-      <AddNewPostFormContainer onSubmit={addNewPost}/>
+      <div className={styles.newPostBlock}>
+        <AddNewPostForm onSubmit={addNewPost}/>
+      </div>
       <div className={styles.postsList}>
         {postsElements}
       </div>

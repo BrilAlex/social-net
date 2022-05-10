@@ -1,5 +1,8 @@
 import {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {Input} from "../common/FormControls/FormControls";
+import {required} from "../../utils/validators/validators";
+import styles from "./Login.module.css";
 
 type LoginFormDataType = {
   login: string
@@ -8,23 +11,34 @@ type LoginFormDataType = {
 };
 
 type LoginPropsType = {
-  sendLoginData: (loginFormData: {email: string, password: string, rememberMe: boolean}) => void
+  sendLoginData: (loginFormData: { email: string, password: string, rememberMe: boolean }) => void
 };
 
 const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
-        <Field name={"login"} component={"input"} placeholder={"Login"}/>
+        <Field
+          name={"login"}
+          component={Input}
+          placeholder={"Login"}
+          validate={[required]}
+        />
       </div>
       <div>
-        <Field name={"password"} component={"input"} type={"password"} placeholder={"Password"}/>
+        <Field
+          name={"password"}
+          component={Input}
+          type={"password"}
+          placeholder={"Password"}
+          validate={[required]}
+        />
       </div>
       <div>
         <Field name={"rememberMe"} component={"input"} type={"checkbox"}/> Remember me
       </div>
       <div>
-        <button>Login</button>
+        <button className={styles.submitButton}>Login</button>
       </div>
     </form>
   );
@@ -43,9 +57,11 @@ export const Login: FC<LoginPropsType> = (props) => {
   };
 
   return (
-    <div>
+    <div className={styles.loginPage}>
       <h1>Login</h1>
-      <LoginFormContainer onSubmit={onLoginFormSubmit}/>
+      <div className={styles.loginForm}>
+        <LoginFormContainer onSubmit={onLoginFormSubmit}/>
+      </div>
     </div>
   );
 };

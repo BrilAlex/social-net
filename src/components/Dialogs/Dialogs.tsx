@@ -3,10 +3,7 @@ import styles from "./Dialogs.module.css";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
-import {
-  SendNewMessageFormContainer,
-  SendNewMessageFormDataType
-} from "./SendNewMessageForm/SendNewMessageForm";
+import SendNewMessageForm, {SendNewMessageFormDataType} from "./SendNewMessageForm/SendNewMessageForm";
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
   const dialogsElements = props.dialogs.map(d =>
@@ -33,7 +30,9 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
       </div>
       <div className={styles.messagesContainer}>
         <div>{messagesElements}</div>
-        <SendNewMessageFormContainer onSubmit={sendNewMessage}/>
+        <div className={styles.newMessageBlock}>
+          <SendNewMessageForm onSubmit={sendNewMessage}/>
+        </div>
       </div>
     </div>
   );
