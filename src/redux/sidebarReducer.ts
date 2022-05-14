@@ -1,15 +1,16 @@
 import womanAvatar from "../assets/images/woman_avatar.png";
 import manAvatar from "../assets/images/man_avatar.png";
-import {AppActionType} from "./reduxStore";
+import {AppActionsType} from "./reduxStore";
 
+// Types
 export type FriendType = {
   id: number
   name: string
   avatarSrc: string
 };
-
 export type SidebarInitStateType = typeof initialState;
 
+// Initial state
 const initialState = {
   friends: [
     {id: 1, name: "Karina", avatarSrc: womanAvatar},
@@ -20,7 +21,7 @@ const initialState = {
   ] as Array<FriendType>,
 };
 
-export const sidebarReducer = (state = initialState, action: AppActionType): SidebarInitStateType => {
+export const sidebarReducer = (state = initialState, action: AppActionsType): SidebarInitStateType => {
   switch (action.type) {
     default:
       return state;

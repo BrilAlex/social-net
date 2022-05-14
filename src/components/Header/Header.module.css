@@ -1,33 +1,21 @@
 .header {
-    grid-area: header;
-    padding: 10px 20px;
-    background: #323232;
-    color: #fff;
+  grid-area: header;
+  padding: 10px 20px;
+  background: #323232;
+  color: #fff;
 }
+
 .header .logo {
-    width: 120px;
-    margin-top: 10px;
+  width: 120px;
+  margin-top: 10px;
 }
 
 .loginBlock {
-    float: right;
-}
-
-.loginBlock .container {
-    display: flex;
-}
-
-.loginBlock img {
-    width: 40px;
-    margin-right: 10px;
-}
-
-.loginBlock a {
-    color: white;
-    text-decoration: none;
+  float: right;
+  margin-top: 5px;
 }
 
 .userInfo button {
-    margin-left: 10px;
-    padding: 0 5px;
+  margin-left: 10px;
+  padding: 5px 10px;
 }

@@ -1,12 +1,12 @@
-import {AppActionType, AppThunkType} from "./reduxStore";
+import {AppThunkType} from "./reduxStore";
 import {profileAPI} from "../api/api";
 
+// Types
 export type PostType = {
   id: number
   postText: string
   likesCount: number
 };
-
 export type ProfileType = {
   userId: number
   aboutMe: string
@@ -28,16 +28,15 @@ export type ProfileType = {
     large: string
   }
 };
-
 export type ProfileInitStateType = typeof initialState;
-
-export type ProfileActionType =
+export type ProfileActionsType =
   ReturnType<typeof addNewPostAC>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setUserStatus>;
 
+// Initial state
 const initialState = {
-  profile: {} as ProfileType,
+  profile: null as ProfileType | null,
   posts: [
     {id: 1, postText: "It's my first post", likesCount: 20},
     {id: 2, postText: "Hi! How are you?", likesCount: 10},
@@ -45,11 +44,12 @@ const initialState = {
   status: "",
 };
 
+// Constants
 const ADD_NEW_POST = "ADD-NEW-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET-USER-STATUS";
 
-// actionCreators
+// Action Creators
 export const addNewPostAC = (newPostText: string) => ({type: ADD_NEW_POST, newPostText} as const);
 export const setUserProfile = (profile: ProfileType) => ({
   type: SET_USER_PROFILE,
@@ -57,11 +57,11 @@ export const setUserProfile = (profile: ProfileType) => ({
 } as const);
 export const setUserStatus = (status: string) => ({type: SET_USER_STATUS, status} as const);
 
-// thunkCreators
-export const getUserProfile = (user_ID: string): AppThunkType => (dispatch) => {
+// Thunk Creators
+export const getUserProfile = (user_ID: number): AppThunkType => (dispatch) => {
   profileAPI.getUserProfile(user_ID).then(data => dispatch(setUserProfile(data)));
 };
-export const getUserStatus = (user_ID: string): AppThunkType => {
+export const getUserStatus = (user_ID: number): AppThunkType => {
   return (dispatch) => {
     profileAPI.getUserStatus(user_ID).then(data => dispatch(setUserStatus(data)));
   };
@@ -77,7 +77,7 @@ export const updateUserStatus = (newStatus: string): AppThunkType => {
   };
 };
 
-export const profileReducer = (state: ProfileInitStateType = initialState, action: AppActionType): ProfileInitStateType => {
+export const profileReducer = (state: ProfileInitStateType = initialState, action: ProfileActionsType): ProfileInitStateType => {
   switch (action.type) {
     case ADD_NEW_POST: {
       const newPost: PostType = {

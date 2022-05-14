@@ -4,9 +4,9 @@ let initState: AuthInitStateType;
 
 beforeEach(() => {
   initState = {
-    user_ID: 0,
-    email: "",
-    login: "",
+    user_ID: null,
+    email: null,
+    login: null,
     isAuth: false,
   };
 });

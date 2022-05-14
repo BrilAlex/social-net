@@ -7,13 +7,13 @@ import defaultAvatar from "../../../assets/images/man_avatar.png";
 import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
-  profile: ProfileType
+  profile: ProfileType | null
   status: string
   updateStatus: (newStatus: string) => void
 };
 
 export const ProfileInfo: FC<ProfileInfoPropsType> = (props) => {
-  if (!props.profile.userId) {
+  if (!props.profile) {
     return <Preloader/>;
   }
 

@@ -1,6 +1,7 @@
-import {AppActionType, AppThunkType} from "./reduxStore";
+import {AppThunkType} from "./reduxStore";
 import {followAPI, usersAPI} from "../api/api";
 
+// Types
 export type UserType = {
   id: number
   name: string
@@ -11,10 +12,8 @@ export type UserType = {
   }
   followed: boolean
 };
-
 export type UsersInitStateType = typeof initialState;
-
-export type UsersActionType =
+export type UsersActionsType =
   ReturnType<typeof followUser>
   | ReturnType<typeof unfollowUser>
   | ReturnType<typeof setUsers>
@@ -23,6 +22,7 @@ export type UsersActionType =
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof toggleFollowingProgress>;
 
+// Initial state
 const initialState = {
   users: [] as UserType[],
   totalUsersCount: 0,
@@ -32,6 +32,7 @@ const initialState = {
   followingInProgress: [] as Array<number>,
 };
 
+// Constants
 const FOLLOW_USER = "FOLLOW-USER";
 const UNFOLLOW_USER = "UNFOLLOW-USER";
 const SET_USERS = "SET-USERS";
@@ -40,7 +41,7 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const TOGGLE_FOLLOWING_PROGRESS = "TOGGLE_FOLLOWING_PROGRESS";
 
-// actionCreators
+// Action Creators
 export const followUser = (user_ID: number) => ({type: FOLLOW_USER, user_ID} as const);
 export const unfollowUser = (user_ID: number) => ({type: UNFOLLOW_USER, user_ID} as const);
 export const setUsers = (users: UserType[]) => ({type: SET_USERS, users} as const);
@@ -53,7 +54,7 @@ export const toggleFollowingProgress = (inProgress: boolean, user_ID: number) =>
   type: TOGGLE_FOLLOWING_PROGRESS, inProgress, user_ID,
 } as const);
 
-// thunkCreators
+// Thunk Creators
 export const getUsers = (currentPage: number, pageSize: number): AppThunkType => (dispatch) => {
   dispatch(toggleIsFetching(true));
   usersAPI.getUsers(currentPage, pageSize).then(data => {
@@ -77,7 +78,7 @@ export const unfollow = (user_ID: number): AppThunkType => (dispatch) => {
   });
 };
 
-export const usersReducer = (state: UsersInitStateType = initialState, action: AppActionType): UsersInitStateType => {
+export const usersReducer = (state: UsersInitStateType = initialState, action: UsersActionsType): UsersInitStateType => {
   switch (action.type) {
     case FOLLOW_USER:
       return {

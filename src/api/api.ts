@@ -33,12 +33,12 @@ export const usersAPI = {
 type ProfileAPIResponseType = ProfileType;
 
 export const profileAPI = {
-  getUserProfile(user_ID: string) {
+  getUserProfile(user_ID: number) {
     return axiosInstance
       .get<ProfileAPIResponseType>(`profile/${user_ID}`)
       .then(response => response.data);
   },
-  getUserStatus(user_ID: string) {
+  getUserStatus(user_ID: number) {
     return axiosInstance
       .get<string>(`profile/status/${user_ID}`)
       .then(response => response.data);

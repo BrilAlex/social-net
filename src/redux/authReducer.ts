@@ -1,37 +1,36 @@
-import {AppActionType, AppThunkType} from "./reduxStore";
-import {setUserProfile} from "./profileReducer";
-import {authAPI, profileAPI} from "../api/api";
+import {AppThunkType} from "./reduxStore";
+import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
+// Types
 export type AuthInitStateType = typeof initState;
+export type AuthActionsType = ReturnType<typeof setAuthUserData>;
 
-export type AuthActionType = ReturnType<typeof setAuthUserData>;
-
+// Initial state
 const initState = {
-  user_ID: 0,
-  email: "",
-  login: "",
+  user_ID: null as number | null,
+  email: null as string | null,
+  login: null as string | null,
   isAuth: false,
 };
 
+// Constants
 const SET_AUTH_USER_DATA = "SET_AUTH_USER_DATA";
 
-// actionCreators
-export const setAuthUserData = (user_ID: number, email: string, login: string, isAuth: boolean) => ({
+// Action Creators
+export const setAuthUserData = (user_ID: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
   type: SET_AUTH_USER_DATA, payload: {user_ID, email, login, isAuth}
 } as const);
 
-// thunkCreators
+// Thunk Creators
 export const getAuthUserData = (): AppThunkType => (dispatch) => {
   authAPI.me().then(data => {
     if (data.resultCode === 0) {
       const {id, email, login} = data.data;
       dispatch(setAuthUserData(id, email, login, true));
-      return profileAPI.getUserProfile(id.toString());
     }
-  }).then(data => data && dispatch(setUserProfile(data)));
+  });
 };
-
 export const login = (email: string, password: string, rememberMe: boolean): AppThunkType => {
   return (dispatch) => {
     authAPI.login(email, password, rememberMe).then(data => {
@@ -44,7 +43,6 @@ export const login = (email: string, password: string, rememberMe: boolean): App
     });
   };
 };
-
 export const logout = (): AppThunkType => (dispatch) => {
   authAPI.logout().then(data => {
     if (data.resultCode === 0) {
@@ -53,7 +51,7 @@ export const logout = (): AppThunkType => (dispatch) => {
   });
 }
 
-export const authReducer = (state: AuthInitStateType = initState, action: AppActionType): AuthInitStateType => {
+export const authReducer = (state: AuthInitStateType = initState, action: AuthActionsType): AuthInitStateType => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
       return {

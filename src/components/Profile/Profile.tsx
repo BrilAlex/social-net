@@ -5,7 +5,7 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {ProfileType} from "../../redux/profileReducer";
 
 type ProfilePropsType = {
-  profile: ProfileType
+  profile: ProfileType | null
   status: string
   updateStatus: (newStatus: string) => void
 };
