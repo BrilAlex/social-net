@@ -15,6 +15,11 @@
   margin-top: 5px;
 }
 
+.loginBlock a {
+  color: white;
+  text-decoration: none;
+}
+
 .userInfo button {
   margin-left: 10px;
   padding: 5px 10px;
