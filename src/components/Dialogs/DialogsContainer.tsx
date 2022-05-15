@@ -5,6 +5,7 @@ import {RootActionsType, AppStateType} from "../../redux/reduxStore";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {ComponentType} from "react";
+import {getDialogs, getMessages} from "../../redux/dialogsSelectors";
 
 type MapStateToPropsType = DialogsInitStateType;
 
@@ -16,8 +17,8 @@ export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
   return {
-    dialogs: state.dialogsPage.dialogs,
-    messages: state.dialogsPage.messages,
+    dialogs: getDialogs(state),
+    messages: getMessages(state),
   };
 };
 
