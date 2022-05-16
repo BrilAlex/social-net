@@ -1,8 +1,14 @@
 import {AppStateType} from "./reduxStore";
+import {createSelector} from "reselect";
+import {UserType} from "./usersReducer";
 
-export const getUsers = (state: AppStateType) => {
-  return state.usersPage.users;
+const usersSelector = (state: AppStateType) => {
+  return state.usersPage.users
 };
+
+export const getUsers = createSelector(usersSelector, (users: Array<UserType>) => {
+  return users;
+});
 export const getTotalUsersCount = (state: AppStateType) => {
   return state.usersPage.totalUsersCount;
 };
