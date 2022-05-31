@@ -2,7 +2,7 @@
 import {AppThunkType} from "./reduxStore";
 import {getAuthUserData} from "./authReducer";
 
-type InitStateType = typeof initState;
+export type InitStateType = typeof initState;
 export type AppActionsType = ReturnType<typeof setInitializedSuccessfully>;
 
 // Initial state
