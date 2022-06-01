@@ -1,10 +1,10 @@
-import React from "react";
+import React, {memo} from "react";
 import styles from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 import AddNewPostForm, {AddNewPostFormDataType} from "./AddNewPostForm/AddNewPostForm";
 
-export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+export const MyPosts: React.FC<MyPostsPropsType> = memo((props) => {
   const postsElements = props.posts.map(p =>
     <Post
       key={p.id}
@@ -28,4 +28,4 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
       </div>
     </div>
   );
-};
+});
