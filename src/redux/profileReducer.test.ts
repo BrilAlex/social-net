@@ -1,5 +1,5 @@
 import {
-  addNewPostAC,
+  addNewPostAC, deletePostAC,
   ProfileInitStateType,
   profileReducer, ProfileType, setUserProfile, setUserStatus
 } from "./profileReducer";
@@ -17,19 +17,37 @@ beforeEach(() => {
   };
 });
 
-test("New post should be immutably added", () => {
+it("New post should be immutably added to state", () => {
+  // 1. test data
   const newPostText = "Hello world!";
   const action = addNewPostAC(newPostText);
 
+  // 2. action
   const newState = profileReducer(state, action);
 
+  // 3. expectation
   expect(newState).not.toBe(state);
   expect(newState.posts.length).toBe(3);
   expect(newState.posts[2].id).toBe(3);
   expect(newState.posts[2].postText).toBe(newPostText);
+  expect(newState.posts[2].likesCount).toBe(0);
 });
 
-test("Profile data should be immutably added to state", () => {
+it("Post with corresponding ID should be deleted from state", () => {
+  // 1. test data
+  const post_ID = 1;
+  const action = deletePostAC(post_ID);
+
+  // 2. action
+  const newState = profileReducer(state, action);
+
+  // 3. expectation
+  expect(newState).not.toBe(state);
+  expect(newState.posts.length).toBe(1);
+});
+
+it("Profile data should be immutably added to state", () => {
+  // 1. test data
   const profileData: ProfileType = {
     userId: 1,
     aboutMe: "",
@@ -46,18 +64,23 @@ test("Profile data should be immutably added to state", () => {
   };
   const action = setUserProfile(profileData);
 
+  // 2. action
   const newState = profileReducer(state, action);
 
+  // 3. expectation
   expect(newState).not.toBe(state);
   expect(newState.profile).toEqual(profileData);
 });
 
-test("User status should be immutably updated in state", () => {
+it("User status should be immutably updated in state", () => {
+  // 1. test data
   const newStatus = "New status";
   const action = setUserStatus(newStatus);
 
+  // 2. action
   const newState = profileReducer(state, action);
 
+  // 3. expectation
   expect(newState).not.toBe(state);
   expect(newState.status).toBe(newStatus);
 });
