@@ -5,7 +5,7 @@ import {MyPostsPropsType} from "./MyPostsContainer";
 import AddNewPostForm, {AddNewPostFormDataType} from "./AddNewPostForm/AddNewPostForm";
 
 export const MyPosts: React.FC<MyPostsPropsType> = memo((props) => {
-  const postsElements = props.posts.map(p =>
+  const postsElements = [...props.posts].reverse().map(p =>
     <Post
       key={p.id}
       postText={p.postText}
