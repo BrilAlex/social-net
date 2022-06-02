@@ -1,8 +1,8 @@
 import {FC} from "react";
 import styles from "./Users.module.css";
-import defaultUserPhoto from "../../assets/images/man_avatar.png";
 import {UserType} from "../../redux/usersReducer";
-import {NavLink} from "react-router-dom";
+import {Pagination} from "../common/Pagination/Pagination";
+import {User} from "./User/User";
 
 type UsersPropsType = {
   users: Array<UserType>
@@ -15,67 +15,37 @@ type UsersPropsType = {
   followingInProgress: Array<number>
 };
 
-export const Users: FC<UsersPropsType> = (props) => {
-  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  let pages: Array<number> = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
+export const Users: FC<UsersPropsType> = (
+  {
+    totalUsersCount,
+    pageSize,
+    currentPage,
+    setCurrentPage,
+    users,
+    ...props
   }
-
-  const followUser = (user_ID: number) => {
-    props.followUser(user_ID);
-  };
-  const unfollowUser = (user_ID: number) => {
-    props.unfollowUser(user_ID);
-  };
-
+) => {
   return (
     <div className={styles.usersPage}>
-      <div className={styles.pagination}>
-        {
-          pages.map((p, i) =>
-            <span
-              key={"page-" + i}
-              className={p === props.currentPage ? styles.selectedPage : ""}
-              onClick={() => props.setCurrentPage(p)}
-            >
-                {p}
-              </span>
-          )
-        }
+      <Pagination
+        totalUsersCount={totalUsersCount}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      <div>
+        {users.map(u => {
+          return (
+            <User
+              key={u.id}
+              user={u}
+              followUser={props.followUser}
+              unfollowUser={props.unfollowUser}
+              followingInProgress={props.followingInProgress}
+            />
+          );
+        })}
       </div>
-      {props.users.map(u => {
-        return (
-          <div key={u.id} className={styles.user}>
-            <div className={styles.userAvatar}>
-              <NavLink to={`/profile/${u.id}`}>
-                <img src={u.photos.small ? u.photos.small : defaultUserPhoto} alt={u.name}/>
-              </NavLink>
-              {
-                u.followed ?
-                  <button
-                    onClick={() => unfollowUser(u.id)}
-                    disabled={props.followingInProgress.some(id => id === u.id)}
-                  >
-                    Unfollow
-                  </button>
-                  :
-                  <button
-                    onClick={() => followUser(u.id)}
-                    disabled={props.followingInProgress.some(id => id === u.id)}
-                  >
-                    Follow
-                  </button>
-              }
-            </div>
-            <div className={styles.userInfo}>
-              <p>{u.name}</p>
-              <p>{u.status}</p>
-              <p>{"u.location.country"}, {"u.location.city"}</p>
-            </div>
-          </div>
-        );
-      })}
     </div>
   );
 }

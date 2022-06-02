@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../common/FormControls/FormControls";
+import {createField, Input} from "../common/FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
 import styles from "./Login.module.css";
 import {connect} from "react-redux";
@@ -24,30 +24,33 @@ type MapDispatchToPropsType = {
 
 type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
-const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = (props) => {
+const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({handleSubmit, error}) => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          name={"email"}
-          component={Input}
-          placeholder={"Email"}
-          validate={[required]}
-        />
-      </div>
-      <div>
-        <Field
-          name={"password"}
-          component={Input}
-          type={"password"}
-          placeholder={"Password"}
-          validate={[required]}
-        />
-      </div>
-      <div>
-        <Field name={"rememberMe"} component={"input"} type={"checkbox"}/> Remember me
-      </div>
-      {props.error && <div className={styles.formError}>{props.error}</div>}
+    <form onSubmit={handleSubmit}>
+      {createField("email", "Email", [required], Input)}
+      {createField("password", "Password", [required], Input, {type: "password"})}
+      {createField("rememberMe", undefined, [], Input, {type: "checkbox"}, "Remember me")}
+      {/*<div>*/}
+      {/*  <Field*/}
+      {/*    name={"email"}*/}
+      {/*    component={Input}*/}
+      {/*    placeholder={"Email"}*/}
+      {/*    validate={[required]}*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {/*<div>*/}
+      {/*  <Field*/}
+      {/*    name={"password"}*/}
+      {/*    component={Input}*/}
+      {/*    type={"password"}*/}
+      {/*    placeholder={"Password"}*/}
+      {/*    validate={[required]}*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {/*<div>*/}
+      {/*  <Field name={"rememberMe"} component={"input"} type={"checkbox"}/> Remember me*/}
+      {/*</div>*/}
+      {error && <div className={styles.formError}>{error}</div>}
       <div>
         <button className={styles.submitButton}>Login</button>
       </div>

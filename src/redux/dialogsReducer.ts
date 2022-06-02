@@ -44,7 +44,7 @@ const initialState = {
 };
 
 // Constants
-export const SEND_NEW_MESSAGE = "SEND-NEW-MESSAGE";
+export const SEND_NEW_MESSAGE = "social-net/dialogs/SEND-NEW-MESSAGE";
 
 // Action Creators
 export const sendNewMessageAC = (newMessageText: string) => ({

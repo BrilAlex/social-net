@@ -46,10 +46,10 @@ const initialState = {
 };
 
 // Constants
-const ADD_NEW_POST = "ADD-NEW-POST";
-const DELETE_POST = "DELETE-POST";
-const SET_USER_PROFILE = "SET-USER-PROFILE";
-const SET_USER_STATUS = "SET-USER-STATUS";
+const ADD_NEW_POST = "social-net/profile/ADD-NEW-POST";
+const DELETE_POST = "social-net/profile/DELETE-POST";
+const SET_USER_PROFILE = "social-net/profile/SET-USER-PROFILE";
+const SET_USER_STATUS = "social-net/profile/SET-USER-STATUS";
 
 // Action Creators
 export const addNewPostAC = (newPostText: string) => ({type: ADD_NEW_POST, newPostText} as const);
@@ -61,23 +61,20 @@ export const setUserProfile = (profile: ProfileType) => ({
 export const setUserStatus = (status: string) => ({type: SET_USER_STATUS, status} as const);
 
 // Thunk Creators
-export const getUserProfile = (user_ID: number): AppThunkType => (dispatch) => {
-  profileAPI.getUserProfile(user_ID).then(data => dispatch(setUserProfile(data)));
+export const getUserProfile = (user_ID: number): AppThunkType => async (dispatch) => {
+  let data = await profileAPI.getUserProfile(user_ID);
+
+  dispatch(setUserProfile(data));
 };
-export const getUserStatus = (user_ID: number): AppThunkType => {
-  return (dispatch) => {
-    profileAPI.getUserStatus(user_ID).then(data => dispatch(setUserStatus(data)));
-  };
+export const getUserStatus = (user_ID: number): AppThunkType => async (dispatch) => {
+  let data = await profileAPI.getUserStatus(user_ID);
+  dispatch(setUserStatus(data));
 };
-export const updateUserStatus = (newStatus: string): AppThunkType => {
-  return (dispatch) => {
-    profileAPI.updateUserStatus(newStatus)
-      .then(data => {
-        if (data.resultCode === 0) {
-          dispatch(setUserStatus(newStatus));
-        }
-      });
-  };
+export const updateUserStatus = (newStatus: string): AppThunkType => async (dispatch) => {
+  let data = await profileAPI.updateUserStatus(newStatus);
+  if (data.resultCode === 0) {
+    dispatch(setUserStatus(newStatus));
+  }
 };
 
 export const profileReducer = (state: ProfileInitStateType = initialState, action: ProfileActionsType): ProfileInitStateType => {

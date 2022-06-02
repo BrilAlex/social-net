@@ -11,7 +11,7 @@ const initState = {
 };
 
 // Constants
-const SET_INITIALIZED_SUCCESSFULLY = "SET-INITIALIZED-SUCCESSFULLY";
+const SET_INITIALIZED_SUCCESSFULLY = "social-net/app/SET-INITIALIZED-SUCCESSFULLY";
 
 // Action Creators
 export const setInitializedSuccessfully = () => ({type: SET_INITIALIZED_SUCCESSFULLY} as const);

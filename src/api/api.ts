@@ -2,7 +2,7 @@ import axios from "axios";
 import {UserType} from "../redux/usersReducer";
 import {ProfileType} from "../redux/profileReducer";
 
-type CommonAPIResponseType<T = {}> = {
+export type APIResponseType<T = {}> = {
   data: T
   resultCode: number
   messages: Array<string>
@@ -45,7 +45,7 @@ export const profileAPI = {
   },
   updateUserStatus(newStatus: string) {
     return axiosInstance
-      .put<CommonAPIResponseType>("profile/status", {status: newStatus})
+      .put<APIResponseType>("profile/status", {status: newStatus})
       .then(response => response.data);
   },
 };
@@ -59,12 +59,12 @@ type AuthAPIDataType = {
 export const authAPI = {
   me() {
     return axiosInstance
-      .get<CommonAPIResponseType<AuthAPIDataType>>("auth/me")
+      .get<APIResponseType<AuthAPIDataType>>("auth/me")
       .then(response => response.data);
   },
   login(email: string, password: string, rememberMe: boolean = false) {
     return axiosInstance
-      .post<CommonAPIResponseType<{ userId: number }>>(
+      .post<APIResponseType<{ userId: number }>>(
         "auth/login",
         {email, password, rememberMe},
       )
@@ -74,7 +74,7 @@ export const authAPI = {
   },
   logout() {
     return axiosInstance
-      .delete<CommonAPIResponseType>("auth/login")
+      .delete<APIResponseType>("auth/login")
       .then(response => response.data);
   },
 };
@@ -82,12 +82,12 @@ export const authAPI = {
 export const followAPI = {
   follow(user_ID: number) {
     return axiosInstance
-      .post<CommonAPIResponseType>(`follow/${user_ID}`, {})
+      .post<APIResponseType>(`follow/${user_ID}`, {})
       .then(response => response.data);
   },
   unfollow(user_ID: number) {
     return axiosInstance
-      .delete<CommonAPIResponseType>(`follow/${user_ID}`)
+      .delete<APIResponseType>(`follow/${user_ID}`)
       .then(response => response.data);
   },
-}
+};

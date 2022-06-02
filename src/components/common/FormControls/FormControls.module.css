@@ -1,3 +1,9 @@
+.formGroup {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
 .formControl {
   margin-bottom: 10px;
 }
@@ -6,6 +12,10 @@
 .formControl textarea {
   display: block;
   width: 100%;
+}
+
+.formControl input[type="checkbox"] {
+  width: auto;
 }
 
 .formControl.error input,

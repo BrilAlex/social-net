@@ -12,12 +12,14 @@ type ProfileInfoPropsType = {
   updateStatus: (newStatus: string) => void
 };
 
-export const ProfileInfo: FC<ProfileInfoPropsType> = (props) => {
-  if (!props.profile) {
+export const ProfileInfo: FC<ProfileInfoPropsType> = (
+  {profile, status, updateStatus}
+) => {
+  if (!profile) {
     return <Preloader/>;
   }
 
-  const userAvatarSrc = props.profile.photos.large ? props.profile.photos.large : defaultAvatar;
+  const userAvatarSrc = profile.photos.large ? profile.photos.large : defaultAvatar;
 
   return (
     <div>
@@ -25,16 +27,16 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = (props) => {
         <img src={defaultProfileBG} alt={"Profile background"}/>
       </div>
       <div className={styles.profileInfoBlock}>
-        <img src={userAvatarSrc} alt={props.profile.fullName}/>
+        <img src={userAvatarSrc} alt={profile.fullName}/>
         <div className={styles.profileInfo}>
           <h3>Profile description:</h3>
-          <p>Name: {props.profile.fullName}</p>
-          <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
-          {props.profile.aboutMe && <p>About me: {props.profile.aboutMe}</p>}
-          {props.profile.lookingForAJob ?
+          <p>Name: {profile.fullName}</p>
+          <ProfileStatus status={status} updateStatus={updateStatus}/>
+          {profile.aboutMe && <p>About me: {profile.aboutMe}</p>}
+          {profile.lookingForAJob ?
             <>
               <p>Looking for a job: Yes</p>
-              <p>{props.profile.lookingForAJobDescription}</p>
+              <p>{profile.lookingForAJobDescription}</p>
             </>
             :
             <p>Looking for a job: No</p>
