@@ -2,6 +2,10 @@
     margin-bottom: 20px;
 }
 
+.pagination button {
+    padding: 4px 8px;
+}
+
 .pagination span {
     display: inline-block;
     margin: 3px;

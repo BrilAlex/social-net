@@ -28,7 +28,7 @@ export const Users: FC<UsersPropsType> = (
   return (
     <div className={styles.usersPage}>
       <Pagination
-        totalUsersCount={totalUsersCount}
+        totalItemsCount={totalUsersCount}
         pageSize={pageSize}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
