@@ -1,21 +1,25 @@
-import React, {ComponentType} from 'react';
+import React, {ComponentType, lazy} from 'react';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import {SidebarContainer} from "./components/Sidebar/SidebarContainer";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import Login from "./components/Login/Login";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/appReducer";
 import {AppStateType, store} from "./redux/reduxStore";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import {withSuspense} from "./hoc/withSuspense";
 
+const ProfileContainer = lazy(() => import ("./components/Profile/ProfileContainer"));
+const DialogsContainer = lazy(() => import ("./components/Dialogs/DialogsContainer"));
+
+const SuspendedProfile = withSuspense(ProfileContainer);
+const SuspendedDialogs = withSuspense(DialogsContainer);
 
 type MapStateToPropsType = {
   initialized: boolean
@@ -40,8 +44,8 @@ class App extends React.Component<AppPropsType> {
         <HeaderContainer/>
         <SidebarContainer/>
         <div className={"appContentWrapper"}>
-          <Route path={"/profile/:userID?"} render={() => <ProfileContainer/>}/>
-          <Route path={"/dialogs"} render={() => <DialogsContainer/>}/>
+          <Route path={"/profile/:userID?"} render={() => <SuspendedProfile/>}/>
+          <Route path={"/dialogs"} render={() => <SuspendedDialogs/>}/>
           <Route path={"/news"} render={() => <News/>}/>
           <Route path={"/music"} render={() => <Music/>}/>
           <Route path={"/users"} render={() => <UsersContainer/>}/>
