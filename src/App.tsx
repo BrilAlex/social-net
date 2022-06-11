@@ -6,14 +6,14 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import Login from "./components/Login/Login";
 import {compose} from "redux";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/appReducer";
-import {AppStateType} from "./redux/reduxStore";
+import {AppStateType, store} from "./redux/reduxStore";
 import {Preloader} from "./components/common/Preloader/Preloader";
 
 
@@ -57,4 +57,19 @@ const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
 });
 
-export default compose<ComponentType>(withRouter, connect(mapStateToProps, {initializeApp}))(App);
+const AppContainer = compose<ComponentType>(
+  withRouter,
+  connect(mapStateToProps, {initializeApp})
+)(App);
+
+const SocialNetApp = () => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer/>
+      </Provider>
+    </BrowserRouter>
+  );
+};
+
+export default SocialNetApp;

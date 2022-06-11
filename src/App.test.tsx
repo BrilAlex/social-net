@@ -1,9 +1,9 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import App from './App';
+import ReactDOM from "react-dom";
+import SocialNetApp from "./App";
 
-test.skip('renders learn react link', () => {
-  render(<App/>);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("Renders without crashing", () => {
+  const div = document.createElement("div");
+  ReactDOM.render(<SocialNetApp/>, div);
+  ReactDOM.unmountComponentAtNode(div);
 });
