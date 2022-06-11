@@ -5,7 +5,7 @@ import {SidebarContainer} from "./components/Sidebar/SidebarContainer";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import Login from "./components/Login/Login";
 import {compose} from "redux";
@@ -68,11 +68,11 @@ const AppContainer = compose<ComponentType>(
 
 const SocialNetApp = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Provider store={store}>
         <AppContainer/>
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
