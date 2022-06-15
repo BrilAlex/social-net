@@ -22,6 +22,15 @@ type UsersAPIResponseType = {
   error: string
 };
 
+export type PhotosType = {
+  small: string | null
+  large: string | null
+};
+
+type ProfilePhotoResponseDataType = {
+  photos: PhotosType
+};
+
 export const usersAPI = {
   getUsers(currentPage: number = 1, pageSize: number = 10) {
     return axiosInstance
@@ -46,6 +55,18 @@ export const profileAPI = {
   updateUserStatus(newStatus: string) {
     return axiosInstance
       .put<APIResponseType>("profile/status", {status: newStatus})
+      .then(response => response.data);
+  },
+  saveUserAvatar(photoFile: File) {
+    const requestData = new FormData();
+    requestData.append("image", photoFile);
+
+    return axiosInstance
+      .put<APIResponseType<ProfilePhotoResponseDataType>>(
+        "profile/photo",
+        requestData,
+        {headers: {"Content-type": "multipart/form-data"}},
+      )
       .then(response => response.data);
   },
 };

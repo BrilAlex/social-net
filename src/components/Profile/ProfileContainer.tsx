@@ -3,7 +3,7 @@ import {Profile} from "./Profile";
 import {
   getUserProfile,
   getUserStatus,
-  ProfileType,
+  ProfileType, saveAvatar,
   updateUserStatus
 } from "../../redux/profileReducer";
 import {AppStateType} from "../../redux/reduxStore";
@@ -26,6 +26,7 @@ type MapDispatchToPropsType = {
   getUserProfile: (user_ID: number) => void
   getUserStatus: (user_ID: number) => void
   updateUserStatus: (newStatus: string) => void
+  saveAvatar: (file: File) => void
 };
 
 type ProfileContainerPropsType =
@@ -34,7 +35,7 @@ type ProfileContainerPropsType =
   & MapDispatchToPropsType;
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
-  componentDidMount() {
+  refreshProfile() {
     let user_ID: number | null = Number(this.props.match.params.userID);
     if (!user_ID) {
       user_ID = this.props.authorizedUser_ID;
@@ -49,9 +50,27 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     }
   };
 
+  componentDidMount() {
+    this.refreshProfile();
+  };
+
+  componentDidUpdate(prevProps: ProfileContainerPropsType) {
+    if (this.props.match.params.userID !== prevProps.match.params.userID) {
+      this.refreshProfile();
+    }
+  };
+
   render() {
-    const {profile, status, updateUserStatus} = this.props;
-    return <Profile profile={profile} status={status} updateStatus={updateUserStatus}/>;
+    const {profile, status, updateUserStatus, saveAvatar} = this.props;
+    return (
+      <Profile
+        isOwner={!this.props.match.params.userID}
+        profile={profile}
+        status={status}
+        updateStatus={updateUserStatus}
+        saveAvatar={saveAvatar}
+      />
+    );
   };
 }
 
@@ -63,6 +82,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 });
 
 export default compose<ComponentType>(
-  connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus}),
+  connect(
+    mapStateToProps,
+    {getUserProfile, getUserStatus, updateUserStatus, saveAvatar}
+  ),
   withRouter,
 )(ProfileContainer);

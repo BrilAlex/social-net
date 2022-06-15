@@ -6,15 +6,23 @@
     margin: 15px 0;
     padding: 5px 10px;
 }
+
 .profileInfoBlock::after {
     clear: both;
     content: "";
     display: table;
 }
-.profileInfoBlock img {
+
+.profileAvatar {
     float: left;
     width: 150px;
 }
+
+.profileInfoBlock img {
+    width: 100%;
+    border-radius: 50%;
+}
+
 .profileInfo {
     float: left;
     margin-left: 25px;

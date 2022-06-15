@@ -1,5 +1,5 @@
 import {AppThunkType} from "./reduxStore";
-import {profileAPI} from "../api/api";
+import {PhotosType, profileAPI} from "../api/api";
 
 // Types
 export type PostType = {
@@ -23,17 +23,15 @@ export type ProfileType = {
     youtube?: string
     mainLink?: string
   }
-  photos: {
-    small: string
-    large: string
-  }
+  photos: PhotosType
 };
 export type ProfileInitStateType = typeof initialState;
 export type ProfileActionsType =
   | ReturnType<typeof addNewPostAC>
   | ReturnType<typeof deletePostAC>
   | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof setUserStatus>;
+  | ReturnType<typeof setUserStatus>
+  | ReturnType<typeof setUserPhotos>;
 
 // Initial state
 const initialState = {
@@ -50,15 +48,19 @@ const ADD_NEW_POST = "social-net/profile/ADD-NEW-POST";
 const DELETE_POST = "social-net/profile/DELETE-POST";
 const SET_USER_PROFILE = "social-net/profile/SET-USER-PROFILE";
 const SET_USER_STATUS = "social-net/profile/SET-USER-STATUS";
+const SET_USER_PHOTOS = "social-net/profile/SET-USER-PHOTOS";
 
 // Action Creators
-export const addNewPostAC = (newPostText: string) => ({type: ADD_NEW_POST, newPostText} as const);
-export const deletePostAC = (post_ID: number) => ({type: DELETE_POST, post_ID} as const);
-export const setUserProfile = (profile: ProfileType) => ({
-  type: SET_USER_PROFILE,
-  profile
-} as const);
-export const setUserStatus = (status: string) => ({type: SET_USER_STATUS, status} as const);
+export const addNewPostAC = (newPostText: string) =>
+  ({type: ADD_NEW_POST, newPostText} as const);
+export const deletePostAC = (post_ID: number) =>
+  ({type: DELETE_POST, post_ID} as const);
+export const setUserProfile = (profile: ProfileType) =>
+  ({type: SET_USER_PROFILE, profile} as const);
+export const setUserStatus = (status: string) =>
+  ({type: SET_USER_STATUS, status} as const);
+export const setUserPhotos = (photos: PhotosType) =>
+  ({type: SET_USER_PHOTOS, photos} as const);
 
 // Thunk Creators
 export const getUserProfile = (user_ID: number): AppThunkType => async (dispatch) => {
@@ -74,6 +76,12 @@ export const updateUserStatus = (newStatus: string): AppThunkType => async (disp
   let data = await profileAPI.updateUserStatus(newStatus);
   if (data.resultCode === 0) {
     dispatch(setUserStatus(newStatus));
+  }
+};
+export const saveAvatar = (file: File): AppThunkType => async (dispatch) => {
+  let data = await profileAPI.saveUserAvatar(file);
+  if (data.resultCode === 0) {
+    dispatch(setUserPhotos(data.data.photos));
   }
 };
 
@@ -99,6 +107,9 @@ export const profileReducer = (state: ProfileInitStateType = initialState, actio
     }
     case SET_USER_STATUS: {
       return {...state, status: action.status};
+    }
+    case SET_USER_PHOTOS: {
+      return {...state, profile: {...state.profile, photos: action.photos} as ProfileType};
     }
     default:
       return state;
