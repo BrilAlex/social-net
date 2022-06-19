@@ -109,11 +109,11 @@ export const authAPI = {
       .get<APIResponseType<AuthAPIDataType>>("auth/me")
       .then(response => response.data);
   },
-  login(email: string, password: string, rememberMe: boolean = false) {
+  login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
     return axiosInstance
       .post<APIResponseType<{ userId: number }>>(
         "auth/login",
-        {email, password, rememberMe},
+        {email, password, rememberMe, captcha},
       )
       .then(response => {
         return response.data;
@@ -135,6 +135,18 @@ export const followAPI = {
   unfollow(user_ID: number) {
     return axiosInstance
       .delete<APIResponseType>(`follow/${user_ID}`)
+      .then(response => response.data);
+  },
+};
+
+type GetCaptchaUrlResponseDataType = {
+  url: string
+};
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return axiosInstance
+      .get<GetCaptchaUrlResponseDataType>("security/get-captcha-url")
       .then(response => response.data);
   },
 };
