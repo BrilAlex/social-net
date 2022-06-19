@@ -1,6 +1,5 @@
 import axios from "axios";
 import {UserType} from "../redux/usersReducer";
-import {ProfileType} from "../redux/profileReducer";
 
 export type APIResponseType<T = {}> = {
   data: T
@@ -22,15 +21,6 @@ type UsersAPIResponseType = {
   error: string
 };
 
-export type PhotosType = {
-  small: string | null
-  large: string | null
-};
-
-type ProfilePhotoResponseDataType = {
-  photos: PhotosType
-};
-
 export const usersAPI = {
   getUsers(currentPage: number = 1, pageSize: number = 10) {
     return axiosInstance
@@ -39,7 +29,38 @@ export const usersAPI = {
   },
 };
 
+
+export type PhotosType = {
+  small: string | null
+  large: string | null
+};
+
+export type ContactsType = {
+  github: string
+  vk: string
+  facebook: string
+  instagram: string
+  twitter: string
+  website: string
+  youtube: string
+  mainLink: string
+}
+
+export type ProfileType = {
+  userId: number
+  fullName: string
+  aboutMe: string
+  lookingForAJob: boolean
+  lookingForAJobDescription: string
+  photos: PhotosType
+  contacts: ContactsType
+};
+
 type ProfileAPIResponseType = ProfileType;
+
+type ProfilePhotoResponseDataType = {
+  photos: PhotosType
+};
 
 export const profileAPI = {
   getUserProfile(user_ID: number) {
@@ -67,6 +88,11 @@ export const profileAPI = {
         requestData,
         {headers: {"Content-type": "multipart/form-data"}},
       )
+      .then(response => response.data);
+  },
+  saveUserProfile(profile: ProfileType) {
+    return axiosInstance
+      .put<APIResponseType>("profile", profile)
       .then(response => response.data);
   },
 };

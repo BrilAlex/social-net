@@ -13,6 +13,7 @@
 .userAvatar img {
     display: block;
     width: 100%;
+    border-radius: 50%;
 }
 
 .userAvatar button {

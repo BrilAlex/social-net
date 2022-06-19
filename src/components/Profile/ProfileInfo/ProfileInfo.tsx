@@ -1,10 +1,56 @@
-import {ChangeEvent, FC} from "react";
-import styles from "./ProfileInfo.module.css";
+import {ChangeEvent, FC, useState} from "react";
+import s from "./ProfileInfo.module.css";
 import defaultProfileBG from "./../../../assets/images/default_profile_bg.jpg";
-import {ProfileType} from "../../../redux/profileReducer";
+import {ContactsType, ProfileType} from "../../../api/api";
 import {Preloader} from "../../common/Preloader/Preloader";
 import defaultAvatar from "../../../assets/images/man_avatar.png";
 import {ProfileStatus} from "./ProfileStatus";
+import {ProfileDataFormContainer} from "./ProfileDataForm";
+
+type ContactPropsType = {
+  contactTitle: string
+  contactValue: string
+};
+
+const Contact: FC<ContactPropsType> = ({contactTitle, contactValue}) => {
+  return (
+    <p className={s.contact}>{contactTitle}: {contactValue}</p>
+  );
+};
+
+type ProfileDataPropsType = {
+  profile: ProfileType
+  isOwner: boolean
+  enableEditMode: () => void
+};
+
+const ProfileData: FC<ProfileDataPropsType> = ({profile, isOwner, enableEditMode}) => {
+  const contactsList = Object.keys(profile.contacts).map(key => {
+    const contactValue = profile.contacts[key as keyof ContactsType];
+    return <Contact key={key} contactTitle={key} contactValue={contactValue}/>;
+  });
+
+  return (
+    <div>
+      <h3>Profile info:</h3>
+      <div><b>Name</b>: {profile.fullName}</div>
+      {profile.aboutMe && <p><b>About me</b>: {profile.aboutMe}</p>}
+      <div>
+        <p><b>Looking for a job</b>: {profile.lookingForAJob ? "Yes" : "No"}</p>
+        {profile.lookingForAJob && <p><b>My skills</b>: {profile.lookingForAJobDescription}</p>}
+      </div>
+      <div>
+        <p><b>Contacts</b>:</p>
+        {contactsList}
+      </div>
+      {isOwner &&
+      <div>
+        <button onClick={enableEditMode}>Edit</button>
+      </div>
+      }
+    </div>
+  );
+};
 
 type ProfileInfoPropsType = {
   isOwner: boolean
@@ -12,11 +58,14 @@ type ProfileInfoPropsType = {
   status: string
   updateStatus: (newStatus: string) => void
   saveAvatar: (file: File) => void
+  saveProfile: (profile: ProfileType) => Promise<{}>
 };
 
 export const ProfileInfo: FC<ProfileInfoPropsType> = (
-  {isOwner, profile, status, updateStatus, saveAvatar}
+  {isOwner, profile, status, updateStatus, saveAvatar, saveProfile}
 ) => {
+  const [editMode, setEditMode] = useState<boolean>(false);
+
   if (!profile) {
     return <Preloader/>;
   }
@@ -29,28 +78,37 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = (
     }
   };
 
+  const onSubmit = (formData: ProfileType) => {
+    console.log(formData);
+    saveProfile(formData).then(() => {
+      setEditMode(false);
+    });
+  };
+
   return (
     <div>
-      <div className={styles.profileBackground}>
+      <div className={s.profileBackground}>
         <img src={defaultProfileBG} alt={"Profile background"}/>
       </div>
-      <div className={styles.profileInfoBlock}>
-        <div className={styles.profileAvatar}>
+      <div className={s.profileInfoBlock}>
+        <div className={s.profileAvatar}>
           <img src={userAvatarSrc} alt={profile.fullName}/>
           {isOwner && <input type={"file"} onChange={changeProfileAvatarHandler}/>}
         </div>
-        <div className={styles.profileInfo}>
-          <h3>Profile description:</h3>
-          <p>Name: {profile.fullName}</p>
+        <div className={s.profileInfo}>
           <ProfileStatus status={status} updateStatus={updateStatus}/>
-          {profile.aboutMe && <p>About me: {profile.aboutMe}</p>}
-          {profile.lookingForAJob ?
-            <>
-              <p>Looking for a job: Yes</p>
-              <p>{profile.lookingForAJobDescription}</p>
-            </>
+          {editMode ?
+            <ProfileDataFormContainer
+              initialValues={profile}
+              onSubmit={onSubmit}
+              profile={profile}
+            />
             :
-            <p>Looking for a job: No</p>
+            <ProfileData
+              profile={profile}
+              isOwner={isOwner}
+              enableEditMode={() => setEditMode(true)}
+            />
           }
         </div>
       </div>

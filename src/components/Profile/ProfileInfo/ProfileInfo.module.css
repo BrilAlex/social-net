@@ -27,3 +27,16 @@
     float: left;
     margin-left: 25px;
 }
+
+.profileInfo p {
+    margin-bottom: 5px;
+}
+
+.profileInfo button {
+    padding: 5px 15px;
+}
+
+.contact {
+    margin-bottom: 5px;
+    padding-left: 15px;
+}

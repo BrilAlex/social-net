@@ -1,29 +1,12 @@
-import {AppThunkType} from "./reduxStore";
-import {PhotosType, profileAPI} from "../api/api";
+import {AppStateType, AppThunkType} from "./reduxStore";
+import {PhotosType, profileAPI, ProfileType} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 // Types
 export type PostType = {
   id: number
   postText: string
   likesCount: number
-};
-export type ProfileType = {
-  userId: number
-  aboutMe: string
-  lookingForAJob: boolean
-  lookingForAJobDescription: string
-  fullName: string
-  contacts: {
-    github: string
-    vk?: string
-    facebook?: string
-    instagram?: string
-    twitter?: string
-    website?: string
-    youtube?: string
-    mainLink?: string
-  }
-  photos: PhotosType
 };
 export type ProfileInitStateType = typeof initialState;
 export type ProfileActionsType =
@@ -82,6 +65,19 @@ export const saveAvatar = (file: File): AppThunkType => async (dispatch) => {
   let data = await profileAPI.saveUserAvatar(file);
   if (data.resultCode === 0) {
     dispatch(setUserPhotos(data.data.photos));
+  }
+};
+export const saveProfile = (profile: ProfileType): AppThunkType => async (dispatch, getState: () => AppStateType) => {
+  const user_ID = getState().auth.user_ID;
+
+  let data = await profileAPI.saveUserProfile(profile);
+  console.log(data);
+  if (data.resultCode === 0) {
+    dispatch(getUserProfile(user_ID as number));
+  } else {
+    const message = data.messages.length > 0 ? data.messages[0] : "Some error";
+    dispatch(stopSubmit("editProfileForm", {_error: message}));
+    return Promise.reject(data.messages[0]);
   }
 };
 

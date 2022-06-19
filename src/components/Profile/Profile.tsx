@@ -2,7 +2,7 @@ import {FC} from "react";
 import styles from "./Profile.module.css";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/profileReducer";
+import {ProfileType} from "../../api/api";
 
 type ProfilePropsType = {
   isOwner: boolean
@@ -10,6 +10,7 @@ type ProfilePropsType = {
   status: string
   updateStatus: (newStatus: string) => void
   saveAvatar: (file: File) => void
+  saveProfile: (profile: ProfileType) => Promise<{}>
 };
 
 export const Profile: FC<ProfilePropsType> = (props) => {
@@ -21,6 +22,7 @@ export const Profile: FC<ProfilePropsType> = (props) => {
         status={props.status}
         updateStatus={props.updateStatus}
         saveAvatar={props.saveAvatar}
+        saveProfile={props.saveProfile}
       />
       <MyPostsContainer/>
     </div>

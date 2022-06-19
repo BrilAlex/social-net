@@ -5,7 +5,7 @@ import {FieldValidatorType} from "../../../utils/validators/validators";
 
 type FormControlsPropsType = {
   meta: WrappedFieldMetaProps
-}
+};
 
 const FormControl: FC<FormControlsPropsType> = ({meta: {touched, error}, children}) => {
   const hasError = touched && error;

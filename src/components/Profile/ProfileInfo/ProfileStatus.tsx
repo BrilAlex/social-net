@@ -29,6 +29,7 @@ export const ProfileStatus: FC<ProfileStatusPropsType> = (props) => {
 
   return (
     <div className={s.status}>
+      <b>Status: </b>
       {!editMode &&
       <span className={s.statusText} onDoubleClick={activateEditMode}>
           {props.status || "------"}

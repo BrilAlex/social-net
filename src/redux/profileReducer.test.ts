@@ -1,8 +1,9 @@
 import {
   addNewPostAC, deletePostAC,
   ProfileInitStateType,
-  profileReducer, ProfileType, setUserProfile, setUserStatus
+  profileReducer, setUserProfile, setUserStatus
 } from "./profileReducer";
+import {ProfileType} from "../api/api";
 
 let state: ProfileInitStateType;
 
@@ -56,6 +57,13 @@ it("Profile data should be immutably added to state", () => {
     fullName: "User",
     contacts: {
       github: "",
+      vk: "",
+      facebook: "",
+      instagram: "",
+      twitter: "",
+      website: "",
+      youtube: "",
+      mainLink: "",
     },
     photos: {
       small: "",
