@@ -1,0 +1,10 @@
+.snackBar {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  padding: 15px 20px;
+  background: #fef4f1;
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+}

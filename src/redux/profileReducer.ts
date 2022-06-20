@@ -1,6 +1,7 @@
 import {AppStateType, AppThunkType} from "./reduxStore";
 import {PhotosType, profileAPI, ProfileType} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {setAppError} from "./appReducer";
 
 // Types
 export type PostType = {
@@ -56,9 +57,17 @@ export const getUserStatus = (user_ID: number): AppThunkType => async (dispatch)
   dispatch(setUserStatus(data));
 };
 export const updateUserStatus = (newStatus: string): AppThunkType => async (dispatch) => {
-  let data = await profileAPI.updateUserStatus(newStatus);
-  if (data.resultCode === 0) {
-    dispatch(setUserStatus(newStatus));
+  try {
+    let data = await profileAPI.updateUserStatus(newStatus);
+    if (data.resultCode === 0) {
+      dispatch(setUserStatus(newStatus));
+    } else {
+      const errorMessage = data.messages.length > 1 ? data.messages.join(". ") : data.messages[0];
+      dispatch(setAppError(errorMessage));
+    }
+  } catch (error) {
+    const errorMessage = (error as { message: string }).message;
+    dispatch(setAppError(errorMessage));
   }
 };
 export const saveAvatar = (file: File): AppThunkType => async (dispatch) => {
@@ -71,7 +80,6 @@ export const saveProfile = (profile: ProfileType): AppThunkType => async (dispat
   const user_ID = getState().auth.user_ID;
 
   let data = await profileAPI.saveUserProfile(profile);
-  console.log(data);
   if (data.resultCode === 0) {
     dispatch(getUserProfile(user_ID as number));
   } else {

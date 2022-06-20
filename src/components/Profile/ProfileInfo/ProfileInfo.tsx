@@ -79,7 +79,6 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = (
   };
 
   const onSubmit = (formData: ProfileType) => {
-    console.log(formData);
     saveProfile(formData).then(() => {
       setEditMode(false);
     });

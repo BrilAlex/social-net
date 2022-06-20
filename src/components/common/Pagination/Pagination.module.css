@@ -6,7 +6,7 @@
     padding: 4px 8px;
 }
 
-.pagination span {
+.page {
     display: inline-block;
     margin: 3px;
     padding: 2px 8px;
@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.pagination .selectedPage {
+.selected {
     background: orange;
     color: black;
 }

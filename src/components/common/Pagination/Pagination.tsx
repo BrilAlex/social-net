@@ -1,5 +1,6 @@
 import {FC, useState} from "react";
-import styles from "./Pagination.module.css";
+import s from "./Pagination.module.css";
+import cn from "classnames";
 
 type PaginationPropsType = {
   totalItemsCount: number
@@ -38,7 +39,7 @@ export const Pagination: FC<PaginationPropsType> = (
   };
 
   return (
-    <div className={styles.pagination}>
+    <div className={s.pagination}>
       {portionNumber > 1 && <button onClick={prevButtonHandler}>Prev</button>}
       {
         pages
@@ -46,7 +47,7 @@ export const Pagination: FC<PaginationPropsType> = (
           .map((p, i) =>
             <span
               key={"page-" + i}
-              className={p === currentPage ? styles.selectedPage : ""}
+              className={cn(s.page, {[s.selected]: p === currentPage})}
               onClick={() => setCurrentPage(p)}
             >
               {p}
