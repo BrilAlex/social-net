@@ -1,6 +1,6 @@
 import React, {ComponentType} from "react";
 import {Redirect} from "react-router-dom";
-import {AppStateType} from "../redux/reduxStore";
+import {AppStateType} from "../redux/store";
 import {connect} from "react-redux";
 
 type MapStateToPropsType = {

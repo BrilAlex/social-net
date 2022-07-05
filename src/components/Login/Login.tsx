@@ -5,7 +5,7 @@ import {required} from "../../utils/validators/validators";
 import styles from "./Login.module.css";
 import {connect} from "react-redux";
 import {login} from "../../redux/authReducer";
-import {AppStateType} from "../../redux/reduxStore";
+import {AppStateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 
 type LoginFormPropsType = {

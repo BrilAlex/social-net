@@ -1,4 +1,4 @@
-import {AppStateType} from "./reduxStore";
+import {AppStateType} from "./store";
 import {createSelector} from "reselect";
 import {UserType} from "./usersReducer";
 

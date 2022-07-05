@@ -1,4 +1,4 @@
-import {AppThunkType} from "./reduxStore";
+import {AppThunkType} from "./store";
 import {APIResponseType, followAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {updateObjectInArray} from "../utils/objectHelpers";

@@ -6,7 +6,7 @@ import {
   saveAvatar, saveProfile,
   updateUserStatus
 } from "../../redux/profileReducer";
-import {AppStateType} from "../../redux/reduxStore";
+import {AppStateType} from "../../redux/store";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";

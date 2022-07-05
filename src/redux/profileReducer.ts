@@ -1,4 +1,4 @@
-import {AppStateType, AppThunkType} from "./reduxStore";
+import {AppStateType, AppThunkType} from "./store";
 import {PhotosType, profileAPI, ProfileType} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {setAppError} from "./appReducer";

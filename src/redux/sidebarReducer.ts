@@ -1,6 +1,6 @@
 import womanAvatar from "../assets/images/woman_avatar.png";
 import manAvatar from "../assets/images/man_avatar.png";
-import {RootActionsType} from "./reduxStore";
+import {RootActionsType} from "./store";
 
 // Types
 export type FriendType = {

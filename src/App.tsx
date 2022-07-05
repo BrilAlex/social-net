@@ -11,7 +11,7 @@ import Login from "./components/Login/Login";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeApp, setAppError} from "./redux/appReducer";
-import {AppStateType, store} from "./redux/reduxStore";
+import {AppStateType, store} from "./redux/store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
 import {SnackBar} from "./components/common/SnackBar/SnackBar";
