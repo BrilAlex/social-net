@@ -3,6 +3,8 @@ import s from "./FormControls.module.css";
 import {Field, WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
 import {FieldValidatorType} from "../../../utils/validators/validators";
 
+export type GetStringKeys<T> = Extract<keyof T, string>;
+
 type FormControlsPropsType = {
   meta: WrappedFieldMetaProps
 };

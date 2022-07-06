@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {InjectedFormProps, reduxForm} from "redux-form";
-import {createField, Input} from "../common/FormControls/FormControls";
+import {createField, GetStringKeys, Input} from "../common/FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
 import styles from "./Login.module.css";
 import {connect} from "react-redux";
@@ -19,6 +19,8 @@ type LoginFormDataType = {
   captcha: string
 };
 
+type LoginFormFieldNamesType = GetStringKeys<LoginFormDataType>;
+
 type MapStateToPropsType = {
   isAuth: boolean
   captchaUrl: string | null
@@ -35,12 +37,12 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType, LoginFormPropsType> & L
 ) => {
   return (
     <form onSubmit={handleSubmit}>
-      {createField("email", "Email", [required], Input)}
-      {createField("password", "Password", [required], Input, {type: "password"})}
-      {createField("rememberMe", undefined, [], Input, {type: "checkbox"}, "Remember me")}
+      {createField<LoginFormFieldNamesType>("email", "Email", [required], Input)}
+      {createField<LoginFormFieldNamesType>("password", "Password", [required], Input, {type: "password"})}
+      {createField<LoginFormFieldNamesType>("rememberMe", undefined, [], Input, {type: "checkbox"}, "Remember me")}
 
       {captchaUrl && <img src={captchaUrl} alt={"captcha"}/>}
-      {captchaUrl && createField("captcha", "Symbols on the image", [required], Input)}
+      {captchaUrl && createField<LoginFormFieldNamesType>("captcha", "Symbols on the image", [required], Input)}
 
       {error && <div className={styles.formError}>{error}</div>}
       <div>
