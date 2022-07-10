@@ -1,11 +1,11 @@
 import {ChangeEvent, FC, useState} from "react";
 import s from "./ProfileInfo.module.css";
 import defaultProfileBG from "./../../../assets/images/default_profile_bg.jpg";
-import {ContactsType, ProfileType} from "../../../api/api";
 import {Preloader} from "../../common/Preloader/Preloader";
 import defaultAvatar from "../../../assets/images/man_avatar.png";
 import {ProfileStatus} from "./ProfileStatus";
 import {ProfileDataFormContainer} from "./ProfileDataForm";
+import {ContactsType, ProfileType} from "../../../api/profileApi";
 
 type ContactPropsType = {
   contactTitle: string

@@ -3,7 +3,7 @@ import {
   ProfileInitStateType,
   profileReducer, setUserProfile, setUserStatus
 } from "./profileReducer";
-import {ProfileType} from "../api/api";
+import {ProfileType} from "../api/profileApi";
 
 let state: ProfileInitStateType;
 

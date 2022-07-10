@@ -10,7 +10,7 @@ import {AppStateType} from "../../redux/store";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
-import {ProfileType} from "../../api/api";
+import {ProfileType} from "../../api/profileApi";
 
 type PathParamsType = {
   userID: string

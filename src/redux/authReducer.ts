@@ -1,6 +1,8 @@
 import {AppThunkType} from "./store";
-import {authAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {authAPI} from "../api/authApi";
+import {securityAPI} from "../api/securityApi";
+import {ResultCode, ResultCodeForCaptcha} from "../api/api";
 
 // Types
 export type AuthInitStateType = typeof initState;
@@ -30,7 +32,7 @@ export const setCaptchaUrl = (captchaUrl: string) => ({
 // Thunk Creators
 export const getAuthUserData = (): AppThunkType => async (dispatch) => {
   let data = await authAPI.me();
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCode.Success) {
     const {id, email, login} = data.data;
     dispatch(setAuthUserData(id, email, login, true));
   }
@@ -38,10 +40,10 @@ export const getAuthUserData = (): AppThunkType => async (dispatch) => {
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string): AppThunkType => {
   return async (dispatch) => {
     let data = await authAPI.login(email, password, rememberMe, captcha);
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCode.Success) {
       dispatch(getAuthUserData());
     } else {
-      if (data.resultCode === 10) {
+      if (data.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
         dispatch(getCaptchaUrl());
       }
       const message = data.messages.length > 0 ? data.messages[0] : "Some error";
@@ -51,7 +53,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 };
 export const logout = (): AppThunkType => async (dispatch) => {
   let data = await authAPI.logout();
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCode.Success) {
     dispatch(setAuthUserData(0, "", "", false));
   }
 };

@@ -1,8 +1,8 @@
 import {FC} from "react";
 import styles from "./Users.module.css";
-import {UserType} from "../../redux/usersReducer";
 import {Pagination} from "../common/Pagination/Pagination";
 import {User} from "./User/User";
+import {UserType} from "../../api/usersApi";
 
 type UsersPropsType = {
   users: Array<UserType>

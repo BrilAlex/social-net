@@ -1,8 +1,8 @@
 import {FC} from "react";
-import {ProfileType} from "../../../api/api";
 import {createField, Input, Textarea} from "../../common/FormControls/FormControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import styles from "../../Login/Login.module.css";
+import {ProfileType} from "../../../api/profileApi";
 
 type ProfileDataFormPropsType = {
   profile: ProfileType

@@ -1,6 +1,6 @@
 import {AppStateType} from "./store";
 import {createSelector} from "reselect";
-import {UserType} from "./usersReducer";
+import {UserType} from "../api/usersApi";
 
 const usersSelector = (state: AppStateType) => {
   return state.usersPage.users

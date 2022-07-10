@@ -1,7 +1,8 @@
 import {AppStateType, AppThunkType} from "./store";
-import {PhotosType, profileAPI, ProfileType} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {setAppError} from "./appReducer";
+import {PhotosType, profileAPI, ProfileType} from "../api/profileApi";
+import {ResultCode} from "../api/api";
 
 // Types
 export type PostType = {
@@ -59,7 +60,7 @@ export const getUserStatus = (user_ID: number): AppThunkType => async (dispatch)
 export const updateUserStatus = (newStatus: string): AppThunkType => async (dispatch) => {
   try {
     let data = await profileAPI.updateUserStatus(newStatus);
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCode.Success) {
       dispatch(setUserStatus(newStatus));
     } else {
       const errorMessage = data.messages.length > 1 ? data.messages.join(". ") : data.messages[0];
@@ -72,7 +73,7 @@ export const updateUserStatus = (newStatus: string): AppThunkType => async (disp
 };
 export const saveAvatar = (file: File): AppThunkType => async (dispatch) => {
   let data = await profileAPI.saveUserAvatar(file);
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCode.Success) {
     dispatch(setUserPhotos(data.data.photos));
   }
 };
@@ -80,7 +81,7 @@ export const saveProfile = (profile: ProfileType): AppThunkType => async (dispat
   const user_ID = getState().auth.user_ID;
 
   let data = await profileAPI.saveUserProfile(profile);
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCode.Success) {
     dispatch(getUserProfile(user_ID as number));
   } else {
     const message = data.messages.length > 0 ? data.messages[0] : "Some error";

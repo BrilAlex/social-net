@@ -1,19 +1,10 @@
 import {AppThunkType} from "./store";
-import {APIResponseType, followAPI, usersAPI} from "../api/api";
+import {APIResponseType, ResultCode} from "../api/api";
 import {Dispatch} from "redux";
 import {updateObjectInArray} from "../utils/objectHelpers";
+import {followAPI, usersAPI, UserType} from "../api/usersApi";
 
 // Types
-export type UserType = {
-  id: number
-  name: string
-  status: string
-  photos: {
-    small: string
-    large: string
-  }
-  followed: boolean
-};
 export type UsersInitStateType = typeof initialState;
 export type UsersActionsType =
   ReturnType<typeof followUser>
@@ -71,7 +62,7 @@ const followUnfollowFlow = async (
 ) => {
   dispatch(toggleFollowingProgress(true, user_ID));
   let data = await apiMethod(user_ID);
-  if (data.resultCode === 0) dispatch(actionCreator(user_ID));
+  if (data.resultCode === ResultCode.Success) dispatch(actionCreator(user_ID));
   dispatch(toggleFollowingProgress(false, user_ID));
 };
 

@@ -2,7 +2,7 @@ import {FC} from "react";
 import styles from "./User.module.css";
 import {NavLink} from "react-router-dom";
 import defaultUserPhoto from "../../../assets/images/man_avatar.png";
-import {UserType} from "../../../redux/usersReducer";
+import {UserType} from "../../../api/usersApi";
 
 type UserPropsType = {
   user: UserType
