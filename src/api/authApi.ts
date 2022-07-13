@@ -1,6 +1,6 @@
 import {APIResponseType, axiosInstance, ResultCode, ResultCodeForCaptcha} from "./api";
 
-type MeResponseDataType = {
+export type MeResponseDataType = {
   id: number
   email: string
   login: string
@@ -14,7 +14,7 @@ export const authAPI = {
   },
   login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
     return axiosInstance
-      .post<APIResponseType<{ userId: number }, ResultCode & ResultCodeForCaptcha>>(
+      .post<APIResponseType<{ userId: number }, ResultCode | ResultCodeForCaptcha>>(
         "auth/login",
         {email, password, rememberMe, captcha},
       )

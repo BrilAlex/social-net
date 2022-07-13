@@ -8,7 +8,7 @@ export type UserType = {
   photos: PhotosType
   followed: boolean
 };
-type UsersAPIResponseType = {
+export type UsersAPIResponseType = {
   items: UserType[]
   totalCount: number
   error: string

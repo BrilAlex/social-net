@@ -54,7 +54,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 export const logout = (): AppThunkType => async (dispatch) => {
   let data = await authAPI.logout();
   if (data.resultCode === ResultCode.Success) {
-    dispatch(setAuthUserData(0, "", "", false));
+    dispatch(setAuthUserData(null, null, null, false));
   }
 };
 export const getCaptchaUrl = (): AppThunkType => async (dispatch) => {
